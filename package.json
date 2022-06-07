@@ -1,0 +1,23 @@
+{
+  "dependencies": {
+    "@distube/soundcloud": "^1.1.0",
+    "@distube/spotify": "^1.2.1",
+    "dbdjs.db": "^2.0.2",
+    "discord.js": "^14.0.0-dev.1654560560-5475767",
+    "distube": "^4.0.0-dev.5",
+    "glob": "^8.0.3",
+    "nekos.life": "^3.0.0",
+    "npm": "^8.12.1"
+  },
+  "name": "Lappland",
+  "version": "2.22.1",
+  "main": "dist/index.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Naoki Solutions",
+  "license": "KSPL",
+  "description": ""
+}

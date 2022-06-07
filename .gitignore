@@ -1,0 +1,7 @@
+package-lock.json
+node_modules/
+replit.nix
+.config/
+.build/
+.replit
+src/

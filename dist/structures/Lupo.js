@@ -33,7 +33,7 @@ class Lupo extends discord_js_1.Client {
                 1 << 0,
                 1 << 1,
                 1 << 7,
-                1 << 9 // GUILD_MESSAGES
+                1 << 9
             ]
         });
         Object.defineProperties(this, {

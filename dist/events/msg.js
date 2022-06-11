@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.run = exports.type = exports.name = void 0;
+const Arguments_1 = require("../structures/Arguments");
 ;
 ;
 exports.name = 'messageCreate';
@@ -14,13 +15,13 @@ async function run(lappy, msg) {
         `<@!${lappy?.user?.id}>`,
         'lappy'
     ], prefix = await prefixes.find((prefix) => msg.content.toLowerCase().startsWith(prefix)) || '';
-    let { channel: ch, guild: gd, author, member: memb } = msg, args = new Args(msg, prefix);
+    let { channel: ch, guild: gd, author, member: memb } = msg, args = new Arguments_1.Arguments(msg, prefix);
     if (prefixes.slice(1).includes(msg.content.trim()))
         lappy.cmds.always.get(1).run({ prefixes, author, lappy, memb, args, msg, ch, gd });
     if (!prefix)
         return;
-    let cmd = await args.shift();
-    const command = lappy.cmds.default.find((_cmd_) => _cmd_.help.names.includes(cmd.toLowerCase()));
+    let cmd = args.shift();
+    const command = lappy.cmds.default.find((_cmd_) => _cmd_.help.names.includes(cmd?.toLowerCase()));
     if (!command)
         return;
     if ((command.help.dev && !lappy.owners.includes(author.id)) || (lappy.owners.includes(author.id) && args.ends.includes('--dev-error')))
@@ -38,8 +39,8 @@ async function run(lappy, msg) {
     }
     ;
     const req_fields = command.help?.fields?.filter((field) => field.req) || [];
-    if (req_fields.length > args.len()) {
-        const index = req_fields.length - args.len();
+    if (req_fields.length > args.length) {
+        const index = req_fields.length - args.length;
         return lappy.sendError({ author }, msg, 'Field', `Field ${index} ['${req_fields[index - 1]?.name || 'unknow-name'}'] Cannot Be Empty`);
     }
     ;

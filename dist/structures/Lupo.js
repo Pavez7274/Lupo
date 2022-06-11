@@ -4,9 +4,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Lupo = void 0;
+const discord_js_1 = require("discord.js");
 const soundcloud_1 = require("@distube/soundcloud");
 const spotify_1 = require("@distube/spotify");
-const discord_js_1 = require("discord.js");
 const dbdjs_db_1 = require("dbdjs.db");
 const nekos_life_1 = __importDefault(require("nekos.life"));
 const glob_1 = require("glob");
@@ -99,13 +99,21 @@ class Lupo extends discord_js_1.Client {
                     delete require.cache[mod];
                 }
                 ;
-                let { type, name, run } = require(mod);
-                !type && (type = 'dsc');
-                if (type === 'dsc')
-                    this.on(name, (...args) => run(this, ...args));
-                else
-                    this?.[type]?.on(name, (...args) => run(this, ...args));
-                console.log(`* [handler] :: loaded event ${name} on ${type}`);
+                let event = require(mod);
+                if (event.default) {
+                    let { name, type, run, once } = event.default;
+                }
+                else {
+                    let { name, type, run, once } = event;
+                }
+                ;
+                if (type === 'dsc') {
+                    thi?.[once ? 'once' : 'on'](name, (...args) => run(this, ...args));
+                }
+                else {
+                    this?.[type]?.[once ? 'once' : 'on'](name, (...args) => run(this, ...args));
+                }
+                ;
             }
             catch (_err) {
                 console.log(_err);
@@ -118,6 +126,46 @@ class Lupo extends discord_js_1.Client {
     start() {
         this.commands().events().login();
         return this;
+    }
+    ;
+    permsError(data, instance, perms, target = data.author) {
+        if (!data.target && target) {
+            data.target = target;
+        }
+        ;
+        const embeds = this.makeEmbeds(data, {
+            title: `${this.emotes.error} | [Error] -> Missing Permissions`,
+            description: `Member/User: ${target?.toString() || 'unknown'}\nPermissions:\n${perms.join(', ').toCodeBlock()}\n`
+        });
+        if (instance.reply)
+            return instance.reply({ embeds });
+        return instance.send({ embeds });
+    }
+    ;
+    sendError(data, instance, type, msg, target = data.author, components = [], content = ' ') {
+        const embeds = this.makeEmbeds(data, {
+            title: `${this.emotes.error} | [Error] ${type ? ` -> ${type}` : ''}`,
+            description: msg?.toCodeBlock() || '```js\nFailed To Display Error```',
+        });
+        if (instance.reply)
+            return instance.reply({ embeds, components, content });
+        return instance.send({ embeds });
+    }
+    ;
+    makeEmbeds(data, ...embeds) {
+        const embeds_0 = new Array();
+        embeds.forEach((options, index) => {
+            if (index > 5)
+                return;
+            const embed = new discord_js_1.MessageEmbed(options);
+            if (!embed.thumbnail && data.target) {
+                embed.setThumbnail(data.target?.displayAvatarURL());
+            }
+            ;
+            !embed.color && embed.setColor('BLURPLE');
+            embeds_0.push(embed);
+        });
+        return embeds_0;
     }
     ;
 }

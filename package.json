@@ -3,7 +3,7 @@
     "@distube/soundcloud": "^1.1.0",
     "@distube/spotify": "^1.2.1",
     "dbdjs.db": "^2.0.2",
-    "discord.js": "^14.0.0-dev.1654560560-5475767",
+    "discord.js": "^13.8.0",
     "distube": "^4.0.0-dev.5",
     "glob": "^8.0.3",
     "nekos.life": "^3.0.0",
@@ -12,7 +12,9 @@
   "name": "Lappland",
   "version": "2.22.1",
   "main": "dist/index.js",
-  "devDependencies": {},
+  "devDependencies": {
+    "@types/node": "^17.0.41"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

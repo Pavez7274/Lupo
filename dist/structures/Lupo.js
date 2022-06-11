@@ -7,7 +7,7 @@ exports.Lupo = void 0;
 const discord_js_1 = require("discord.js");
 const soundcloud_1 = require("@distube/soundcloud");
 const spotify_1 = require("@distube/spotify");
-const dbdjs_db_1 = require("dbdjs.db");
+const DataBase_1 = require("./DataBase");
 const nekos_life_1 = __importDefault(require("nekos.life"));
 const glob_1 = require("glob");
 const distube_1 = __importDefault(require("distube"));
@@ -38,10 +38,10 @@ class Lupo extends discord_js_1.Client {
         });
         Object.defineProperties(this, {
             db: {
-                value: new dbdjs_db_1.Database({
+                value: new DataBase_1.DB({
                     tables: [{ name: 'main' }, { name: 'snipe' }],
                     path: './db/'
-                })
+                }, 'main')
             },
             music: {
                 value: new distube_1.default(this, {
@@ -99,16 +99,22 @@ class Lupo extends discord_js_1.Client {
                     delete require.cache[mod];
                 }
                 ;
-                let event = require(mod);
+                let event = require(mod), name, type, run, once;
                 if (event.default) {
-                    let { name, type, run, once } = event.default;
+                    name = event.default.name;
+                    type = event.default.type ?? 'dsc';
+                    run = event.default.run ?? function () { };
+                    once = event.default.once ?? false;
                 }
                 else {
-                    let { name, type, run, once } = event;
+                    name = event.name;
+                    type = event.type ?? 'dsc';
+                    run = event.run ?? function () { };
+                    once = event.once ?? false;
                 }
                 ;
                 if (type === 'dsc') {
-                    thi?.[once ? 'once' : 'on'](name, (...args) => run(this, ...args));
+                    this?.[once ? 'once' : 'on'](name, (...args) => run(this, ...args));
                 }
                 else {
                     this?.[type]?.[once ? 'once' : 'on'](name, (...args) => run(this, ...args));

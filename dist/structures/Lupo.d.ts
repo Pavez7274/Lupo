@@ -6,7 +6,7 @@ export declare class Lupo extends Client {
     events(): Lupo;
     start(): Lupo;
     permsError(data: any, instance: any, perms: Array<string>, target?: User): Message;
-    sendError(data: any, instance: any, type: string | void, msg: string, target?: User, components?: Array<MessageActionRow | void>, content?: string): Message;
+    sendError(data: any, instance: any, type: string | undefined, msg: string | undefined, target?: User, components?: Array<MessageActionRow | void>, content?: string): Message;
     makeEmbeds(data: any, ...embeds: Array<object>): Array<MessageEmbed>;
 }
 //# sourceMappingURL=Lupo.d.ts.map

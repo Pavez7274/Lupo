@@ -14,6 +14,8 @@ const distube_1 = __importDefault(require("distube"));
 var emotes;
 (function (emotes) {
     emotes["error"] = "<:lappyAaa:913295794151501864>";
+    emotes["feli"] = "<:lappyfeli:913295978205966338>";
+    emotes["tofu"] = "<:lappytofu:902410429601570866>";
 })(emotes || (emotes = {}));
 ;
 class Lupo extends discord_js_1.Client {
@@ -67,59 +69,64 @@ class Lupo extends discord_js_1.Client {
             },
             emotes: {
                 value: emotes
+            },
+            owners: {
+                value: [
+                    '788869971073040454',
+                    '878235498055864382',
+                ]
             }
         });
     }
     ;
     commands() {
+        console.log('* [handler] :: Running -> Commands');
         (0, glob_1.sync)(`${process.cwd()}/dist/cmds/**/*.js`).forEach(async (mod) => {
             if (mod && require.cache[mod]) {
                 delete require.cache[mod];
             }
             ;
-            const cmd = require(mod);
-            cmd.parsedFields = cmd.fields.map((field) => field.req ? `<${field.name}>` : `[${field.name}]`);
+            let cmd = require(mod);
+            if ('default' in cmd) {
+                cmd = cmd.default;
+            }
+            ;
+            if ('fields' in cmd) {
+                cmd.parsedFields = cmd.fields.map((field) => field.req ? `<${field.name}>` : `[${field.name}]`);
+            }
+            ;
             if (!this.cmds[cmd.type]) {
                 this.cmds[cmd.type] = new discord_js_1.Collection();
             }
             ;
-            this.cmds[cmd.type]
-                .set(cmd.names[0] ?? 'unknown', cmd)
-                .then(() => console.log(`* [handler] :: loaded command '${cmd.names[0]}'`))
-                .catch((error) => console.log(`* [handler] :: failed to load command '${cmd.names[0]}' because ${error}`));
+            try {
+                this.cmds[cmd.type].set(cmd.names[0] ?? 'unknown', cmd);
+                console.log(`* [handler] :: loaded command '${cmd.names[0] ?? 'unknown'}'`);
+            }
+            catch (error) {
+                console.log(`* [handler] :: failed to load command '${cmd.names[0] ?? 'unknown'}' because ${error}`);
+            }
         });
         return this;
     }
     ;
     events() {
-        this.removeAllListeners();
+        console.log('* [handler] :: Running -> Events');
         (0, glob_1.sync)(`${process.cwd()}/dist/events/**/*.js`).forEach(async (mod) => {
             try {
                 if (mod && require.cache[mod]) {
                     delete require.cache[mod];
                 }
                 ;
-                let event = require(mod), name, type, run, once;
-                if (event.default) {
-                    name = event.default.name;
-                    type = event.default.type ?? 'dsc';
-                    run = event.default.run ?? function () { };
-                    once = event.default.once ?? false;
+                let ev = require(mod);
+                if (ev.type === 'dsc') {
+                    this?.[ev.once ? 'once' : 'on'](ev.name, (...args) => ev.run(this, ...args));
                 }
                 else {
-                    name = event.name;
-                    type = event.type ?? 'dsc';
-                    run = event.run ?? function () { };
-                    once = event.once ?? false;
+                    this?.[ev.type]?.[ev.once ? 'once' : 'on'](ev.name, (...args) => ev.run(this, ...args));
                 }
                 ;
-                if (type === 'dsc') {
-                    this?.[once ? 'once' : 'on'](name, (...args) => run(this, ...args));
-                }
-                else {
-                    this?.[type]?.[once ? 'once' : 'on'](name, (...args) => run(this, ...args));
-                }
-                ;
+                console.log(`* [handler] :: loaded event '${ev.name ?? 'unknown'}'`);
             }
             catch (_err) {
                 console.log(_err);
@@ -130,7 +137,7 @@ class Lupo extends discord_js_1.Client {
     }
     ;
     start() {
-        this.commands().events().login();
+        this.events().commands().login();
         return this;
     }
     ;

@@ -7,6 +7,7 @@ exports.run = exports.fields = exports.type = exports.desc = exports.dev = expor
 const discord_js_1 = require("discord.js");
 const inspect_1 = __importDefault(require("../../util/inspect"));
 const typescript_1 = require("typescript");
+const coffeescript_1 = require("coffeescript");
 const util_1 = require("util");
 exports.names = ['eval', 'ev', 'js'];
 exports.dev = 1;
@@ -19,9 +20,18 @@ async function run(d) {
         (asynchorus = 1) &&
         d.args.args.shift();
     try {
-        d.args.ends.includes('--no-ts')
-            ? (code = d.args.string())
-            : (code = (0, typescript_1.transpile)(d.args.string()), compiled = 1);
+        if (d.args.ends.includes('--js')) {
+            code = d.args.string();
+        }
+        else if (d.args.includes('--coffee')) {
+            code = (0, coffeescript_1.compile)(d.args.string());
+            compiled = 2;
+        }
+        else {
+            code = (0, typescript_1.transpile)(d.args.string());
+            compiled = 1;
+        }
+        ;
         evaled = await eval(asynchorus ? `(async (d) => ${code} )(d)` : code);
     }
     catch (_err) {
@@ -62,6 +72,7 @@ async function run(d) {
     embeds[0]
         .addField(':incoming_envelope: | Input', code.toCodeBlock('js'))
         .addField(':page_facing_up: | Output', evaled || 'undefined')
+        .addField(':scroll: | Language', ((compiled == 2 && 'coffeescript') || (compiled == 1 && 'typescript') || 'javascript').toCodeBlock())
         .addField(':card_box: | Type', typeof_1.toCodeBlock('js'))
         .addField(':stopwatch: | Execution time', (Date.now() - start + 'Ms').toCodeBlock('js'));
     return await d.msg.reply({ embeds });

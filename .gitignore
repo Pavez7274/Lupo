@@ -5,3 +5,4 @@ replit.nix
 .config
 .build
 src
+db

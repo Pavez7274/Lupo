@@ -51,11 +51,12 @@ class Lupo extends discord_js_1.Client {
                         new soundcloud_1.SoundCloudPlugin(),
                         new spotify_1.SpotifyPlugin()
                     ],
-                    leaveOnFinish: !1,
-                    leaveOnEmpty: !1,
-                    leaveOnStop: !1,
+                    leaveOnFinish: false,
+                    leaveOnEmpty: false,
+                    leaveOnStop: false,
                     searchSongs: 5,
-                    nsfw: !0
+                    nsfw: true,
+                    youtubeDL: false
                 })
             },
             nekos: {
@@ -137,6 +138,7 @@ class Lupo extends discord_js_1.Client {
     }
     ;
     start() {
+        this.db.connect();
         this.events().commands().login();
         return this;
     }

@@ -5,9 +5,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.run = exports.fields = exports.type = exports.desc = exports.dev = exports.names = void 0;
 const discord_js_1 = require("discord.js");
-const inspect_1 = __importDefault(require("../../util/inspect"));
 const typescript_1 = require("typescript");
 const coffeescript_1 = require("coffeescript");
+const inspect_1 = __importDefault(require("../../util/inspect"));
 const util_1 = require("util");
 exports.names = [
     'coffee',
@@ -28,10 +28,10 @@ async function run(d) {
         (asynchorus = 1) &&
         d.args.args.shift();
     try {
-        if (d.args.ends.includes('--js') || d.cmd.toLowerCase() === 'js') {
+        if (d.args.ends.some((k) => /--(javascript|js)=(1|yes|true)/gi.test(k)) || d.cmd.toLowerCase() === 'js') {
             code = d.args.string();
         }
-        else if (d.args.includes('--coffee') || d.cmd.toLowerCase() === 'coffee') {
+        else if (d.args.ends.some((k) => /--(coffee|cs)=(1|yes|true)/gi.test(k)) || d.cmd.toLowerCase() === 'coffee') {
             code = (0, coffeescript_1.compile)(d.args.string());
             compiled = 2;
         }
@@ -78,7 +78,7 @@ async function run(d) {
         result = `${result}`.toCodeBlock('js');
     }
     ;
-    if (d.args.ends.includes('--no-embed')) {
+    if (d.args.ends.some((k) => /--embed=(0|no|false)/gi.test(k))) {
         return d.msg.reply(result ?? 'unknown');
     }
     else {

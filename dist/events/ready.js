@@ -7,7 +7,7 @@ function run() {
     const date = new Date(Date.now()).toLocaleString('en-gb', {
         timeZone: 'America/Mendoza'
     });
-    console.log('* [client] :: Ready at ', date);
+    console.log('* [client] :: Ready at', date);
 }
 exports.run = run;
 //# sourceMappingURL=ready.js.map

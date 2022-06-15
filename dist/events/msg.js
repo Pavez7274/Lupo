@@ -37,8 +37,8 @@ async function run(lappy, msg) {
     }
     ;
     const req_fields = command?.fields?.filter((field) => field.req) || [];
-    if (req_fields.length > args.length) {
-        const index = req_fields.length - args.length;
+    if (req_fields.length > args.len) {
+        const index = req_fields.length - args.len;
         return lappy.sendError({ author }, msg, 'Field', `Field ${index} ['${req_fields[index - 1]?.name || 'unknow-name'}'] Cannot Be Empty`);
     }
     ;

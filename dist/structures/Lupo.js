@@ -8,7 +8,6 @@ const discord_js_1 = require("discord.js");
 const soundcloud_1 = require("@distube/soundcloud");
 const spotify_1 = require("@distube/spotify");
 const DataBase_1 = require("./DataBase");
-const nekos_life_1 = __importDefault(require("nekos.life"));
 const glob_1 = require("glob");
 const distube_1 = __importDefault(require("distube"));
 var emotes;
@@ -58,9 +57,6 @@ class Lupo extends discord_js_1.Client {
                     nsfw: true,
                     youtubeDL: false
                 })
-            },
-            nekos: {
-                value: new nekos_life_1.default()
             },
             cache: {
                 value: new discord_js_1.Collection()

@@ -8,7 +8,7 @@ function default_1(value) {
         else if (Buffer.isBuffer(value))
             return 'buffer';
         else if (value instanceof RegExp)
-            return 'RegExp';
+            return 'regexp';
         else if (value instanceof Date)
             return 'date';
         else if (value === null)
@@ -16,7 +16,7 @@ function default_1(value) {
         else if (value === void 0)
             return 'void';
         else
-            return (0, util_1.inspect)(value, { depth: -1 });
+            return (0, util_1.inspect)(value, { depth: -1 })?.replace(/[\[\]]/g, '')?.toLowerCase();
     }
     ;
     return typeof value;

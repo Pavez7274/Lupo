@@ -7,6 +7,7 @@ class Arguments extends String {
     ends;
     msg;
     prefix;
+    _ends;
     constructor(msg, prefix) {
         super(msg.content);
         this.prefix = prefix;
@@ -17,13 +18,14 @@ class Arguments extends String {
             .split(/ +/g);
         this.args = this.all_args.filter((arg) => !arg.startsWith('--'));
         this.ends = this.all_args.filter((arg) => arg.startsWith('--'));
+        this._ends = [];
     }
     ;
     get(index) {
         return this.args?.[index === 'last' ? this.length - 1 : index] || void 0;
     }
     ;
-    get length() {
+    get len() {
         return this.args.length;
     }
     ;

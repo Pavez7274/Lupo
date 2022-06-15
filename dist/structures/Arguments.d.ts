@@ -5,9 +5,10 @@ export declare class Arguments extends String {
     ends: Array<string>;
     msg: Message;
     prefix: string;
+    _ends: Array<any>;
     constructor(msg: Message, prefix: string);
     get(index: number | string): string;
-    get length(): number;
+    get len(): number;
     string(all?: boolean | number, sep?: string): string;
     shift(): string | undefined;
     pop(): string | undefined;

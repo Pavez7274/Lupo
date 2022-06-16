@@ -135,7 +135,11 @@ class Lupo extends discord_js_1.Client {
     ;
     start() {
         this.db.connect();
-        this.events().commands().login();
+        this
+            .events()
+            .commands()
+            .on('debug', console.log)
+            .login();
         return this;
     }
     ;

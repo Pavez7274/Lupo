@@ -8,6 +8,6 @@ String.prototype.toTitleCase = function (sep = ' ') {
         .join(sep);
 };
 String.prototype.toCodeBlock = function (lang = '') {
-    return `\`\`\`${lang}\n${discord_js_1.Util.escapeCodeBlock(this)}\`\`\``;
+    return `\`\`\`${lang}\n${discord_js_1.Util.escapeCodeBlock(this)}\n\`\`\``;
 };
 //# sourceMappingURL=protos.js.map

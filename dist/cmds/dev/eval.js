@@ -20,6 +20,7 @@ exports.desc = 'Evaluate JavaScript/TypeScript Code Via `eval`';
 exports.type = 'default';
 exports.fields = [{
         name: 'code',
+        type: 'string',
         req: true
     }];
 async function run(d) {

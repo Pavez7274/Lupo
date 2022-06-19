@@ -7,6 +7,7 @@ exports.Lupo = void 0;
 const discord_js_1 = require("discord.js");
 const soundcloud_1 = require("@distube/soundcloud");
 const spotify_1 = require("@distube/spotify");
+const generateCommandDoc_1 = require("../util/generateCommandDoc");
 const DataBase_1 = require("./DataBase");
 const glob_1 = require("glob");
 const distube_1 = __importDefault(require("distube"));
@@ -99,6 +100,7 @@ class Lupo extends discord_js_1.Client {
             try {
                 this.cmds[cmd.type].set(cmd.names[0] ?? 'unknown', cmd);
                 console.log(`* [handler] :: loaded command '${cmd.names[0] ?? 'unknown'}'`);
+                (0, generateCommandDoc_1.generateCommandDoc)(cmd);
             }
             catch (error) {
                 console.log(`* [handler] :: failed to load command '${cmd.names[0] ?? 'unknown'}' because ${error}`);

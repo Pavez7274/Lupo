@@ -7,7 +7,6 @@ class Arguments extends String {
     ends;
     msg;
     prefix;
-    _ends;
     constructor(msg, prefix) {
         super(msg.content);
         this.prefix = prefix;
@@ -18,7 +17,6 @@ class Arguments extends String {
             .split(/ +/g);
         this.args = this.all_args.filter((arg) => !arg.startsWith('--'));
         this.ends = this.all_args.filter((arg) => arg.startsWith('--'));
-        this._ends = [];
     }
     ;
     get(index) {
@@ -47,6 +45,10 @@ class Arguments extends String {
             return poped;
         this.all_args.splice(index, 1);
         return poped;
+    }
+    ;
+    endIsTrue(name) {
+        return this.ends.some((end) => (new RegExp(`${name}(=(true|yes|1)|)`, 'gi')).test(end));
     }
     ;
 }

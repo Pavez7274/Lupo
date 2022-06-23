@@ -1,13 +1,13 @@
 # Coffee
-> eval, js, ts
+> Eval, Js, Ts
 
-Evaluate Javascript/typescript Code Via `eval`
+Evaluate Javascript, Typescript Or Coffeescript Code Via `eval()`, `ts.transpile()` Or `coffee.compile`
 
 ## Fields
 
 | Name | Type | Required |
 |------|------|----------|
-| code | string | Yes |
+| Code | String | Yes |
 
 ## Command Usage
 ```

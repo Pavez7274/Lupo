@@ -1,7 +1,7 @@
 import { Message } from 'discord.js';
 export declare const names: string[];
 export declare const dev = 1;
-export declare const desc = "Evaluate JavaScript/TypeScript Code Via `eval`";
+export declare const desc = "evaluate javascript, typescript or coffeescript code via `eval()`, `TS.transpile()` or `Coffee.compile`";
 export declare const type = "default";
 export declare const fields: {
     name: string;

@@ -1,5 +1,5 @@
-# Userinfo
-> User
+# Say
+> Owoify
 
 This Command Does Not Yet Have A Description
 
@@ -7,9 +7,9 @@ This Command Does Not Yet Have A Description
 
 | Name | Type | Required |
 |------|------|----------|
-| Target | Userresolvable | No |
+| Message | String | Yes |
 
 ## Command Usage
 ```
-?userinfo [target]
+?say <message>
 ```

@@ -16,7 +16,7 @@ exports.names = [
     'ts'
 ];
 exports.dev = 1;
-exports.desc = 'Evaluate JavaScript/TypeScript Code Via `eval`';
+exports.desc = 'evaluate javascript, typescript or coffeescript code via `eval()`, `TS.transpile()` or `Coffee.compile`';
 exports.type = 'default';
 exports.fields = [{
         name: 'code',
@@ -29,10 +29,10 @@ async function run(d) {
         (asynchorus = 1) &&
         d.args.args.shift();
     try {
-        if (d.args.ends.some((k) => /--(javascript|js)=(1|yes|true)/gi.test(k)) || d.cmd.toLowerCase() === 'js') {
+        if (d.args.ends.some((k) => /--(javascript|js)(=(1|yes|true)|)/gi.test(k)) || d.cmd.toLowerCase() === 'js') {
             code = d.args.string();
         }
-        else if (d.args.ends.some((k) => /--(coffee|cs)=(1|yes|true)/gi.test(k)) || d.cmd.toLowerCase() === 'coffee') {
+        else if (d.args.ends.some((k) => /--(coffee|cs)(=(1|yes|true)|)/gi.test(k)) || d.cmd.toLowerCase() === 'coffee') {
             code = (0, coffeescript_1.compile)(d.args.string());
             compiled = 2;
         }

@@ -26,13 +26,13 @@ async function run(lappy, msg) {
         return lappy.permsError({ author }, msg, ['developer']);
     if ('perms' in command)
         if (command.perms
-            .map((perm) => memb.permissionsIn(ch).has(perm))
-            .some((perm) => !perm))
+            ?.map((perm) => memb.permissionsIn(ch).has(perm))
+            ?.some((perm) => !perm))
             return lappy.permsError({ author }, msg, command.perms);
     if ('bot_perms' in command) {
         if (command.bot_perms
-            .forEach((perm) => memb.permissionsIn(ch).has(perm))
-            .some((perm) => !perm))
+            ?.forEach((perm) => gd?.me?.permissionsIn(ch)?.has(perm))
+            ?.some((perm) => !perm))
             return lappy.permsError({ author: lappy.user }, msg, command.bot_perms);
     }
     ;

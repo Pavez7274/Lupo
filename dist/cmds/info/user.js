@@ -6,6 +6,7 @@ exports.default = {
         'userinfo',
         'user'
     ],
+    type: 'default',
     fields: [{
             name: 'target',
             type: 'userResolvable',

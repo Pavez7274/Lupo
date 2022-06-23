@@ -1,5 +1,5 @@
 # Avatar
-> icon
+> Icon
 
 This Command Does Not Yet Have A Description
 
@@ -7,7 +7,7 @@ This Command Does Not Yet Have A Description
 
 | Name | Type | Required |
 |------|------|----------|
-| target | userResolvable | No |
+| Target | Userresolvable | No |
 
 ## Command Usage
 ```

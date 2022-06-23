@@ -6,7 +6,7 @@ function generateCommandDoc(cmd) {
     let str = new Array();
     str.push(`# ${cmd.names[0]?.toTitleCase()}`);
     cmd.names.length > 1 &&
-        str.push(`> ${cmd.names.slice(1).join(', ')}`);
+        str.push(`> ${cmd.names.slice(1).join(', ').toTitleCase()}`);
     str.push('');
     str.push((cmd.desc ?? 'this command does not yet have a description').toTitleCase());
     str.push('');
@@ -16,7 +16,7 @@ function generateCommandDoc(cmd) {
         str.push('| Name | Type | Required |');
         str.push('|------|------|----------|');
         for (let field of cmd.fields) {
-            str.push(`| ${field.name} | ${field.type} | ${field.req ? 'Yes' : 'No'} |`);
+            str.push(`| ${field.name.toTitleCase()} | ${field.type.toTitleCase()} | ${field.req ? 'Yes' : 'No'} |`);
         }
         ;
         str.push('');

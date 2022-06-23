@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.getType = void 0;
 const util_1 = require("util");
-function default_1(value) {
+function getType(value) {
     if (typeof value === 'object') {
         if (Array.isArray(value))
             return 'array';
@@ -21,6 +22,7 @@ function default_1(value) {
     ;
     return typeof value;
 }
-exports.default = default_1;
+exports.getType = getType;
 ;
+exports.default = getType;
 //# sourceMappingURL=inspect.js.map

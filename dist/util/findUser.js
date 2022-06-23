@@ -20,7 +20,5 @@ async function findUser(client, userToSolve, tags) {
 }
 exports.findUser = findUser;
 ;
-exports.default = {
-    findUser
-};
+exports.default = findUser;
 //# sourceMappingURL=findUser.js.map

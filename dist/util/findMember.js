@@ -25,7 +25,5 @@ async function findMember(guild, resolver, tags) {
 }
 exports.findMember = findMember;
 ;
-exports.default = {
-    findMember
-};
+exports.default = findMember;
 //# sourceMappingURL=findMember.js.map

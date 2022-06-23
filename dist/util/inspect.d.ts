@@ -1,2 +1,3 @@
-export default function (value: any): string;
+export declare function getType(value: any): string;
+export default getType;
 //# sourceMappingURL=inspect.d.ts.map

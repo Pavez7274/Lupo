@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Arguments = void 0;
+const isBoolean_1 = require("../util/isBoolean");
 class Arguments extends String {
     all_args;
     args;
@@ -49,6 +50,22 @@ class Arguments extends String {
     ;
     endIsTrue(name) {
         return this.ends.some((end) => (new RegExp(`${name}(=(true|yes|1)|)`, 'gi')).test(end));
+    }
+    ;
+    endIsFalse(name) {
+        return this.ends.some((end) => (new RegExp(`${name}=(false|no|0)`, 'gi')).test(end));
+    }
+    ;
+    getEndValue(name) {
+        let end = this.ends.find((End) => (new RegExp(name, 'gi')).test(End));
+        if (!end)
+            return void 0;
+        let value = end.split(/=/g).slice(1).join('=');
+        if ((0, isBoolean_1.isBoolean)(value))
+            return (0, isBoolean_1.parse)(value);
+        if (!isNaN(Number(value)))
+            return Number(value);
+        return value;
     }
     ;
 }

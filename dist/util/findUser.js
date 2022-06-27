@@ -2,20 +2,20 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.findUser = void 0;
 const resolveSnowflake_1 = require("./resolveSnowflake");
-async function findUser(client, userToSolve, tags) {
-    userToSolve = userToSolve.toLowerCase();
-    if ((0, resolveSnowflake_1.isSnowflake)(userToSolve)) {
-        return await client.users.fetch(userToSolve).catch(() => void 0);
+async function findUser(client, resolvable, tags) {
+    resolvable = resolvable.toLowerCase();
+    if ((0, resolveSnowflake_1.isSnowflake)(resolvable)) {
+        return await client.users.fetch(resolvable).catch(() => void 0);
     }
     ;
-    let reg = new RegExp(userToSolve, tags ?? 'gi');
+    let reg = new RegExp(resolvable, tags ?? 'gi');
     return client.users.cache.find((user) => {
-        return userToSolve === user.username.toLowerCase() ||
-            userToSolve === user.tag ||
+        return resolvable === user.username.toLowerCase() ||
+            resolvable === user.tag ||
             reg.test(user.username) ||
             reg.test(user.tag) ||
-            userToSolve === user.toString() ||
-            (0, resolveSnowflake_1.resolveSnowflake)(userToSolve) === user.id;
+            resolvable === user.toString() ||
+            (0, resolveSnowflake_1.resolveSnowflake)(resolvable) === user.id;
     });
 }
 exports.findUser = findUser;

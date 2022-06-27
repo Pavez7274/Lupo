@@ -1,1 +1,1 @@
-{"version":3,"file":"resolveSnowflake.d.ts","sourceRoot":"","sources":["../../src/util/resolveSnowflake.ts"],"names":[],"mappings":"AAAA,wBAAgB,WAAW,CAAE,iBAAiB,EAAE,MAAM,GAAG,MAAM,GAAG,MAAM,GAAG,OAAO,CAMjF;AAED,wBAAgB,gBAAgB,CAAE,QAAQ,EAAE,MAAM,GAAG,MAAM,GAAG,OAAO,CAGpE;;;;;AAED,wBAGE"}
+{"version":3,"file":"resolveSnowflake.d.ts","sourceRoot":"","sources":["../../src/util/resolveSnowflake.ts"],"names":[],"mappings":"AAAA,wBAAgB,WAAW,CAAE,UAAU,EAAE,MAAM,GAAG,MAAM,GAAG,OAAO,CAMjE;AAED,wBAAgB,gBAAgB,CAAE,UAAU,EAAE,MAAM,GAAG,MAAM,GAAG,OAAO,CAGtE;;;;;AAED,wBAGE"}

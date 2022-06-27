@@ -7,7 +7,7 @@ const Arguments_1 = require("../structures/Arguments");
 exports.name = 'messageCreate';
 exports.type = 'dsc';
 async function run(lappy, msg) {
-    if (msg.author.bot || !msg.guild || !msg.channel || !msg.guild.me.permissionsIn(msg.channel).has('SEND_MESSAGES'))
+    if (msg.author.bot || !msg.guild.me.permissionsIn(msg.channel).has('SEND_MESSAGES'))
         return;
     const prefixes = [
         await lappy.db.get('guild_prefix', msg.guild.id, '?'),
@@ -16,6 +16,8 @@ async function run(lappy, msg) {
         'lappy'
     ], prefix = await prefixes.find((prefix) => msg.content.toLowerCase().startsWith(prefix)) || '';
     let { channel: ch, guild: gd, author, member: memb } = msg, args = new Arguments_1.Arguments(msg, prefix);
+    if (prefixes.slice(1).includes(msg.content.trim()))
+        return msg.reply('my prefix here is `'.concat(prefixes[0].concat('`')));
     if (!prefix)
         return;
     let cmd = args.shift();

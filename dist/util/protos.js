@@ -2,15 +2,21 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
 const random_1 = require("./random");
-String.prototype.toTitleCase = function (sep = ' ') {
-    return this
-        .split(sep)
-        .map((word) => word.toLowerCase().replace(word[0].toLowerCase(), word[0].toUpperCase()))
-        .join(sep);
+String.prototype.toTitleCase = function () {
+    return this.replace(/\w+/gim, (word) => word.toLowerCase().replace(word[0].toLowerCase(), word[0].toUpperCase()));
 };
 String.prototype.toCodeBlock = function (lang = '') {
     return `\`\`\`${lang}\n${discord_js_1.Util.escapeCodeBlock(this)}\n\`\`\``;
 };
+const faces = [
+    'uwu',
+    'owo',
+    '>w<',
+    '^w^',
+    'uvu',
+    'ovo',
+    '>v<'
+];
 String.prototype.OwOIfy = function () {
     return this
         .replace(/([Ll])ove/g, '$1uv')
@@ -33,9 +39,14 @@ String.prototype.OwOIfy = function () {
         .replace(/([Dd]ick|[Pp]enis)/g, 'peepee')
         .replace(/(DICK|PENIS)/g, 'PEEPEE')
         .replace(/[Tt]h(?![Ee])/g, 'f')
-        .replace(/TH(?![Ee])/g, 'F');
+        .replace(/TH(?![Ee])/g, 'F')
+        .replace(/[.,](?![0-9])/g, ' ' + faces.random())
+        .replace(/[!;]+/g, ' ' + faces.random());
 };
 Array.prototype.random = function () {
     return this[(0, random_1.random)(this.length - 1)];
+};
+Array.prototype.addAt = function (position, ...items) {
+    return this.splice(position, 0, ...items);
 };
 //# sourceMappingURL=protos.js.map

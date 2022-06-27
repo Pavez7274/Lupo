@@ -5,6 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.run = exports.fields = exports.type = exports.desc = exports.dev = exports.names = void 0;
 const discord_js_1 = require("discord.js");
+const child_process_1 = require("child_process");
 const typescript_1 = require("typescript");
 const coffeescript_1 = require("coffeescript");
 const inspect_1 = __importDefault(require("../../util/inspect"));
@@ -13,10 +14,11 @@ exports.names = [
     'coffee',
     'eval',
     'js',
-    'ts'
+    'ts',
+    'bash'
 ];
 exports.dev = 1;
-exports.desc = 'evaluate javascript, typescript or coffeescript code via `eval()`, `TS.transpile()` or `Coffee.compile`';
+exports.desc = 'evaluate javascript, typescript or coffeescript code via `eval()`, `typescript.transpile()`, `coffee.compile()` or `child_process execSync()`';
 exports.type = 'default';
 exports.fields = [{
         name: 'code',
@@ -24,27 +26,38 @@ exports.fields = [{
         req: true
     }];
 async function run(d) {
-    let start = Date.now(), asynchorus = 0, compiled = 0, evaled = '', depth = 0, code;
+    let start = Date.now(), asynchorus = 0, compiled = [false, 'JavaScript'], evaled = '', depth = 0, code;
     d.args.get(0)?.toLowerCase() === 'async' &&
         (asynchorus = 1) &&
         d.args.args.shift();
     try {
-        if (d.args.ends.some((k) => /--(javascript|js)(=(1|yes|true)|)/gi.test(k)) || d.cmd.toLowerCase() === 'js') {
+        if (d.args.endIsTrue('(javascript|js)') || d.cmd === 'js') {
             code = d.args.string();
         }
-        else if (d.args.ends.some((k) => /--(coffee|cs)(=(1|yes|true)|)/gi.test(k)) || d.cmd.toLowerCase() === 'coffee') {
+        else if (d.args.endIsTrue('(coffee|cs)') || d.cmd === 'coffee') {
+            code = (0, child_process_1.execSync)(d.args.string()).toString();
+            compiled = [true, 'CoffeeScript'];
+        }
+        else if (d.args.endIsTrue('(bash|exec)') || ['bash', 'exec'].includes(d.cmd)) {
             code = (0, coffeescript_1.compile)(d.args.string());
-            compiled = 2;
+            compiled = [false, 'Bash'];
         }
         else {
             code = (0, typescript_1.transpile)(d.args.string());
-            compiled = 1;
+            compiled = [true, 'TypeScript'];
         }
         ;
         evaled = await eval(asynchorus ? `(async (d) => {${code}} )(d)` : code);
     }
     catch (_err) {
-        let button_0 = new discord_js_1.MessageButton().setLabel('View Stack').setStyle('DANGER').setCustomId(discord_js_1.SnowflakeUtil.generate()), button_1 = new discord_js_1.MessageButton().setLabel('View Transpiled').setStyle('DANGER').setCustomId(discord_js_1.SnowflakeUtil.generate()).setDisabled(!compiled), row_0 = new discord_js_1.MessageActionRow().setComponents(button_0, button_1), msg_0 = await d.lappy.sendError(d, d.msg, _err.name, _err.message, void 0, [row_0.toJSON()]);
+        let button_0 = new discord_js_1.MessageButton()
+            .setLabel('View Stack')
+            .setStyle('DANGER')
+            .setCustomId(discord_js_1.SnowflakeUtil.generate()), button_1 = new discord_js_1.MessageButton()
+            .setLabel('View Transpiled/Compiled')
+            .setStyle('DANGER')
+            .setCustomId(discord_js_1.SnowflakeUtil.generate())
+            .setDisabled(!compiled[0]), row_0 = new discord_js_1.MessageActionRow().setComponents(button_0, button_1), msg_0 = await d.lappy.sendError(d, d.msg, _err.name, _err.message, void 0, [row_0.toJSON()]);
         await msg_0.createMessageComponentCollector({
             filter: (i) => [button_0.customId, button_1.customId].includes(i.customId),
             componentType: 2,
@@ -79,15 +92,14 @@ async function run(d) {
         result = `${result}`.toCodeBlock('js');
     }
     ;
-    if (d.args.ends.some((k) => /--embed=(0|no|false)/gi.test(k))) {
+    if (d.args.endIsFalse('embed')) {
         return d.msg.reply(result ?? 'unknown');
     }
     else {
-        const embeds = d.lappy.makeEmbeds(d, { title: `${d.lappy.emotes.tofu} | Eval` });
+        const embeds = d.lappy.makeEmbeds(d, { title: `${d.lappy.emotes.tofu} | Eval -> ${compiled[1]}` });
         embeds[0]
             .addField(':incoming_envelope: | Input', code.toCodeBlock('js'))
             .addField(':page_facing_up: | Output', result ?? 'unknown')
-            .addField(':scroll: | Language', ((compiled == 2 && 'coffeescript') || (compiled == 1 && 'typescript') || 'javascript').toCodeBlock())
             .addField(':card_box: | Type', typeof_1.toCodeBlock('js'))
             .addField(':stopwatch: | Execution time', (Date.now() - start + 'Ms').toCodeBlock('js'));
         return await d.msg.reply({ embeds });

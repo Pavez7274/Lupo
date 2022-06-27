@@ -1,7 +1,7 @@
 # Coffee
-> Eval, Js, Ts
+> Eval, Js, Ts, Bash
 
-Evaluate Javascript, Typescript Or Coffeescript Code Via `eval()`, `ts.transpile()` Or `coffee.compile`
+Evaluate Javascript, Typescript Or Coffeescript Code Via `Eval()`, `Typescript.Transpile()`, `Coffee.Compile()` Or `Child_process Execsync()`
 
 ## Fields
 

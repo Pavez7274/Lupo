@@ -12,5 +12,7 @@ export declare class Arguments extends String {
     shift(): string | undefined;
     pop(): string | undefined;
     endIsTrue(name: string): boolean;
+    endIsFalse(name: string): boolean;
+    getEndValue(name: string): any;
 }
 //# sourceMappingURL=Arguments.d.ts.map

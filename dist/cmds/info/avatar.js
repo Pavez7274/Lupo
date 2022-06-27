@@ -21,11 +21,11 @@ exports.default = {
             user = d.author;
         if (!user)
             return d.lappy.sendError(d, d.msg, 'not found', `No Matches Were Found With ['${d.args.string().slice(0, 10)}']`);
-        let avatar = user.displayAvatarURL({ size: 4096, dynamic: true }), embeds = d.lappy.makeEmbeds(d, {
+        let url = user.displayAvatarURL({ size: 4096, dynamic: true }), embeds = d.lappy.makeEmbeds(d, {
             title: user.tag,
-            url: avatar,
+            url,
             image: {
-                url: avatar
+                url
             }
         });
         return d.msg.reply({ embeds });

@@ -1,5 +1,5 @@
-export declare function isSnowflake(snowflakeResolver: String | string | number): boolean;
-export declare function resolveSnowflake(resolver: string): string | boolean;
+export declare function isSnowflake(resolvable: string | number): boolean;
+export declare function resolveSnowflake(resolvable: string): string | boolean;
 declare const _default: {
     isSnowflake: typeof isSnowflake;
     resolveSnowflake: typeof resolveSnowflake;

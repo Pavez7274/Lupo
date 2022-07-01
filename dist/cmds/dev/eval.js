@@ -35,11 +35,11 @@ async function run(d) {
             code = d.args.string();
         }
         else if (d.args.endIsTrue('(coffee|cs)') || d.cmd === 'coffee') {
-            code = (0, child_process_1.execSync)(d.args.string()).toString();
+            code = (0, coffeescript_1.compile)(d.args.string());
             compiled = [true, 'CoffeeScript'];
         }
         else if (d.args.endIsTrue('(bash|exec)') || ['bash', 'exec'].includes(d.cmd)) {
-            code = (0, coffeescript_1.compile)(d.args.string());
+            code = (0, child_process_1.execSync)(d.args.string()).toString();
             compiled = [false, 'Bash'];
         }
         else {

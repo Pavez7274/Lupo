@@ -21,10 +21,10 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
-		"typescript bot",
-		"discord bot",
-		"bot"
-	],
+    "typescript bot",
+    "discord bot",
+    "bot"
+  ],
   "author": "Naoki Solutions",
   "license": "KSPL",
   "description": ""

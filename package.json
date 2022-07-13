@@ -7,6 +7,7 @@
     "distube": "^3.3.4",
     "express": "^4.18.1",
     "glob": "^8.0.3",
+    "math-expression-evaluator": "^1.4.0",
     "npm": "^8.13.2",
     "uglify-js": "^3.16.2"
   },
@@ -16,10 +17,11 @@
   "devDependencies": {
     "@types/node": "^17.0.41",
     "coffeescript": "^2.7.0",
-    "typescript": "^4.7.3"
+    "typescript": "^4.7.3", 
+		"compiler": "github:AkaruiDevelopment/compiler" 
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "compile": "tsc && node uglifier"
   },
   "keywords": [
     "typescript bot",

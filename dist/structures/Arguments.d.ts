@@ -11,8 +11,8 @@ export declare class Arguments extends String {
     string(all?: boolean | number, sep?: string): string;
     shift(): string | undefined;
     pop(): string | undefined;
-    endIsTrue(name: string): boolean;
-    endIsFalse(name: string): boolean;
+    endIsTrue(name: string, def?: boolean): boolean;
+    endIsFalse(name: string, def?: boolean): boolean;
     getEndValue(name: string): any;
 }
 //# sourceMappingURL=Arguments.d.ts.map

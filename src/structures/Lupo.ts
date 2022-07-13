@@ -86,7 +86,7 @@ export class Lupo extends Client {
 				cmd.type = 'default';
 			};
 			if ('fields' in cmd) {
-				cmd.parsedFields = cmd.fields.map((field: any) => field.req ? `<${field.name}>` : `[${field.name}]`);
+				cmd.parsedFields = cmd.fields.map((field: any) => field.req ? `<${field.name}>` : `[${field.name}]`).join(' ');
 			};
 			if (!this.cmds[cmd.type]) {
 				this.cmds[cmd.type] = new Collection();
@@ -110,9 +110,9 @@ export class Lupo extends Client {
 					delete require.cache[mod];
 				};
 				let ev = require(mod);
-				// if ('default' in event) {
-				// 	event = event.default
-				// };
+				if ('default' in ev) {
+					ev = ev.default;
+				};
 				if (ev.type === 'dsc') {
 					this?.[ev.once ? 'once' : 'on'](ev.name, (...args: any) => ev.run(this, ...args));
 				} else {
@@ -131,7 +131,10 @@ export class Lupo extends Client {
 		this
 			.events()
 			.commands()
-			.on('debug', console.log)
+			.on('debug', (msg: string) => {
+				if (msg.includes('Hit a 429'))
+					console.log('%c Please run in the shell "kill 1"', 'color: #C00');
+			})
 			.login();
 		return this;
 	};
@@ -150,6 +153,7 @@ export class Lupo extends Client {
   };
 	
 	public sendError (data: any, instance: any, type: string | undefined, msg: string | undefined, target: User = data.author, components: Array<MessageActionRow | void> = [], content: string = ' '): Message {
+		data.target = target;
     const embeds = this.makeEmbeds(data, {
       title: `${this.emotes.error} | [Error] ${ type ? ` -> ${type}` : '' }`,
       description: msg?.toCodeBlock() || '```js\nFailed To Display Error```',

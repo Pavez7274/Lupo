@@ -1,21 +1,15 @@
 // imports
-import { Message, Guild, TextChannel, GuildMember, PermissionResolvable } from 'discord.js';
+import { PermissionResolvable } from 'discord.js';
 import { Arguments } from '../structures/Arguments';
 import { Lupo } from '../structures/Lupo';
-interface gd extends Guild {
-	me: GuildMember;
-};
-interface Msg extends Message {
-	channel: TextChannel;
-	guild: gd;
-	member: GuildMember;
-};
+import { Msg } from '../../types/data';
 
 // exports
 export const name = 'messageCreate';
 export const type = 'dsc';
 export async function run (lappy: Lupo, msg: Msg): Promise<any | void> {
 	if (msg.author.bot || !msg.guild.me.permissionsIn(msg.channel).has('SEND_MESSAGES')) return;
+	await msg.guild.members.fetch()?.catch(() => {});
 	const prefixes = [
 		// custom prefix
 		await lappy.db.get('guild_prefix', msg.guild.id, '?'),
@@ -66,5 +60,5 @@ export async function run (lappy: Lupo, msg: Msg): Promise<any | void> {
 		console.log(error);
 		// @ts-ignore
 		return lappy.sendError({ author }, msg, error.name, error.stack);
-	}
+	};
 };

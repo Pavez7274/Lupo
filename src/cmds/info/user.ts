@@ -1,5 +1,5 @@
 // imports 
-import { User, GuildMember } from 'discord.js';
+import { GuildMember } from 'discord.js';
 import { findUser } from '../../util/findUser';
 
 // exports

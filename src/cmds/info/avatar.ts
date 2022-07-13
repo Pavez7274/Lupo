@@ -1,5 +1,6 @@
 // imports
 import { findUser } from '../../util/findUser';
+import { Data } from '../../../types/data';
 
 export default {
 	names: [
@@ -12,15 +13,15 @@ export default {
 		type: 'userResolvable', 
 		req: false
 	}], 
-	run: async (d: any): Promise<any> => {
-		await d.gd.members.fetch();
-		let user: any;
+	run: async (d: Data): Promise<any> => {
+		let user: any, memb: any;
 		if (d.args.len)
 			user = await findUser(d.lappy, d.args.string());
 		else user = d.author;
 		if (!user)
 			return d.lappy.sendError(d, d.msg, 'not found', `No Matches Were Found With ['${d.args.string().slice(0, 10)}']`);
-		let url = user.displayAvatarURL({ size: 4096, dynamic: true }),
+		memb = d.gd.members.cache.get(user.id);
+		let url = ((d.args.endIsFalse('global', true) && memb) || user).displayAvatarURL({ size: 4096, dynamic: true }),
 			embeds = d.lappy.makeEmbeds(d, {
 				title: user.tag,
 				url, 

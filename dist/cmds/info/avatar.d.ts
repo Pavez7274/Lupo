@@ -1,3 +1,4 @@
+import { Data } from '../../../types/data';
 declare const _default: {
     names: string[];
     type: string;
@@ -6,7 +7,7 @@ declare const _default: {
         type: string;
         req: boolean;
     }[];
-    run: (d: any) => Promise<any>;
+    run: (d: Data) => Promise<any>;
 };
 export default _default;
 //# sourceMappingURL=avatar.d.ts.map

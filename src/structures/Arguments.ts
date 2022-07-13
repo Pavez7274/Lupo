@@ -46,11 +46,16 @@ export class Arguments extends String {
 		this.all_args.splice(index, 1);
 		return poped;
   };
-	endIsTrue (name: string): boolean {
-		return this.ends.some((end: string) => (new RegExp(`${name}(=(true|yes|1)|)`, 'gi')).test(end));
+	endIsTrue (name: string, def: boolean = false): boolean {
+		let end = this.ends.find((end) => end.toLowerCase().startsWith('--' + name.toLowerCase()));
+		if (!end) return def;
+		return (new RegExp(`--${name}(=(true|yes|1)|)`, 'gi')).test(end);
+		// return this.ends.some((end: string) => (new RegExp(`--${name}(=(true|yes|1)|)`, 'gi')).test(end));
 	};
-	endIsFalse (name: string): boolean {
-		return this.ends.some((end: string) => (new RegExp(`${name}=(false|no|0)`, 'gi')).test(end));
+	endIsFalse (name: string, def: boolean = false): boolean {
+		let end = this.ends.find((end) => end.toLowerCase().startsWith('--' + name.toLowerCase()));
+		if (!end) return def;
+		return (new RegExp(`--${name}=(false|no|0)`, 'gi')).test(end);
 	};
 	getEndValue (name: string): any {
 		let end = this.ends.find((End: string) => (new RegExp(name, 'gi')).test(End));

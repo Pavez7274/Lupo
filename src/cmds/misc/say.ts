@@ -9,7 +9,7 @@ export default {
 		req: true
 	}],
 	bot_perms: [
-		1 << 13
+		'MANAGE_MESSAGES'
 	], 
 	run: async (d: any) => {
 		let msg: any,

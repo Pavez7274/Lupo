@@ -23,11 +23,18 @@ export default {
 			return d.lappy.sendError(d, d.msg, undefined, 'Invalid mathematical calculation: ' + error?.message);
 		};
 		let embeds = d.lappy.makeEmbeds(d, {
-			title: `${d.lappy.emotes.tofu} | Math`
+			title: `${d.lappy.emotes.tofu} | Math`, 
+			fields: [{
+				name: '📬 | Input', 
+				value: d.args.string().toCodeBlock()
+			}, {
+				name: '📭 | Output', 
+				value: String(answer).toCodeBlock('js')
+			}]
 		});
-		embeds[0]
+		/*embeds[0]
 			.addField(':mailbox_with_mail: | Input', d.args.string().toCodeBlock())
-			.addField(':mailbox_with_no_mail: | Output', String(answer).toCodeBlock('js'));
+			.addField(':mailbox_with_no_mail: | Output', String(answer).toCodeBlock('js'));*/
 		return d.msg.reply({ embeds });
 	}
 };

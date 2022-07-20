@@ -20,10 +20,10 @@ export default {
 		else user = d.author;
 		if (!user)
 			return d.lappy.sendError(d, d.msg, 'not found', `No Matches Were Found With ['${d.args.string().slice(0, 10)}']`);
-		memb = d.gd.members.cache.get(user.id);
+		memb = await d.gd.members.fetch(user.id).catch(() => {});
 		let url = ((d.args.endIsFalse('global', true) && memb) || user).displayAvatarURL({ size: 4096, dynamic: true }),
 			embeds = d.lappy.makeEmbeds(d, {
-				title: user.tag,
+				title: `${d.lappy.emotes.tofu} | ${user.tag}`,
 				url, 
 				image: {
 					url

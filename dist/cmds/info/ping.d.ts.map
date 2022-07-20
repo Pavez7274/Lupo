@@ -1,1 +1,1 @@
-{"version":3,"file":"ping.d.ts","sourceRoot":"","sources":["../../../src/cmds/info/ping.ts"],"names":[],"mappings":"AAAA,eAAO,MAAM,KAAK,UAEjB,CAAC;AACF,eAAO,MAAM,IAAI,YAAY,CAAC;AAC9B,wBAAgB,GAAG,CAAE,CAAC,EAAE,GAAG,GAAG,IAAI,CAEjC"}
+{"version":3,"file":"ping.d.ts","sourceRoot":"","sources":["../../../src/cmds/info/ping.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,IAAI,EAAE,MAAM,qBAAqB,CAAC;;;;aAOjC,IAAI,KAAG,IAAI;;AALrB,wBAQE"}

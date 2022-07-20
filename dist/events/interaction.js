@@ -1,0 +1,1 @@
+"use strict";async function run(e,t){2==t.type&&console.log(t.type)}Object.defineProperty(exports,"__esModule",{value:!0}),exports.run=exports.type=exports.name=void 0,exports.name="interactionCreate",exports.type="dsc",exports.run=run;

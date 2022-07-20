@@ -1,0 +1,1 @@
+{"version":3,"file":"interaction.js","sourceRoot":"","sources":["../../src/events/interaction.ts"],"names":[],"mappings":";;;AAIa,QAAA,IAAI,GAAG,mBAAmB,CAAC;AAC3B,QAAA,IAAI,GAAG,KAAK,CAAC;AACnB,KAAK,UAAU,GAAG,CAAE,KAAW,EAAE,GAAgB;IACvD,IAAI,GAAG,CAAC,IAAI,IAAI,CAAC,EAAE;QAClB,OAAO,CAAC,GAAG,CAAC,GAAG,CAAC,IAAI,CAAC,CAAA;KACrB;IAAA,CAAC;AACH,CAAC;AAJD,kBAIC;AAAA,CAAC"}

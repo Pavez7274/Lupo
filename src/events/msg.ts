@@ -1,5 +1,5 @@
 // imports
-import { PermissionResolvable } from 'discord.js';
+import { PermissionFlagsBits } from 'discord.js';
 import { Arguments } from '../structures/Arguments';
 import { Lupo } from '../structures/Lupo';
 import { Msg } from '../../types/data';
@@ -8,7 +8,7 @@ import { Msg } from '../../types/data';
 export const name = 'messageCreate';
 export const type = 'dsc';
 export async function run (lappy: Lupo, msg: Msg): Promise<any | void> {
-	if (msg.author.bot || !msg.guild.me.permissionsIn(msg.channel).has('SEND_MESSAGES')) return;
+	if (msg.author.bot || !msg.channel.permissionsFor(await msg.guild.members.fetchMe()).has(PermissionFlagsBits.SendMessages) || (await msg.guild.members.fetchMe()).isCommunicationDisabled()) return;
 	await msg.guild.members.fetch()?.catch(() => {});
 	const prefixes = [
 		// custom prefix
@@ -28,6 +28,7 @@ export async function run (lappy: Lupo, msg: Msg): Promise<any | void> {
 		member: memb
 	} = msg,
 		args = new Arguments(msg, prefix);
+	author = await author.fetch() ?? author;
 	
 	// prefix commands
 	if (prefixes.slice(1).includes(msg.content.trim()))
@@ -40,12 +41,12 @@ export async function run (lappy: Lupo, msg: Msg): Promise<any | void> {
     return lappy.permsError({ author }, msg, [ 'developer' ]); 
   if ('perms' in command)
 		if (command.perms
-				?.map((perm: PermissionResolvable) => memb.permissionsIn(ch).has(perm))
+				?.map((perm: string) => memb.permissionsIn(ch).has(PermissionFlagsBits[perm]))
 				?.some((perm: boolean) => !perm))
 			return lappy.permsError({ author }, msg, command.perms);
     if ('bot_perms' in command) {
 			if (command.bot_perms
-					?.forEach((perm: PermissionResolvable) => gd?.me?.permissionsIn(ch)?.has(perm))
+					?.forEach((perm: string) => gd?.me?.permissionsIn(ch)?.has(PermissionFlagsBits[perm]))
 					?.some((perm: boolean) => !perm))
 				return lappy.permsError({ author: lappy.user }, msg, command.bot_perms);
     };

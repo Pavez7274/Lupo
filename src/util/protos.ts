@@ -1,6 +1,6 @@
 // genshin reference??
 // imports
-import { Util } from 'discord.js';
+import { escapeCodeBlock } from 'discord.js';
 import { random } from './random';
 
 // strings 
@@ -9,7 +9,7 @@ String.prototype.toTitleCase = function (): string {
 };
 
 String.prototype.toCodeBlock = function (lang: string | String = ''): string {
-	return `\`\`\`${lang}\n${Util.escapeCodeBlock(this as string)}\n\`\`\``
+	return `\`\`\`${lang}\n${escapeCodeBlock(this as string)}\n\`\`\``
 };
 
 const faces = [

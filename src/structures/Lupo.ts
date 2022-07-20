@@ -1,4 +1,4 @@
-import { Client, Collection, User, MessageActionRow, MessageEmbed, Message } from 'discord.js';
+import { Client, Collection, User, ActionRow, EmbedBuilder, Message, GatewayIntentBits, APIEmbed} from 'discord.js';
 import { SoundCloudPlugin } from '@distube/soundcloud';
 import { SpotifyPlugin } from '@distube/spotify';
 import { generateCommandDoc } from '../util/generateCommandDoc';
@@ -6,14 +6,14 @@ import { DB } from './DataBase';
 import { sync } from 'glob';
 import DS from 'distube';
 
-enum emotes {
-	error = '<:lappyAaa:913295794151501864>',
-	feli = '<:lappyfeli:913295978205966338>',
-	tofu = '<:lappytofu:902410429601570866>',
-};
-
 export class Lupo extends Client {
 	[index: string]: any;
+	emotes = {
+		error: '<:lappyAaa:913295794151501864>',
+		feli: '<:lappyfeli:913295978205966338>',
+		tofu: '<:lappytofu:902410429601570866>', 
+		keyboard: '<:bunnykeyboard:998811876974678017>' 
+	};
 	constructor () {
 		super({
 			allowedMentions: {
@@ -22,15 +22,17 @@ export class Lupo extends Client {
 			presence: {
 				status: 'dnd',
 				activities: [{
-					name: '* Naoki Solutions :: New Source',
+					name: '* Naoki Solutions :: Updating to djs v14!!',
 					type: 0
 				}],
 			},
 			intents: [
-				1 << 0, // GUILDS
-				1 << 1, // GUILD_MEMBERS
-				1 << 7, // GUILD_VOICE_STATES
-				1 << 9 // GUILD_MESSAGES
+				GatewayIntentBits.Guilds, 
+				GatewayIntentBits.GuildMembers, 
+				GatewayIntentBits.GuildVoiceStates, 
+				GatewayIntentBits.GuildMessages,
+				GatewayIntentBits.GuildPresences, 
+				GatewayIntentBits.MessageContent
 			]
 		});
 		Object.defineProperties(this, {
@@ -50,8 +52,7 @@ export class Lupo extends Client {
 					leaveOnEmpty: false,
 					leaveOnStop: false,
 					searchSongs: 5,
-					nsfw: true,
-					youtubeDL: false
+					nsfw: true
 				})
 			},
 			cache: {
@@ -59,9 +60,6 @@ export class Lupo extends Client {
 			},
 			cmds: {
 				value: new Object()
-			},
-			emotes: {
-				value: emotes
 			},
 			owners: {
 				value: [
@@ -133,13 +131,13 @@ export class Lupo extends Client {
 			.commands()
 			.on('debug', (msg: string) => {
 				if (msg.includes('Hit a 429'))
-					console.log('%c Please run in the shell "kill 1"', 'color: #C00');
+					console.log('Please run in the shell "kill 1"');
 			})
 			.login();
 		return this;
 	};
 
-	public permsError (data: any, instance: any, perms: Array<string>, target: User = data.author): Message {
+	public permsError (data: any, instance: any, perms: string[], target: User = data.author): Message {
 		if (!data.target && target) {
 			data.target = target;
 		};
@@ -152,7 +150,7 @@ export class Lupo extends Client {
     return instance.send({ embeds });
   };
 	
-	public sendError (data: any, instance: any, type: string | undefined, msg: string | undefined, target: User = data.author, components: Array<MessageActionRow | void> = [], content: string = ' '): Message {
+	public sendError (data: any, instance: any, type: string | undefined, msg: string | undefined, target: User = data.author, components: ActionRow<any>[] | void[] = [], content: string = ' '): Message {
 		data.target = target;
     const embeds = this.makeEmbeds(data, {
       title: `${this.emotes.error} | [Error] ${ type ? ` -> ${type}` : '' }`,
@@ -163,17 +161,17 @@ export class Lupo extends Client {
     return instance.send({ embeds });
   };
 	
-	public makeEmbeds (data: any, ...embeds: Array<object>): Array<MessageEmbed> {
-		const embeds_0 = new Array();
+	public makeEmbeds (data: any, ...embeds: APIEmbed[] | object[]): APIEmbed[] {
+		const Embeds: any = [];
 		embeds.forEach((options: object, index: number) => {
 			if (index > 5) return;
-			const embed = new MessageEmbed(options);
-			if (!embed.thumbnail && data.target) {
+			const embed = new EmbedBuilder(options);
+			if (!embed.data.thumbnail && data.target) {
 				embed.setThumbnail(data.target?.displayAvatarURL());
 			};
-			!embed.color && embed.setColor('BLURPLE');
-			embeds_0.push(embed);
+			!embed.data.color && embed.setColor('Blurple');
+			Embeds.push(embed.toJSON());
 		});
-		return embeds_0;
+		return Embeds;
 	};
 }; 

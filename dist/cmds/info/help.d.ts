@@ -1,3 +1,4 @@
+import { Data } from '../../../types/data';
 declare const _default: {
     names: string[];
     fields: {
@@ -6,7 +7,7 @@ declare const _default: {
         req: boolean;
     }[];
     type: string;
-    run: (d: any) => void;
+    run: (d: Data) => any;
 };
 export default _default;
 //# sourceMappingURL=help.d.ts.map

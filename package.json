@@ -3,8 +3,8 @@
     "@distube/soundcloud": "^1.1.0",
     "@distube/spotify": "^1.2.1",
     "dbdjs.db": "^2.0.2",
-    "discord.js": "^13.8.0",
-    "distube": "^3.3.4",
+    "discord.js": "^14.0.2",
+    "distube": "^4.0.0",
     "express": "^4.18.1",
     "glob": "^8.0.3",
     "math-expression-evaluator": "^1.4.0",
@@ -17,11 +17,11 @@
   "devDependencies": {
     "@types/node": "^17.0.41",
     "coffeescript": "^2.7.0",
-    "typescript": "^4.7.3", 
-		"compiler": "github:AkaruiDevelopment/compiler" 
+    "compiler": "github:AkaruiDevelopment/compiler",
+    "typescript": "^4.7.3"
   },
   "scripts": {
-    "compile": "tsc && node uglifier"
+    "cpl": "tsc && node uglifier"
   },
   "keywords": [
     "typescript bot",

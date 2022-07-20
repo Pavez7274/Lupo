@@ -22,18 +22,18 @@ export default {
 		let url = user.bannerURL({ size: 4096, dynamic: true });
 		if (url) {
 			var embeds = d.lappy.makeEmbeds(d, {
-				title: user.tag,
+				title: `${d.lappy.emotes.tofu} | ${user.tag}`,
 				url, 
 				image: { url }
 			});
 		} else if (user.accentColor) {
 			var embeds = d.lappy.makeEmbeds(d, {
-				title: user.tag,
+				title: `${d.lappy.emotes.tofu} | ${user.tag}`,
 				description: `The user in question does not own an image in his banner, but the accent color he/she uses is **\`${'#' + user.accentColor.toString(16)}\`**`
 			});
 		} else {
 			var embeds = d.lappy.makeEmbeds(d, {
-				title: user.tag, 
+				title: `${d.lappy.emotes.tofu} | ${user.tag}`,
 				description: 'The user in question doesn\'t have a banner or accent color' 
 			});
 		};

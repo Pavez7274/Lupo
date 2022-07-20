@@ -19,7 +19,11 @@ const faces = [
 	'^w^', 
 	'uvu', 
 	'ovo', 
-	'>v<'
+	'>v<', 
+	'7w7', 
+	'7v7',
+	'TwT',
+	'TvT'
 ];
 String.prototype.OwOIfy = function (): string {
 	return this

@@ -1,5 +1,5 @@
 "use strict";Object.defineProperty(exports,"__esModule",{value:!0});const findUser_1=require("../../util/findUser"),nya=["Playing","Streaming","Listening","Watching","Custom","Competing"];exports.default={names:["userinfo","user"],type:"default",fields:[{name:"target",type:"userResolvable",req:!1}],run:async e=>{await e.gd.members.fetch();let t,n;if(!(t=e.args.len?await(0,findUser_1.findUser)(e.lappy,e.args.string()):await e.author.fetch()))return e.lappy.sendError(e,e.msg,"not found",`No Matches Were Found With ['${e.args.string().slice(0,10)}']`);n=await e.gd.members.fetch(t.id).catch(()=>{});let a=`Id :: \`${t.id??"unknown"}\`
-Type :: \`${t.bot?"Bot":t.system?"System":"User"}\`
+Type :: \`${t.system?"System":t.bot?"Bot":"User"}\`
 ${t.accentColor?`Color :: \`#${t.accentColor.toString(16)}\`
 `:""}Creation :: <t:${Math.round(Number(t.createdAt)/1e3)}>
 `+(n?.joinedAt?`Joined :: <t:${Math.round(Number(n.joinedAt)/1e3)}>

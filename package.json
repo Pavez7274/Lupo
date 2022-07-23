@@ -2,6 +2,7 @@
   "dependencies": {
     "@distube/soundcloud": "^1.1.0",
     "@distube/spotify": "^1.2.1",
+    "axios": "^0.27.2",
     "dbdjs.db": "^2.0.2",
     "discord.js": "^14.0.2",
     "distube": "^4.0.0",

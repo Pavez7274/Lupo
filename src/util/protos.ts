@@ -12,7 +12,7 @@ String.prototype.toCodeBlock = function (lang: string | String = ''): string {
 	return `\`\`\`${lang}\n${escapeCodeBlock(this as string)}\n\`\`\``
 };
 
-const faces = [
+export const faces = [
 	'uwu', 
 	'owo', 
 	'>w<', 

@@ -47,7 +47,7 @@ export default {
 			};
 		};
 		*/
-		let msg = `Id :: \`${user.id ?? 'unknown'}\`\nType :: \`${user.bot ? 'Bot' : user.system ? 'System' : 'User'}\`\n${user.accentColor ? `Color :: \`#${user.accentColor.toString(16)}\`\n` : ''}Creation :: <t:${Math.round(Number(user.createdAt)/1000)}>\n${member?.joinedAt ? `Joined :: <t:${Math.round(Number(member.joinedAt)/1000)}>\n` : ''}${member?.nickname ? `Nickname :: \`${member.nickname}\`\n` : ''}`;
+		let msg = `Id :: \`${user.id ?? 'unknown'}\`\nType :: \`${user.system ? 'System' : user.bot ? 'Bot' : 'User'}\`\n${user.accentColor ? `Color :: \`#${user.accentColor.toString(16)}\`\n` : ''}Creation :: <t:${Math.round(Number(user.createdAt)/1000)}>\n${member?.joinedAt ? `Joined :: <t:${Math.round(Number(member.joinedAt)/1000)}>\n` : ''}${member?.nickname ? `Nickname :: \`${member.nickname}\`\n` : ''}`;
 		if (member?.presence?.activities) {
 			msg += member.presence.activities.map(k => {
    			if (k.type === 0) return `Playing: ${k.name}`;

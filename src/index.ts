@@ -25,3 +25,8 @@ app
 app.listen(8080, () => {
 	console.log('* [server] :: Ready')
 });
+
+// ignore this
+setInterval(async () => {
+	(await import('axios') as any).get('https://pavez.glitch.me/')
+}, 2e4)

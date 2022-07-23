@@ -1,11 +1,14 @@
+// imports
 import { Client, Collection, User, ActionRow, EmbedBuilder, Message, GatewayIntentBits, APIEmbed} from 'discord.js';
 import { SoundCloudPlugin } from '@distube/soundcloud';
 import { SpotifyPlugin } from '@distube/spotify';
-import { generateCommandDoc } from '../util/generateCommandDoc';
+import * as util from '../util/index';
 import { DB } from './DataBase';
+import { Neko } from './Neko'; 
 import { sync } from 'glob';
 import DS from 'distube';
 
+// exports
 export class Lupo extends Client {
 	[index: string]: any;
 	emotes = {
@@ -14,6 +17,8 @@ export class Lupo extends Client {
 		tofu: '<:lappytofu:902410429601570866>', 
 		keyboard: '<:bunnykeyboard:998811876974678017>' 
 	};
+	neko = new Neko({ client: this });
+	util = util;
 	constructor () {
 		super({
 			allowedMentions: {
@@ -92,7 +97,7 @@ export class Lupo extends Client {
 			try {
 				this.cmds[cmd.type].set(cmd.names[0] ?? 'unknown', cmd);
 				console.log(`* [handler] :: loaded command '${cmd.names[0] ?? 'unknown'}'`);
-				generateCommandDoc(cmd);
+				this.util.generateCommandDoc(cmd);
 			} catch (error) {
 				console.log(`* [handler] :: failed to load command '${cmd.names[0] ?? 'unknown'}' because ${error}`);
 			}

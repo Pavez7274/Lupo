@@ -1,4 +1,6 @@
 import { Client, User, ActionRow, Message, APIEmbed } from 'discord.js';
+import * as util from '../util/index';
+import { Neko } from './Neko';
 export declare class Lupo extends Client {
     [index: string]: any;
     emotes: {
@@ -7,6 +9,8 @@ export declare class Lupo extends Client {
         tofu: string;
         keyboard: string;
     };
+    neko: Neko;
+    util: typeof util;
     constructor();
     commands(): Lupo;
     events(): Lupo;

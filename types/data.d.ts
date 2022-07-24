@@ -1,12 +1,9 @@
 import { Lupo } from '../src/structures/Lupo';
 import { Arguments } from '../src/structures/Arguments';
-import { Guild, GuildMember, Message, TextChannel, User } from 'discord.js';
-export interface gd extends Guild {
-	me: GuildMember;
-};
+import { Guild, GuildMember, Message, TextChannel, User, UserContextMenuCommandInteraction } from 'discord.js';
 export interface Msg extends Message {
 	channel: TextChannel;
-	guild: gd;
+	guild: Guild;
 	member: GuildMember;
 };
 export interface Data {
@@ -20,4 +17,8 @@ export interface Data {
 	msg: Message;
 	ch: TextChannel;
 	gd: gd
+};
+export interface ContextData {
+	int: UserContextMenuCommandInteraction, 
+	lappy: Lupo
 };

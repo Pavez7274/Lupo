@@ -85,9 +85,7 @@ export class Lupo extends Client {
 			if ('default' in cmd) {
 				cmd = cmd.default;
 			};
-			if (!('type' in cmd)) {
-				cmd.type = 'default';
-			};
+			cmd.type ||= 'default';
 			if ('fields' in cmd) {
 				cmd.parsedFields = cmd.fields.map((field: any) => field.req ? `<${field.name}>` : `[${field.name}]`).join(' ');
 			};

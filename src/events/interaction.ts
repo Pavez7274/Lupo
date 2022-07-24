@@ -6,6 +6,8 @@ export const name = 'interactionCreate';
 export const type = 'dsc';
 export async function run (lappy: Lupo, int: Interaction): Promise<any> {
 	if (int.type == 2) {
-		console.log(int.type)
+		let cmd = await lappy.cmds.default.find((cmd: any) => cmd.names.includes(int.commandName));
+		if (!cmd || !cmd.contextRun) return int.deferReply();
+		return cmd.contextRun({ lappy, int });
 	};
 };

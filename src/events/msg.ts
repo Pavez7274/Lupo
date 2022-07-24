@@ -37,7 +37,7 @@ export async function run (lappy: Lupo, msg: Msg): Promise<any | void> {
 	let cmd = args.shift();
 	const command = lappy.cmds.default.find((CMD: any) => CMD.names.includes(cmd?.toLowerCase()));
   if (!command) return;
-  if ((command.dev && !lappy.owners.includes(author.id)) || (lappy.owners.includes(author.id) && args.ends.includes('--dev-error')))
+  if ((command.dev && !lappy.owners.includes(author.id)) || (lappy.owners.includes(author.id) && args.endIsTrue('--dev-error')))
     return lappy.permsError({ author }, msg, [ 'developer' ]); 
   if ('perms' in command)
 		if (command.perms
@@ -46,7 +46,7 @@ export async function run (lappy: Lupo, msg: Msg): Promise<any | void> {
 			return lappy.permsError({ author }, msg, command.perms);
     if ('bot_perms' in command) {
 			if (command.bot_perms
-					?.forEach((perm: string) => gd?.me?.permissionsIn(ch)?.has(PermissionFlagsBits[perm]))
+					?.map(async (perm: string) => (await gd.members.fetchMe())?.permissionsIn(ch)?.has(PermissionFlagsBits[perm]))
 					?.some((perm: boolean) => !perm))
 				return lappy.permsError({ author: lappy.user }, msg, command.bot_perms);
     };

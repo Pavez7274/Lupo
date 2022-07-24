@@ -7,6 +7,7 @@ declare const _default: {
         req: boolean;
     }[];
     type: string;
+    desc: string;
     run: (d: Data) => Promise<any>;
 };
 export default _default;

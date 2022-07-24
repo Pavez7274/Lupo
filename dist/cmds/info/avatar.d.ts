@@ -1,4 +1,4 @@
-import { Data } from '../../../types/data';
+import { ContextData, Data } from '../../../types/data';
 declare const _default: {
     names: string[];
     type: string;
@@ -8,6 +8,7 @@ declare const _default: {
         req: boolean;
     }[];
     run: (d: Data) => Promise<any>;
+    contextRun: (d: ContextData) => Promise<import("discord.js").InteractionResponse<boolean>>;
 };
 export default _default;
 //# sourceMappingURL=avatar.d.ts.map

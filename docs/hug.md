@@ -1,6 +1,6 @@
 # Hug
 
-This Command Does Not Yet Have A Description
+Hug Someone >W<
 
 ## Fields
 

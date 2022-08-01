@@ -1,1 +1,1 @@
-{"version":3,"file":"kiss.d.ts","sourceRoot":"","sources":["../../../src/cmds/interaction/kiss.ts"],"names":[],"mappings":"AACA,OAAO,EAAE,IAAI,EAAE,MAAM,qBAAqB,CAAC;;;;;;;;;aAa3B,IAAI,KAAG,QAAQ,GAAG,CAAC;;AAVnC,wBAyBE"}
+{"version":3,"file":"kiss.d.ts","sourceRoot":"","sources":["../../../src/cmds/interaction/kiss.ts"],"names":[],"mappings":"AACA,OAAO,EAAE,IAAI,EAAE,MAAM,qBAAqB,CAAC;;;;;;;;;;aAc3B,IAAI,KAAG,QAAQ,GAAG,CAAC;;AAXnC,wBA0BE"}

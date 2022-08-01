@@ -52,6 +52,22 @@ String.prototype.OwOIfy = function (): string {
 		.replace(/[!;]+/g, ' ' + faces.random())
 };
 
+String.prototype.cropAt = function (at: number): string {
+	return (this.length > at ? this.slice(0, at + 3).concat('...') : this) as string;
+};
+
+export const colors = {
+	red: 31, 
+	green: 32,
+	yellow: 33,
+	blue: 34,
+	magenta: 35
+};
+
+String.prototype.color = function (color: string | number): string {
+	return `\x1b[0m\x1b[${Number(color) ? Number(color) : colors[color]}m${this}\x1b[0m`;
+};
+
 // arrays
 Array.prototype.random = function (): any {
 	return this[random(this.length - 1)];

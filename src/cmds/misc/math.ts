@@ -8,12 +8,12 @@ export default {
 		'calc', 
 		'math'
 	],
-	desc: 'a simple calculator', 
 	fields: [{
 		name: 'operation', 
 		type: 'any', 
 		req: true
 	}], 
+	desc: 'a simple calculator',  
 	type: 'default',
 	run: async (d: Data): Promise<any> => {
 		let answer: any;

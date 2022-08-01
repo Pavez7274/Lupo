@@ -7,12 +7,13 @@ export default {
 		'avatar', 
 		'icon'
 	],
-	type: 'default',
 	fields: [{
 		name: 'target', 
 		type: 'userResolvable', 
 		req: false
 	}], 
+	desc: 'see the avatar of some user', 
+	type: 'default',
 	run: async (d: Data): Promise<any> => {
 		let user: User | void, memb: GuildMember | void;
 		if (d.args.len)

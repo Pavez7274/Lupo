@@ -34,7 +34,7 @@ export async function run (lappy: Lupo, msg: Msg): Promise<any | void> {
 	if (prefixes.slice(1).includes(msg.content.trim()))
 		return msg.reply('my prefix here is `'.concat(prefixes[0].concat('`')))
 	if (!prefix) return;
-	let cmd = args.shift();
+	let cmd = args.shift()?.replace(/-/g, '');
 	const command = lappy.cmds.default.find((CMD: any) => CMD.names.includes(cmd?.toLowerCase()));
   if (!command) return;
   if ((command.dev && !lappy.owners.includes(author.id)) || (lappy.owners.includes(author.id) && args.endIsTrue('--dev-error')))

@@ -1,6 +1,6 @@
 # Banner
 
-This Command Does Not Yet Have A Description
+See The Banner Of Some User
 
 ## Fields
 

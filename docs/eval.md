@@ -1,5 +1,5 @@
-# Coffee
-> Eval, Js, Ts, Bash
+# Eval
+> Coffee, Js, Ts, Bash, Exec
 
 Evaluate Javascript, Typescript, Coffeescript Or Bash Code Via `Eval()`, `Typescript.Transpile()`, `Coffee.Compile()` Or `Child_process.Execsync()`
 
@@ -11,5 +11,5 @@ Evaluate Javascript, Typescript, Coffeescript Or Bash Code Via `Eval()`, `Typesc
 
 ## Command Usage
 ```
-?coffee <code>
+?eval <code>
 ```

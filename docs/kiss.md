@@ -1,6 +1,6 @@
 # Kiss
 
-This Command Does Not Yet Have A Description
+Uh, Well, U Know, What Couples Do...
 
 ## Fields
 

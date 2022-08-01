@@ -9,6 +9,7 @@ export default {
 		type: 'string', 
 		req: true
 	}], 
+	desc: 'get help on a specific command', 
 	type: 'default',
 	run: (d: Data): any => {
 		let cmd = d.lappy.cmds.default.find((cmd: any) => cmd.names.includes(d.args.get(0)));

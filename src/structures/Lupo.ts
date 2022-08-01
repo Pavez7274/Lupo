@@ -15,14 +15,16 @@ export class Lupo extends Client {
 		error: '<:lappyAaa:913295794151501864>',
 		feli: '<:lappyfeli:913295978205966338>',
 		tofu: '<:lappytofu:902410429601570866>', 
-		keyboard: '<:bunnykeyboard:998811876974678017>' 
+		keyboard: '<:bunnykeyboard:998811876974678017>', 
+		luv: '<:lappyluv:1001149497012924446>'
 	};
 	neko = new Neko({ client: this });
 	util = util;
 	constructor () {
 		super({
 			allowedMentions: {
-				repliedUser: false
+				repliedUser: false, 
+				parse: [ 'roles' ]
 			},
 			presence: {
 				status: 'dnd',
@@ -76,7 +78,7 @@ export class Lupo extends Client {
 	};
 
 	public commands (): Lupo {
-		console.log('* [handler] :: Running -> Commands');
+		console.log(`* [${'handler'.color('red')}] :: ${'Running'.color('green')} -> ${'Commands'.color('blue')}`);
 		sync(`${process.cwd()}/dist/cmds/**/*.js`).forEach(async (mod: string) => {
 			if (mod && require.cache[mod]) {
 				delete require.cache[mod];
@@ -94,17 +96,17 @@ export class Lupo extends Client {
 			};
 			try {
 				this.cmds[cmd.type].set(cmd.names[0] ?? 'unknown', cmd);
-				console.log(`* [handler] :: loaded command '${cmd.names[0] ?? 'unknown'}'`);
 				this.util.generateCommandDoc(cmd);
+				console.log(`* [${'handler'.color('red')}] :: ${'loaded'.color('green')} command '${(cmd.names[0] ?? 'unknown').color('blue')}'`);
 			} catch (error) {
-				console.log(`* [handler] :: failed to load command '${cmd.names[0] ?? 'unknown'}' because ${error}`);
+				console.log(`* [handler] :: failed to load command '${cmd.names[0] ?? 'unknown'}' because ${error}`.color('red'));
 			}
 		});
 		return this;
 	};
 
 	public events (): Lupo {
-		console.log('* [handler] :: Running -> Events');
+		console.log(`* [${'handler'.color('red')}] :: ${'Running'.color('green')} -> ${'Events'.color('blue')}`);
 		sync(`${process.cwd()}/dist/events/**/*.js`).forEach(async (mod: string): Promise<void> => {
       try {
 				if (mod && require.cache[mod]) {
@@ -119,7 +121,7 @@ export class Lupo extends Client {
 				} else {
 					this?.[ev.type]?.[ev.once ? 'once' : 'on'](ev.name, (...args: any) => ev.run(this, ...args));
 				};
-				console.log(`* [handler] :: loaded event '${ev.name ?? 'unknown'}'`);
+				console.log(`* [${'handler'.color('red')}] :: ${'loaded'.color('green')} event '${(ev.name ?? 'unknown').color('blue')}'`);
 			} catch (_err) {
 				console.log(_err);
 			};
@@ -133,8 +135,8 @@ export class Lupo extends Client {
 			.events()
 			.commands()
 			.on('debug', (msg: string) => {
-				if (msg.includes('Hit a 429'))
-					console.log('Please run in the shell "kill 1"');
+				if (msg.includes('429'))
+					console.log('Please run in the shell "kill 1"'.color('red'));
 			})
 			.login();
 		return this;
@@ -153,7 +155,7 @@ export class Lupo extends Client {
     return instance.send({ embeds });
   };
 	
-	public sendError (data: any, instance: any, type: string | undefined, msg: string | undefined, target: User = data.author, components: ActionRow<any>[] | void[] = [], content: string = ' '): Message {
+	public sendError (data: any, instance: any, type: string | undefined, msg: string | undefined, target: User = data.author, components: ActionRow<any>[] | void[] = [], content: string = ' '): Promise<Message> {
 		data.target = target;
     const embeds = this.makeEmbeds(data, {
       title: `${this.emotes.error} | [Error] ${ type ? ` -> ${type}` : '' }`,

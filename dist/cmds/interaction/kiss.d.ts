@@ -6,6 +6,7 @@ declare const _default: {
         type: string;
         req: boolean;
     }[];
+    desc: string;
     type: string;
     run: (d: Data) => Promise<any>;
 };

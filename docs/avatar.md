@@ -1,7 +1,7 @@
 # Avatar
 > Icon
 
-This Command Does Not Yet Have A Description
+See The Avatar Of Some User
 
 ## Fields
 

@@ -1,6 +1,6 @@
 # Help
 
-This Command Does Not Yet Have A Description
+Get Help On A Specific Command
 
 ## Fields
 

@@ -1,7 +1,7 @@
 # Say
 > Owoify
 
-This Command Does Not Yet Have A Description
+Make Me Say Something!!
 
 ## Fields
 

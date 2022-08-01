@@ -3,17 +3,17 @@ import { ActionRowBuilder, ButtonBuilder, ButtonInteraction, Message, SnowflakeU
 import { Data } from '../../../types/data';
 import { transpile } from 'typescript';
 import { compile } from 'coffeescript';
-import is from '../../util/inspect';
 import { minify } from 'uglify-js'; 
 import { inspect } from 'util';
 
 // exports
 export const names = [
-	'coffee',
 	'eval',
+	'coffee', 
 	'js',
 	'ts', 
-	'bash'
+	'bash', 
+	'exec'
 ];
 export const dev = 1;
 export const desc = 'evaluate javascript, typescript, coffeescript or bash code via `eval()`, `typescript.transpile()`, `coffee.compile()` or `child_process.execSync()`';
@@ -33,8 +33,7 @@ export async function run (d: Data): Promise<Message | void> {
       code: any;
 	// checks whether to do an asynchronous run
   d.args.get(0)?.toLowerCase() === 'async' &&
-		(asynchorus = 1) &&
-		d.args.args.shift();
+		(asynchorus = 1) && d.args.args.shift();
 	try {
 		// checks whether it should be compiled or not
 		if (d.args.endIsTrue('(javascript|js)') || d.cmd === 'js') {
@@ -84,9 +83,12 @@ export async function run (d: Data): Promise<Message | void> {
 			});
 		return;
 	};
+	// i hate myself ~ pavez
+	if (d.args.endIsTrue('(noreturn|nosend|n[rs])'))
+		return void 0;
 	// util information uwu
 	let typeof_0 = typeof evaled,
-		typeof_1 = is(evaled), 
+		typeof_1 = d.lappy.util.getType(evaled), 
 		result = evaled;
 	// This fragment of code will make that if the return (evaled) is not a string convert it into one through the inspect method
 	if (typeof_0 !== 'string') {
@@ -95,21 +97,10 @@ export async function run (d: Data): Promise<Message | void> {
 	if (evaled && typeof_1 === 'date') {
 		const time = Math.floor(Number(evaled)/1000);
 		result = `<t:${time}>\n\`${evaled}\``;
-	} else {
-		// limits the length of the return
-		if (result.length > 1000) {
-			result = result
-				.slice(0, 1000).concat('\n...');
-		};
-		result = `${result}`.toCodeBlock('js');
-	};
-	if (code.length > 1000) {
-		code = code
-			.slice(0, 1000).concat('\n...');
 	};
 	// makes the embed
 	if (d.args.endIsFalse('embed')) {
-		return d.msg.reply(result ?? 'unknown');
+		return d.msg.reply(result.cropAt(2000) ?? 'unknown');
 	} else {
 		const embeds = d.lappy.makeEmbeds(d, {
 			title: `${d.lappy.emotes.tofu} | Eval -> ${compiled[1]}`, 
@@ -118,17 +109,12 @@ export async function run (d: Data): Promise<Message | void> {
 				value: code.toCodeBlock('js')
 			}, {
 				name: '📃 | answer', 
-				value: result ?? '```ts\nunknown```' 
+				value: result.cropAt(1000).toCodeBlock('js') ?? '```ts\nunknown```' 
 			}, {
 				name: '📖 | extra', 
 				value: `**[ Type ]** -> \`${typeof_1}\`\n**[ Time ]** -> \`${Date.now() - start ?? 0}Ms\``
 			}]
 		});
-		/*embeds[0]
-			.addField(':incoming_envelope: | Input', code.toCodeBlock('js'))
-			.addField(':page_facing_up: | Output', result ?? 'unknown')
-			.addField(':card_box: | Type', typeof_1.toCodeBlock('js'))
-			.addField(':stopwatch: | Execution time', (Date.now() - start + 'Ms').toCodeBlock('js'));*/
 		return await d.msg.reply({ embeds });
 	};
 };

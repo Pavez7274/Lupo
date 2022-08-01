@@ -11,6 +11,7 @@ export default {
 	bot_perms: [
 		'MANAGE_MESSAGES'
 	], 
+	desc: 'make me say something!!', 
 	run: async (d: any) => {
 		let msg: any,
 			owoify = d.args.endIsTrue('owoify') || d.cmd === 'owoify';

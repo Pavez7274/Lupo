@@ -6,6 +6,7 @@ declare const _default: {
         req: boolean;
     }[];
     bot_perms: string[];
+    desc: string;
     run: (d: any) => Promise<any>;
 };
 export default _default;

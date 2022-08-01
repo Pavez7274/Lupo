@@ -1,12 +1,12 @@
 import { Data } from '../../../types/data';
 declare const _default: {
     names: string[];
-    desc: string;
     fields: {
         name: string;
         type: string;
         req: boolean;
     }[];
+    desc: string;
     type: string;
     run: (d: Data) => Promise<any>;
 };

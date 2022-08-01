@@ -1,6 +1,6 @@
 # Ping
 
-This Command Does Not Yet Have A Description
+Returns My Latency
 
 ## Command Usage
 ```

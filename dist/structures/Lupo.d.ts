@@ -8,6 +8,7 @@ export declare class Lupo extends Client {
         feli: string;
         tofu: string;
         keyboard: string;
+        luv: string;
     };
     neko: Neko;
     util: typeof util;
@@ -16,7 +17,7 @@ export declare class Lupo extends Client {
     events(): Lupo;
     start(): Lupo;
     permsError(data: any, instance: any, perms: string[], target?: User): Message;
-    sendError(data: any, instance: any, type: string | undefined, msg: string | undefined, target?: User, components?: ActionRow<any>[] | void[], content?: string): Message;
+    sendError(data: any, instance: any, type: string | undefined, msg: string | undefined, target?: User, components?: ActionRow<any>[] | void[], content?: string): Promise<Message>;
     makeEmbeds(data: any, ...embeds: APIEmbed[] | object[]): APIEmbed[];
 }
 //# sourceMappingURL=Lupo.d.ts.map

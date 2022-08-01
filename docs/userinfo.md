@@ -1,7 +1,7 @@
 # Userinfo
 > User
 
-This Command Does Not Yet Have A Description
+View A User'S Public Information
 
 ## Fields
 

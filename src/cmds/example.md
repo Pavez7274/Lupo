@@ -1,7 +1,9 @@
 ## Example 1
 ```ts
+// imports 
 import { Data } from '../../../types/data';
 
+// exports 
 export const names = [
 	'uwu'
 ];
@@ -13,8 +15,10 @@ export function run (d: Data): void {
 
 ## Example 2 `(export default)`
 ```ts
+// imports 
 import { Data } from '../../../types/data';
 
+// exports 
 export default {
 	names: [
 		'uwu'

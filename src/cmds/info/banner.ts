@@ -7,12 +7,13 @@ export default {
 	names: [
 		'banner', 
 	],
-	type: 'default',
 	fields: [{
 		name: 'target', 
 		type: 'userResolvable', 
 		req: false
 	}], 
+	desc: 'see the banner of some user', 
+	type: 'default',
 	run: async (d: Data): Promise<any> => {
 		await d.gd.members.fetch();
 		let user: User | void;

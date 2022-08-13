@@ -3,6 +3,13 @@ export interface NekoOptions {
     client: Lupo;
     baseURL?: string;
 }
+export interface ImageResult {
+    anime_name: string;
+    url: string;
+}
+export interface Result {
+    results: Array<ImageResult>;
+}
 export declare class Neko {
     __opts__: NekoOptions;
     baseURL: string;
@@ -11,6 +18,6 @@ export declare class Neko {
     imgs: string[];
     constructor(options: NekoOptions);
     get(path: string): Promise<object>;
-    img(nya: string): Promise<any>;
+    img(nya: string | number): Promise<any>;
 }
 //# sourceMappingURL=Neko.d.ts.map

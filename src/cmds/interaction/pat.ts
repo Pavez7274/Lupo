@@ -24,9 +24,11 @@ export default {
 		} else {
 			title = `${d.memb.displayName}'s pats ${snowy.displayName} ${d.lappy.emotes.feli}`
 		}
-		let embeds = d.lappy.makeEmbeds(d, {
-			image: await d.lappy.neko.img('pat'), 
-			title
+		let result = await d.lappy.neko.img('pat'),
+		embeds = d.lappy.makeEmbeds(d, {
+			image: { url: result.url }, 
+			title,
+			footer: { text: `anime: ${result.anime_name}` }
 		});
 		return d.msg.reply({ embeds })
 	}

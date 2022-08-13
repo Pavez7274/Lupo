@@ -36,12 +36,21 @@ Object.defineProperty(exports, "__esModule", {
     desc: "uh, well, u know, what couples do...",
     type: "default",
     run: async e => {
-        var t = await e.lappy.util.findMember(e.gd, e.args.string());
-        return t ? t.id === e.lappy?.user?.id ? e.msg.reply("ew no") : t.id === e.author.id ? e.msg.reply("u're narcissistic?!?") : (t = e.lappy.makeEmbeds(e, {
-            image: await e.lappy.neko.img("kiss"),
-            title: `${e.memb.displayName} is kissing ${t.displayName} ${(await Promise.resolve().then(()=>__importStar(require("../../util/protos")))).faces.random()}!!`
-        }), e.msg.reply({
-            embeds: t
-        })) : e.lappy.sendError(e, e.msg, "not found", `No Matches Were Found With ['${e.args.string().slice(0,10)}']`)
+        if (!(r = await e.lappy.util.findMember(e.gd, e.args.string()))) return e.lappy.sendError(e, e.msg, "not found", `No Matches Were Found With ['${e.args.string().slice(0,10)}']`);
+        if (r.id === e.lappy?.user?.id) return e.msg.reply("ew no");
+        if (r.id === e.author.id) return e.msg.reply("u're narcissistic?!?");
+        var t = await e.lappy.neko.img("kiss"),
+            r = e.lappy.makeEmbeds(e, {
+                image: {
+                    url: t.url
+                },
+                title: `${e.memb.displayName} is kissing ${r.displayName} ${(await Promise.resolve().then(()=>__importStar(require("../../util/protos")))).faces.random()}!!`,
+                footer: {
+                    text: "anime: " + t.anime_name
+                }
+            });
+        return e.msg.reply({
+            embeds: r
+        })
     }
 };

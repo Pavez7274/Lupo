@@ -23,10 +23,12 @@ export default {
 			title = `${d.memb.displayName} is hugging him/herself -w-`
 		} else {
 			title = `${d.memb.displayName} is hugging ${snowy.displayName} ${d.lappy.emotes.feli}`
-		}
-		let embeds = d.lappy.makeEmbeds(d, {
-			image: await d.lappy.neko.img('hug'), 
-			title
+		};
+		let result = await d.lappy.neko.img('hug'),
+		embeds = d.lappy.makeEmbeds(d, {
+			image: { url: result.url }, 
+			title,
+			footer: { text: `anime: ${result.anime_name}` }
 		});
 		return d.msg.reply({ embeds })
 	}

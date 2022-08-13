@@ -22,9 +22,11 @@ export default {
 		} else if (snowy.id === d.author.id) {
 			return d.msg.reply('u\'re narcissistic?!?')
 		};
-		let embeds = d.lappy.makeEmbeds(d, {
-			image: await d.lappy.neko.img('kiss'), 
-			title: `${d.memb.displayName} is kissing ${snowy.displayName} ${(await import('../../util/protos')).faces.random()}!!`
+		let result = await d.lappy.neko.img('kiss'),
+		embeds = d.lappy.makeEmbeds(d, {
+			image: { url: result.url }, 
+			title: `${d.memb.displayName} is kissing ${snowy.displayName} ${(await import('../../util/protos')).faces.random()}!!`,
+			footer: { text: `anime: ${result.anime_name}` }
 		});
 		return d.msg.reply({ embeds })
 	}

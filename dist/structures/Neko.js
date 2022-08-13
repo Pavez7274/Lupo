@@ -1,13 +1,13 @@
 "use strict";
-var __createBinding = this && this.__createBinding || (Object.create ? function(e, t, i, a) {
-        void 0 === a && (a = i), Object.defineProperty(e, a, {
+var __createBinding = this && this.__createBinding || (Object.create ? function(e, t, i, s) {
+        void 0 === s && (s = i), Object.defineProperty(e, s, {
             enumerable: !0,
             get: function() {
                 return t[i]
             }
         })
-    } : function(e, t, i, a) {
-        e[a = void 0 === a ? i : a] = t[i]
+    } : function(e, t, i, s) {
+        e[s = void 0 === s ? i : s] = t[i]
     }),
     __setModuleDefault = this && this.__setModuleDefault || (Object.create ? function(e, t) {
         Object.defineProperty(e, "default", {
@@ -33,15 +33,15 @@ class Neko {
     baseURL;
     client;
     axios = axios;
-    imgs = ["smug", "woof", "gasm", "8ball", "goose", "cuddle", "avatar", "slap", "v3", "pat", "gecg", "feed", "fox_girl", "lizard", "neko", "hug", "meow", "kiss", "wallpaper", "tickle", "spank", "waifu", "lewd", "ngif"];
+    imgs = ["baka", "bite", "blush", "bored", "cry", "cuddle", "dance", "facepalm", "feed", "handhold", "happy", "highfive", "hug", "kick", "kiss", "laugh", "pat", "poke", "pout", "punch", "shoot", "shrug", "slap", "sleep", "smile", "smug", "stare", "think", "thumbsup", "tickle", "wave", "wink", "yeet"];
     constructor(e) {
-        this.__opts__ = e, this.baseURL = e.baseURL ?? "http://pavez.glitch.me/neko/", this.client = e.client
+        this.__opts__ = e, this.baseURL = e.baseURL ?? "https://nekos.best/api/v2/", this.client = e.client
     }
     async get(e) {
         return (await this.axios.get(this.baseURL.concat(encodeURIComponent(e))))?.data ?? {}
     }
     async img(e) {
-        return this.get("v2/img/" + e)
+        return (await this.get(this.imgs?.[e] ?? e))?.results[0]
     }
 }
 exports.Neko = Neko;

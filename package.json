@@ -4,10 +4,11 @@
     "@distube/spotify": "^1.3.2",
     "axios": "^0.27.2",
     "dbdjs.db": "^2.0.2",
-    "discord.js": "^14.0.3",
+    "discord.js": "^14.2.0",
     "distube": "^4.0.3",
     "express": "^4.18.1",
     "glob": "^8.0.3",
+    "js-beautify": "^1.14.5",
     "math-expression-evaluator": "^1.4.0",
     "npm": "^8.13.2",
     "os-utils": "^0.0.14",
@@ -22,9 +23,7 @@
     "compiler": "github:AkaruiDevelopment/compiler",
     "typescript": "^4.7.3"
   },
-  "scripts": {
-    "cpl": "tsc && node uglifier"
-  },
+  "scripts": {},
   "keywords": [
     "typescript bot",
     "discord bot",

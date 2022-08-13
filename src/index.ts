@@ -28,5 +28,5 @@ app.listen(8080, () => {
 
 // ignore this
 setInterval(async () => {
-	(await import('axios') as any).get('https://pavez.glitch.me/')
+	(await import('axios') as any).get('https://pavez.glitch.me/');
 }, 2e4)

@@ -4,4 +4,5 @@ replit.nix
 .replit
 .config
 .build
+src/
 db

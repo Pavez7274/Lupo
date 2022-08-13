@@ -6,9 +6,9 @@ Get Help On A Specific Command
 
 | Name | Type | Required |
 |------|------|----------|
-| Command | String | Yes |
+| Command | String | No |
 
 ## Command Usage
 ```
-?help <command>
+?help [command]
 ```

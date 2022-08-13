@@ -29,7 +29,7 @@ export class Lupo extends Client {
 			presence: {
 				status: 'dnd',
 				activities: [{
-					name: '* Naoki Solutions :: Updating to djs v14!!',
+					name: '* No Dev Studios Jaja :: version ' + require(process.cwd() + '/package.json').version,
 					type: 0
 				}],
 			},

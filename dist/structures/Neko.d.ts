@@ -18,6 +18,6 @@ export declare class Neko {
     imgs: string[];
     constructor(options: NekoOptions);
     get(path: string): Promise<object>;
-    img(nya: string | number): Promise<any>;
+    img(nya: string | number): Promise<ImageResult>;
 }
 //# sourceMappingURL=Neko.d.ts.map

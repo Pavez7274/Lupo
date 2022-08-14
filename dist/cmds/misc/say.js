@@ -8,7 +8,7 @@ Object.defineProperty(exports, "__esModule", {
         type: "string",
         req: !0
     }],
-    bot_perms: ["MANAGE_MESSAGES"],
+    bot_perms: ["ManageMessages"],
     desc: "make me say something!!",
     run: async s => {
         let e, t = s.args.endIsTrue("owoify") || "owoify" === s.cmd;

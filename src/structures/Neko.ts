@@ -42,7 +42,7 @@ export class Neko {
 	async get (path: string): Promise<object> {
 		return (await this.axios.get(this.baseURL.concat(encodeURIComponent(path))))?.data ?? {};
 	};
-	async img (nya: string | number): Promise<any> {
+	async img (nya: string | number): Promise<ImageResult> {
 		return (await this.get(this.imgs?.[nya] ?? nya) as Result)?.results[0];
 	};
 };

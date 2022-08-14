@@ -9,7 +9,7 @@ export default {
 		req: true
 	}],
 	bot_perms: [
-		'MANAGE_MESSAGES'
+		'ManageMessages'
 	], 
 	desc: 'make me say something!!', 
 	run: async (d: any) => {

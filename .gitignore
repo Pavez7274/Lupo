@@ -4,5 +4,6 @@ replit.nix
 .replit
 .config
 .build
-src/
+store
+src
 db

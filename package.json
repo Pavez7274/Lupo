@@ -12,6 +12,7 @@
     "math-expression-evaluator": "^1.4.0",
     "npm": "^8.13.2",
     "os-utils": "^0.0.14",
+    "spotify-finder": "^2.1.1",
     "uglify-js": "^3.16.2"
   },
   "name": "Lappland",

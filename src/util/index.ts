@@ -5,3 +5,4 @@ export * from './isBoolean';
 export * from './findUser';
 export * from './inspect';
 export * from './random';
+export * from './reboot';

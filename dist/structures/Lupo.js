@@ -1,13 +1,13 @@
 "use strict";
-var __createBinding = this && this.__createBinding || (Object.create ? function(e, t, o, r) {
-        void 0 === r && (r = o), Object.defineProperty(e, r, {
+var __createBinding = this && this.__createBinding || (Object.create ? function(e, t, o, s) {
+        void 0 === s && (s = o), Object.defineProperty(e, s, {
             enumerable: !0,
             get: function() {
                 return t[o]
             }
         })
-    } : function(e, t, o, r) {
-        e[r = void 0 === r ? o : r] = t[o]
+    } : function(e, t, o, s) {
+        e[s = void 0 === s ? o : s] = t[o]
     }),
     __setModuleDefault = this && this.__setModuleDefault || (Object.create ? function(e, t) {
         Object.defineProperty(e, "default", {
@@ -36,6 +36,7 @@ const discord_js_1 = require("discord.js"),
     soundcloud_1 = require("@distube/soundcloud"),
     spotify_1 = require("@distube/spotify"),
     util = __importStar(require("../util/index")),
+    spotify_finder_1 = __importDefault(require("spotify-finder")),
     DataBase_1 = require("./DataBase"),
     Neko_1 = require("./Neko"),
     glob_1 = require("glob"),
@@ -46,8 +47,15 @@ class Lupo extends discord_js_1.Client {
         feli: "<:lappyfeli:913295978205966338>",
         tofu: "<:lappytofu:902410429601570866>",
         keyboard: "<:bunnykeyboard:998811876974678017>",
-        luv: "<:lappyluv:1001149497012924446>"
+        luv: "<:lappyluv:1001149497012924446>",
+        spotify: "<:spotify:1008605434942337114>"
     };
+    spotify = new spotify_finder_1.default({
+        consumer: {
+            secret: process.env.spotify_secret,
+            key: process.env.spotify_key
+        }
+    });
     neko = new Neko_1.Neko({
         client: this
     });
@@ -126,39 +134,39 @@ class Lupo extends discord_js_1.Client {
             e.includes("429") && console.log('Please run in the shell "kill 1"'.color("red"))
         }).login(), this
     }
-    permsError(e, t, o, r = e.author) {
-        return !e.target && r && (e.target = r), r = this.makeEmbeds(e, {
+    permsError(e, t, o, s = e.author) {
+        return !e.target && s && (e.target = s), s = this.makeEmbeds(e, {
             title: this.emotes.error + " | [Error] -> Missing Permissions",
-            description: `Member/User: ${r?.toString()||"unknown"}
+            description: `Member/User: ${s?.toString()||"unknown"}
 Permissions:
 ${o.join(", ").toCodeBlock()}
 `
         }), t.reply ? t.reply({
-            embeds: r
-        }) : t.send({
-            embeds: r
-        })
-    }
-    sendError(e, t, o, r, s = e.author, n = [], i = " ") {
-        return e.target = s, s = this.makeEmbeds(e, {
-            title: this.emotes.error + " | [Error] " + (o ? " -> " + o : ""),
-            description: r?.toCodeBlock() || "```js\nFailed To Display Error```"
-        }), t.reply ? t.reply({
-            embeds: s,
-            components: n,
-            content: i
+            embeds: s
         }) : t.send({
             embeds: s
         })
     }
-    makeEmbeds(r, ...e) {
-        const s = [];
+    sendError(e, t, o, s, r = e.author, n = [], i = " ") {
+        return e.target = r, r = this.makeEmbeds(e, {
+            title: this.emotes.error + " | [Error] " + (o ? " -> " + o.toTitleCase() : ""),
+            description: s?.toTitleCase()?.toCodeBlock() || "```js\nFailed To Display Error```"
+        }), t.reply ? t.reply({
+            embeds: r,
+            components: n,
+            content: i
+        }) : t.send({
+            embeds: r
+        })
+    }
+    makeEmbeds(s, ...e) {
+        const r = [];
         return e.forEach((e, t) => {
             if (!(5 < t)) {
                 const o = new discord_js_1.EmbedBuilder(e);
-                !o.data.thumbnail && r.target && o.setThumbnail(r.target?.displayAvatarURL()), o.data.color || o.setColor("Blurple"), s.push(o.toJSON())
+                !o.data.thumbnail && s.target && o.setThumbnail(s.target?.displayAvatarURL()), o.data.color || o.setColor("Blurple"), r.push(o.toJSON())
             }
-        }), s
+        }), r
     }
 }
 exports.Lupo = Lupo;

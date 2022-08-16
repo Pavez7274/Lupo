@@ -3,6 +3,7 @@ import { Client, Collection, User, ActionRow, EmbedBuilder, Message, GatewayInte
 import { SoundCloudPlugin } from '@distube/soundcloud';
 import { SpotifyPlugin } from '@distube/spotify';
 import * as util from '../util/index';
+import Spotify from 'spotify-finder';
 import { DB } from './DataBase';
 import { Neko } from './Neko'; 
 import { sync } from 'glob';
@@ -16,8 +17,15 @@ export class Lupo extends Client {
 		feli: '<:lappyfeli:913295978205966338>',
 		tofu: '<:lappytofu:902410429601570866>', 
 		keyboard: '<:bunnykeyboard:998811876974678017>', 
-		luv: '<:lappyluv:1001149497012924446>'
+		luv: '<:lappyluv:1001149497012924446>',
+		spotify: '<:spotify:1008605434942337114>'
 	};
+	spotify = new Spotify({
+		consumer: {
+			secret: process.env.spotify_secret,
+			key: process.env.spotify_key
+		}
+	});
 	neko = new Neko({ client: this });
 	util = util;
 	constructor () {
@@ -158,8 +166,8 @@ export class Lupo extends Client {
 	public sendError (data: any, instance: any, type: string | undefined, msg: string | undefined, target: User = data.author, components: ActionRow<any>[] | void[] = [], content: string = ' '): Promise<Message> {
 		data.target = target;
     const embeds = this.makeEmbeds(data, {
-      title: `${this.emotes.error} | [Error] ${ type ? ` -> ${type}` : '' }`,
-      description: msg?.toCodeBlock() || '```js\nFailed To Display Error```',
+      title: `${this.emotes.error} | [Error] ${ type ? ` -> ${type.toTitleCase()}` : '' }`,
+      description: msg?.toTitleCase()?.toCodeBlock() || '```js\nFailed To Display Error```',
     });
     if (instance.reply)
       return instance.reply({ embeds, components, content });

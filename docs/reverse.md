@@ -1,7 +1,7 @@
 # Reverse
 > Invert
 
-Invert A Text
+Invert a Text
 
 ## Fields
 

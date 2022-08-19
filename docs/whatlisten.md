@@ -1,7 +1,7 @@
 # Whatlisten
-> Whathear
+> Whathear, Wl
 
-This Command Does Not Yet Have A Description
+This Command Does Not Yet Have a Description
 
 ## Fields
 

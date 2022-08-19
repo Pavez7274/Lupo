@@ -1,7 +1,7 @@
 # Calculate
 > Calc, Math
 
-A Simple Calculator
+a Simple Calculator
 
 ## Fields
 

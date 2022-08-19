@@ -53,7 +53,7 @@ async function run(d) {
                 title: d.lappy.emotes.tofu + " | Eval -> " + compiled[1],
                 fields: [{
                     name: "✉️ | code provided",
-                    value: code.toCodeBlock("js")
+                    value: code.cropAt(1e3).toCodeBlock("js")
                 }, {
                     name: "📃 | answer",
                     value: result.cropAt(1e3).toCodeBlock("js") ?? "```ts\nunknown```"

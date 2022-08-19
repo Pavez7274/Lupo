@@ -34,10 +34,14 @@ Object.defineProperty(exports, "__esModule", {
 });
 const Lupo_1 = require("./structures/Lupo"),
     client = (require("./util/protos"), new Lupo_1.Lupo),
-    express_1 = (client.start(), __importDefault(require("express"))),
+    promises_1 = (client.start(), require("fs/promises")),
+    marked_1 = require("marked"),
+    express_1 = __importDefault(require("express")),
     app = (0, express_1.default)();
 app.get("/", (e, t) => {
     t.send("Just /owoify?text=STRING for now")
+}).get("/doc/:cmd", (e, t) => {
+    (0, promises_1.readFile)(process.cwd() + `/docs/${e.params.cmd}.md`, "utf8").then(e => t.send((0, marked_1.marked)(e.toString()))).catch(() => t.send("File Not Found"))
 }).get("/owoify", (e, t) => {
     e.query.text || t.json({
         msg: "hey shitty dev, you forgot to provide a text".OwOIfy()
@@ -47,5 +51,5 @@ app.get("/", (e, t) => {
 }), app.listen(8080, () => {
     console.log("* [server] :: Ready")
 }), setInterval(async () => {
-    (await Promise.resolve().then(() => __importStar(require("axios")))).get("https://pavez.glitch.me/")
+    (await Promise.resolve().then(() => __importStar(require("axios")))).get("https://pavez.ml/")
 }, 2e4);

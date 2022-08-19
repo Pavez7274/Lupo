@@ -10,7 +10,7 @@ function parse(e) {
 Object.defineProperty(exports, "__esModule", {
     value: !0
 }), exports.default = {
-    names: ["whatlisten", "whathear"],
+    names: ["whatlisten", "whathear", "wl"],
     fields: [{
         name: "target",
         type: "userResolvable",
@@ -25,28 +25,28 @@ Object.defineProperty(exports, "__esModule", {
         if (!s || !s?.some(({
                 name: e
             }) => "Spotify" === e)) return e.lappy.sendError(e, e.msg, "No Music", `${t.user.id===e.author.id?"u aren't":"This user isn't"} listening anything or I can't see it`);
-        let r = s?.find(({
+        let a = s?.find(({
                 name: e
             }) => "Spotify" === e),
-            a = (await e.lappy.spotify.search({
-                q: r?.details
-            }))?.tracks.items.find(e => e.name === r?.details && e.artists.some(({
+            r = (await e.lappy.spotify.search({
+                q: a?.details
+            }))?.tracks.items.find(e => e.name === a?.details && e.artists.every(({
                 name: e
-            }) => r?.state?.includes(e)));
-        return a ? (t = e.lappy.makeEmbeds(e, {
+            }) => a?.state?.includes(e)));
+        return r ? (t = e.lappy.makeEmbeds(e, {
             title: `${e.lappy.emotes.spotify} | What does ${t.user.id===e.author.id?"u":t.displayName} listen to?`,
-            description: `**Song** :: [${a.name}](${a.external_urls.spotify})
-**Artists** :: ${a.artists.map(e=>`[${e.name}](${e.external_urls.spotify})`).join(" | ")}
-**${a.album.type.toTitleCase()}** :: [${a.album.name}](${a.album.external_urls.spotify})
-**Duration** :: ${parse(a.duration_ms)}
-**Explicit** :: ${a.explicit?"Yes":"No"}
+            description: `**Song** :: [${r.name}](${r.external_urls.spotify})
+**Artists** :: ${r.artists.map(e=>`[${e.name}](${e.external_urls.spotify})`).join(" | ")}
+**${r.album.type.toTitleCase()}** :: [${r.album.name}](${r.album.external_urls.spotify})
+**Duration** :: ${parse(r.duration_ms)}
+**Explicit** :: ${r.explicit?"Yes":"No"}
 
-[Click here to listen a preview](${a.preview_url})`,
+[Click here to listen a preview](${r.preview_url})`,
             thumbnail: {
-                url: a.album.images[0].url
+                url: r.album.images[0].url
             }
         }), e.msg.reply({
             embeds: t
-        })) : e.lappy.sendError(e, e.msg, "not found", `i couldn't find the song ['${e.args.string().cropAt(20)}']`)
+        })) : e.lappy.sendError(e, e.msg, "not found", `i couldn't find the song ['${a.details??"unknown"}']`)
     }
 };

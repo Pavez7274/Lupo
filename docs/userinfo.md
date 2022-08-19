@@ -1,7 +1,7 @@
 # Userinfo
 > User
 
-View A User'S Public Information
+View a User's Public Information
 
 ## Fields
 

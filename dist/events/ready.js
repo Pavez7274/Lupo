@@ -1,10 +1,10 @@
 "use strict";
 
 function run() {
-    var e = new Date(Date.now()).toLocaleString("en-gb", {
+    const e = new Date(Date.now()).toLocaleString("en-gb", {
         timeZone: "America/Mendoza"
     });
-    console.log("* [client] :: Ready at", e)
+    console.log(`* [${"Lupo".color("red")}] :: ${"Ready at".color("green")} ` + e.color("blue"))
 }
 Object.defineProperty(exports, "__esModule", {
     value: !0

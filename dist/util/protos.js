@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 const discord_js_1 = require("discord.js"),
     random_1 = require("./random");
 String.prototype.toTitleCase = function() {
-    return this.replace(/\w+/gim, e => e.toLowerCase().replace(e[0].toLowerCase(), e[0].toUpperCase()))
+    return this.replace(/\w\S{1,}/gim, e => e.toLowerCase().replace(e[0].toLowerCase(), e[0].toUpperCase()))
 }, String.prototype.toCodeBlock = function(e = "") {
     return `\`\`\`${e}
 ${(0,discord_js_1.escapeCodeBlock)(this)}

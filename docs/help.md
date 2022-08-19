@@ -1,6 +1,6 @@
 # Help
 
-Get Help On A Specific Command
+Get Help On a Specific Command
 
 ## Fields
 

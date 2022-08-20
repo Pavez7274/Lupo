@@ -47,7 +47,7 @@ async function run(d) {
             const time = Math.floor(Number(evaled) / 1e3);
             result = `<t:${time}>
 \`${evaled}\``
-        }
+        } else result = result.cropAt(1e3).toCodeBlock("js");
         if (d.args.endIsFalse("embed")) return d.msg.reply(result.cropAt(2e3) ?? "unknown"); {
             const embeds = d.lappy.makeEmbeds(d, {
                 title: d.lappy.emotes.tofu + " | Eval -> " + compiled[1],
@@ -56,7 +56,7 @@ async function run(d) {
                     value: code.cropAt(1e3).toCodeBlock("js")
                 }, {
                     name: "📃 | answer",
-                    value: result.cropAt(1e3).toCodeBlock("js") ?? "```ts\nunknown```"
+                    value: result ?? "```ts\nunknown```"
                 }, {
                     name: "📖 | extra",
                     value: `**[ Type ]** -> \`${typeof_1}\`

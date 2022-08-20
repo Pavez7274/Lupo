@@ -16,7 +16,7 @@ Object.defineProperty(exports, "__esModule", {
             title: s.lappy.emotes.feli + " | help -> All Commands",
             description: s.lappy.cmds.default.map(({
                 names: e
-            }) => e[0]).join(", ").cropAt(4e3).toCodeBlock()
+            }) => e[0]).sort((e, s) => e.localeCompare(s)).join(", ").cropAt(4e3).toCodeBlock()
         }), s.msg.reply({
             embeds: e
         });

@@ -38,7 +38,7 @@ Object.defineProperty(exports, "__esModule", {
             description: `**Song** :: [${r.name}](${r.external_urls.spotify})
 **Artists** :: ${r.artists.map(e=>`[${e.name}](${e.external_urls.spotify})`).join(" | ")}
 **${r.album.type.toTitleCase()}** :: [${r.album.name}](${r.album.external_urls.spotify})
-**Duration** :: ${parse(r.duration_ms)}
+**Duration** :: ${parse(Date.now()-a?.timestamps?.start)} / ${parse(r.duration_ms)}
 **Explicit** :: ${r.explicit?"Yes":"No"}
 
 [Click here to listen a preview](${r.preview_url})`,
@@ -47,6 +47,6 @@ Object.defineProperty(exports, "__esModule", {
             }
         }), e.msg.reply({
             embeds: t
-        })) : e.lappy.sendError(e, e.msg, "not found", `i couldn't find the song ['${a.details??"unknown"}']`)
+        })) : e.lappy.sendError(e, e.msg, "not found", `I couldn't find the song ['${a.details??"unknown"}']`)
     }
 };

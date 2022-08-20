@@ -18,7 +18,7 @@ export class Lupo extends Client {
 		tofu: '<:lappytofu:902410429601570866>', 
 		keyboard: '<:bunnykeyboard:998811876974678017>', 
 		luv: '<:lappyluv:1001149497012924446>',
-		spotify: '<:spotify:1008605434942337114>'
+		spotify: '<:spotify:1010667806980833312>'
 	};
 	spotify = new Spotify({
 		consumer: {

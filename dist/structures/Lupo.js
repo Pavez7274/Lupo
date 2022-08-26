@@ -123,16 +123,14 @@ class Lupo extends discord_js_1.Client {
             try {
                 e && require.cache[e] && delete require.cache[e];
                 let t = require(e);
-                "dsc" === (t = "default" in t ? t.default : t).type ? this?.[t.once ? "once" : "on"](t.name, (...e) => t.run(this, ...e)) : this?.[t.type]?.[t.once ? "once" : "on"](t.name, (...e) => t.run(this, ...e)), console.log(`* [${"handler".color("red")}] :: ${"loaded".color("green")} event '${(t.name??"unknown").color("blue")}'`)
+                "dsc" === (t = "default" in t ? t.default : t).type ? (this.removeAllListeners(t.name), this?.[t.once ? "once" : "on"](t.name, (...e) => t.run(this, ...e))) : (this?.[t.type]?.removeAllListeners(t.name), this?.[t.type]?.[t.once ? "once" : "on"](t.name, (...e) => t.run(this, ...e))), console.log(`* [${"handler".color("red")}] :: ${"loaded".color("green")} event '${(t.name??"unknown").color("blue")}'`)
             } catch (e) {
                 console.log(e)
             }
         }), this
     }
     start() {
-        return this.db.connect(), this.events().commands().on("debug", e => {
-            e.includes("429") && console.log('Please run in the shell "kill 1"'.color("red"))
-        }).login(), this
+        return this.db.connect(), this.events().commands().on("debug", console.log).login(), this
     }
     permsError(e, t, o, s = e.author) {
         return !e.target && s && (e.target = s), s = this.makeEmbeds(e, {
@@ -141,22 +139,18 @@ class Lupo extends discord_js_1.Client {
 Permissions:
 ${o.join(", ").toCodeBlock()}
 `
-        }), t.reply ? t.reply({
-            embeds: s
-        }) : t.send({
+        }), t?.["reply" in t ? "reply" : "send"]({
             embeds: s
         })
     }
     sendError(e, t, o, s, r = e.author, n = [], i = " ") {
         return e.target = r, r = this.makeEmbeds(e, {
             title: this.emotes.error + " | [Error] " + (o ? " -> " + o.toTitleCase() : ""),
-            description: s?.toTitleCase()?.toCodeBlock() || "```js\nFailed To Display Error```"
-        }), t.reply ? t.reply({
+            description: s?.toCodeBlock() ?? "```js\nFailed To Display Error```"
+        }), t?.["reply" in t ? "reply" : "send"]({
             embeds: r,
             components: n,
             content: i
-        }) : t.send({
-            embeds: r
         })
     }
     makeEmbeds(s, ...e) {

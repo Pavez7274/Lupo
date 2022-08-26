@@ -32,9 +32,11 @@ async function run(o, a) {
                 var m, u = c?.fields?.filter(e => e.req) || [];
                 if (u.length > e.len) return m = u.length - e.len, o.sendError({
                     author: i
-                }, a, "Field", `Field ${m} ['${u[m-1]?.name||"unknow-name"}'] Cannot Be Empty`);
+                }, a, "Field", `Field ${m} ['${u[m-1]?.name||"unknown"}'] Cannot Be Empty
+Correct use: '${e.prefix}${c.names[0]} ${c.parsedFields}'`);
                 try {
                     return await c.run({
+                        ...o.util,
                         command: c,
                         prefixes: d,
                         lappy: o,

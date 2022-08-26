@@ -1,5 +1,5 @@
 // imports
-import { Client, Collection, User, ActionRow, EmbedBuilder, Message, GatewayIntentBits, APIEmbed} from 'discord.js';
+import { Client, Collection, User, ActionRow, EmbedBuilder, Message, GatewayIntentBits, APIEmbed } from 'discord.js';
 import { SoundCloudPlugin } from '@distube/soundcloud';
 import { SpotifyPlugin } from '@distube/spotify';
 import * as util from '../util/index';
@@ -125,8 +125,10 @@ export class Lupo extends Client {
 					ev = ev.default;
 				};
 				if (ev.type === 'dsc') {
+					this.removeAllListeners(ev.name);
 					this?.[ev.once ? 'once' : 'on'](ev.name, (...args: any) => ev.run(this, ...args));
 				} else {
+					this?.[ev.type]?.removeAllListeners(ev.name);
 					this?.[ev.type]?.[ev.once ? 'once' : 'on'](ev.name, (...args: any) => ev.run(this, ...args));
 				};
 				console.log(`* [${'handler'.color('red')}] :: ${'loaded'.color('green')} event '${(ev.name ?? 'unknown').color('blue')}'`);
@@ -142,10 +144,7 @@ export class Lupo extends Client {
 		this
 			.events()
 			.commands()
-			.on('debug', (msg: string) => {
-				if (msg.includes('429'))
-					console.log('Please run in the shell "kill 1"'.color('red'));
-			})
+			.on('debug', console.log)
 			.login();
 		return this;
 	};
@@ -158,20 +157,16 @@ export class Lupo extends Client {
 			title: `${this.emotes.error} | [Error] -> Missing Permissions`,
 			description: `Member/User: ${target?.toString() || 'unknown'}\nPermissions:\n${perms.join(', ').toCodeBlock()}\n`
 		});
-    if (instance.reply)
-      return instance.reply({ embeds });
-    return instance.send({ embeds });
+    return instance?.['reply' in instance ? 'reply' : 'send']({ embeds });
   };
 	
 	public sendError (data: any, instance: any, type: string | undefined, msg: string | undefined, target: User = data.author, components: ActionRow<any>[] | void[] = [], content: string = ' '): Promise<Message> {
 		data.target = target;
     const embeds = this.makeEmbeds(data, {
       title: `${this.emotes.error} | [Error] ${ type ? ` -> ${type.toTitleCase()}` : '' }`,
-      description: msg?.toTitleCase()?.toCodeBlock() || '```js\nFailed To Display Error```',
+      description: msg?.toCodeBlock() ?? '```js\nFailed To Display Error```',
     });
-    if (instance.reply)
-      return instance.reply({ embeds, components, content });
-    return instance.send({ embeds });
+    return instance?.['reply' in instance ? 'reply' : 'send']({ embeds, components, content });
   };
 	
 	public makeEmbeds (data: any, ...embeds: APIEmbed[] | object[]): APIEmbed[] {

@@ -1,7 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", {
     value: !0
-}), exports.default = {
+});
+const Table = require("ascii-table"),
+    table = (new Table).removeBorder();
+exports.default = {
     names: ["help"],
     fields: [{
         name: "command",
@@ -10,41 +13,47 @@ Object.defineProperty(exports, "__esModule", {
     }],
     desc: "get help on a specific command",
     type: "default",
-    run: s => {
-        var e;
-        if (s.args.ends.includes("--all")) return e = s.lappy.makeEmbeds(s, {
-            title: s.lappy.emotes.feli + " | help -> All Commands",
-            description: s.lappy.cmds.default.map(({
+    run: l => {
+        let s = l.lappy.cmds.default.map(({
                 names: e
-            }) => e[0]).sort((e, s) => e.localeCompare(s)).join(", ").cropAt(4e3).toCodeBlock()
-        }), s.msg.reply({
+            }) => e[0]).sort((e, l) => e.localeCompare(l)),
+            a = [];
+        for (let l = 0; l < s.length; l += 2) {
+            let e = [];
+            s[l] && e.push(s[l]), s[++l] && e.push(s[l]), s[++l] && e.push(s[l]), a.push(e)
+        }
+        var e;
+        if (table.addRowMatrix(a), l.args.ends.includes("--all")) return e = l.lappy.makeEmbeds(l, {
+            title: l.lappy.emotes.feli + " | help -> All Commands",
+            description: table.toString().split("\n").map(e => e.trim()).join("\n").cropAt(4e3).toCodeBlock()
+        }), l.msg.reply({
             embeds: e
         });
-        if (0 === s.args.len) return s.lappy.sendError(s, s.msg, "Field", "Field 1 ['command'] Cannot Be Empty");
-        let l = s.lappy.cmds.default.find(e => e.names.includes(s.args.get(0)));
-        if (!l) return s.lappy.sendError(s, s.msg, "Not Found", `Command ['${s.args.get(0)}'] Not Found`);
-        let a = s.lappy.makeEmbeds(s, {
-            title: (s.lappy.emotes.tofu + " | help -> " + l.names[0]).toTitleCase(),
+        if (0 === l.args.len) return l.lappy.sendError(l, l.msg, "Field", "Field 1 ['command'] Cannot Be Empty");
+        let t = l.lappy.cmds.default.find(e => e.names.includes(l.args.get(0)));
+        if (!t) return l.lappy.sendError(l, l.msg, "Not Found", `Command ['${l.args.get(0)}'] Not Found`);
+        let o = l.lappy.makeEmbeds(l, {
+            title: (l.lappy.emotes.tofu + " | help -> " + t.names[0]).toTitleCase(),
             fields: [{
                 name: "Name/Alias",
-                value: l.names.join(", ").toTitleCase().toCodeBlock(),
+                value: t.names.join(", ").toTitleCase().toCodeBlock(),
                 fields: []
             }]
         });
-        return l.desc && a[0].fields?.push({
+        return t.desc && o[0].fields?.push({
             name: "Description",
-            value: ("**" + l.desc + "**").toTitleCase()
-        }), l.parsedFields && a[0].fields?.push({
+            value: ("**" + t.desc + "**").toTitleCase()
+        }), t.parsedFields && o[0].fields?.push({
             name: "Usage",
-            value: (l.names[0] + " " + l.parsedFields).toTitleCase().toCodeBlock()
-        }), l.fields && a[0].fields?.push({
+            value: (t.names[0] + " " + t.parsedFields).toTitleCase().toCodeBlock()
+        }), t.fields && o[0].fields?.push({
             name: "Fields",
-            value: l.fields.map(e => e.name.concat(e.req ? "" : "?") + " -> " + e.type).join("\n").toTitleCase().toCodeBlock()
-        }), l.dev && a[0].fields?.push({
+            value: t.fields.map(e => e.name.concat(e.req ? "" : "?") + " -> " + e.type).join("\n").toTitleCase().toCodeBlock()
+        }), t.dev && o[0].fields?.push({
             name: "Important!",
             value: "This Command Can Only Be Executed By My Developers".toCodeBlock()
-        }), s.msg.reply({
-            embeds: a
+        }), l.msg.reply({
+            embeds: o
         })
     }
 };

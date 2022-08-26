@@ -3,14 +3,17 @@ Object.defineProperty(exports, "__esModule", {
     value: !0
 }), exports.findUsers = exports.findUser = void 0;
 const resolveSnowflake_1 = require("./resolveSnowflake");
-async function findUser(e, s, r) {
-    if (s = s.toLowerCase(), (0, resolveSnowflake_1.isSnowflake)(s)) return e.users.fetch(s).catch(() => {});
-    let t = new RegExp(s, r ?? "gi");
-    return e.users.cache.find(e => s === e.username.toLowerCase() || s === e.tag || t.test(e.username) || t.test(e.tag) || s === e.toString() || (0, resolveSnowflake_1.resolveSnowflake)(s) === e.id)
+async function findUser(e, r, o) {
+    if ("" !== (r = r.toLowerCase().trim())) {
+        if ((0, resolveSnowflake_1.isSnowflake)((0, resolveSnowflake_1.resolveSnowflake)(r))) return e.users.fetch((0, resolveSnowflake_1.resolveSnowflake)(r)).catch(() => {});
+        let s = new RegExp(r, o ?? "gi");
+        return e.users.cache.find(e => r === e.username.toLowerCase() || r === e.tag || s.test(e.username) || s.test(e.tag) || r === e.toString() || (0, resolveSnowflake_1.resolveSnowflake)(r) === e.id)
+    }
 }
-async function findUsers(e, s, r = 1 / 0, t) {
-    s = s.toLowerCase();
-    let n = new RegExp(s, t ?? "gi");
-    return e.users.cache.filter(e => s === e.username.toLowerCase() || s === e.tag || n.test(e.username) || n.test(e.tag) || s === e.toString() || (0, resolveSnowflake_1.resolveSnowflake)(s) === e.id).first(r)
+async function findUsers(e, r, o = 1 / 0, t) {
+    if ("" !== (r = r.toLowerCase().trim())) {
+        let s = new RegExp(r, t ?? "gi");
+        return e.users.cache.filter(e => r === e.username.toLowerCase() || r === e.tag || s.test(e.username) || s.test(e.tag) || r === e.toString() || (0, resolveSnowflake_1.resolveSnowflake)(r) === e.id).first(o)
+    }
 }
 exports.findUser = findUser, exports.findUsers = findUsers, exports.default = findUser;

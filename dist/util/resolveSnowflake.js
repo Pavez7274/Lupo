@@ -2,11 +2,11 @@
 
 function isSnowflake(e) {
     var o = typeof e;
-    return !(!["number", "string"].includes(o) || isNaN(e)) && ("number" == o && (e = e.toString()), /\d{17,19}/.test(e))
+    return !(!["number", "string"].includes(o) || isNaN(e)) && ("number" == o && (e = e.toString()), /\d{17,20}/.test(e))
 }
 
 function resolveSnowflake(e) {
-    return e = e.replace(/[<!@#:&a-z>]/gim, ""), isNaN(Number(e)) && e
+    return e = e.replace(/[&#@!:<>]/gim, ""), !!Number(e) && e
 }
 Object.defineProperty(exports, "__esModule", {
     value: !0

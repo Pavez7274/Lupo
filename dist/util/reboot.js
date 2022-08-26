@@ -5,7 +5,9 @@ Object.defineProperty(exports, "__esModule", {
 const child_process_1 = require("child_process");
 
 function reboot() {
-    process.on("exit", () => (0, child_process_1.spawn)(process.argv.shift(), process.argv, {
+    console.log(("=".repeat(20) + `
+				Starting Reboot
+` + "=".repeat(20)).color("blue")), process.on("exit", () => (0, child_process_1.spawn)(process.argv.shift(), process.argv, {
         cwd: process.cwd(),
         detached: !0,
         stdio: "inherit"

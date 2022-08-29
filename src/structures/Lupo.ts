@@ -37,7 +37,7 @@ export class Lupo extends Client {
 			presence: {
 				status: 'dnd',
 				activities: [{
-					name: '* No Dev Studios Jaja :: version ' + require(process.cwd() + '/package.json').version,
+					name: '* Kaede Studio :: version ' + require(process.cwd() + '/package.json').version,
 					type: 0
 				}],
 			},
@@ -80,6 +80,7 @@ export class Lupo extends Client {
 				value: [
 					'788869971073040454', // Pavez
 					'878235498055864382', // zLexus
+					'311194088567341077' // riata
 				]
 			}
 		});
@@ -144,12 +145,18 @@ export class Lupo extends Client {
 		this
 			.events()
 			.commands()
-			.on('debug', console.log)
+			.on('debug', (str: string) => {
+				console.log(
+					str
+					.replace(/\w+/gim, (a: string) => isNaN(a) ? a.color('blue') : a.color('green'))
+					.replace(/\[(.*?)\]/gim, (...m: Array<string | number>) => `[${m[1].color('red')}]`)
+				);
+			})
 			.login();
 		return this;
 	};
 
-	public permsError (data: any, instance: any, perms: string[], target: User = data.author): Message {
+	public async permsError (data: any, instance: any, perms: string[], target: User = data.author): Message {
 		if (!data.target && target) {
 			data.target = target;
 		};
@@ -160,7 +167,7 @@ export class Lupo extends Client {
     return instance?.['reply' in instance ? 'reply' : 'send']({ embeds });
   };
 	
-	public sendError (data: any, instance: any, type: string | undefined, msg: string | undefined, target: User = data.author, components: ActionRow<any>[] | void[] = [], content: string = ' '): Promise<Message> {
+	public async sendError (data: any, instance: any, type: string | undefined, msg: string | undefined, target: User = data.author, components: ActionRow<any>[] | void[] = [], content: string = ' '): Promise<Message> {
 		data.target = target;
     const embeds = this.makeEmbeds(data, {
       title: `${this.emotes.error} | [Error] ${ type ? ` -> ${type.toTitleCase()}` : '' }`,

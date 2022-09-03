@@ -1,4 +1,9 @@
 "use strict";
+var __importDefault = this && this.__importDefault || function(e) {
+    return e && e.__esModule ? e : {
+        default: e
+    }
+};
 Object.defineProperty(exports, "__esModule", {
     value: !0
 }), exports.run = exports.fields = exports.type = exports.desc = exports.dev = exports.names = void 0;
@@ -6,7 +11,8 @@ const discord_js_1 = require("discord.js"),
     typescript_1 = require("typescript"),
     coffeescript_1 = require("coffeescript"),
     uglify_js_1 = require("uglify-js"),
-    util_1 = require("util");
+    util_1 = require("util"),
+    axios_1 = __importDefault(require("axios"));
 async function run(d) {
     let start = Date.now(),
         asynchorus = 0,
@@ -63,7 +69,11 @@ async function run(d) {
 **[ Time ]** -> \`${Date.now()-start??0}Ms\``
                 }]
             });
-            return d.msg.reply({
+            return "string" == typeof_0 && evaled?.startsWith("https://") && axios_1.default.get(result).then(({
+                headers: e
+            }) => e?.["content-type"]?.includes("image")).catch(() => !1) && (embeds[0].image = {
+                url: evaled
+            }), d.msg.reply({
                 embeds: embeds
             })
         }

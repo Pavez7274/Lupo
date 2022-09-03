@@ -1,0 +1,8 @@
+# Bored
+
+
+
+## Command Usage
+```
+?bored 
+```

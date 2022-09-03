@@ -10,6 +10,9 @@ export declare class Lupo extends Client {
         keyboard: string;
         luv: string;
         spotify: string;
+        facha: string;
+        death: string;
+        food: string;
     };
     spotify: any;
     neko: Neko;

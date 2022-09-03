@@ -11,10 +11,13 @@
     "fs": "^0.0.1-security",
     "glob": "^8.0.3",
     "js-beautify": "^1.14.5",
+    "lyrics-fetcher": "^1.0.2",
     "marked": "^4.0.18",
     "math-expression-evaluator": "^1.4.0",
     "npm": "^8.13.2",
+    "ora": "^6.1.2",
     "os-utils": "^0.0.14",
+    "spinnies": "^0.5.1",
     "spotify-finder": "^2.1.1",
     "uglify-js": "^3.16.2",
     "wanakana": "^5.0.2"

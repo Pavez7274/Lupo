@@ -5,5 +5,4 @@ replit.nix
 .config
 .build
 store
-src
 db

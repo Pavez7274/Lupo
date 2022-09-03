@@ -26,4 +26,7 @@ ${(0,discord_js_1.escapeCodeBlock)(this)}
     return this[(0, random_1.random)(this.length - 1)]
 }, Array.prototype.addAt = function(e, ...r) {
     return this.splice(e, 0, ...r)
+}, Array.prototype.chunk = function(e) {
+    for (var r = Math.ceil(this.length / e), t = [], o = 0; o < r;) t[o] = this.splice(0, e), o++;
+    return t
 };

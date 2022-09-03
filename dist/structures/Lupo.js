@@ -1,13 +1,13 @@
 "use strict";
-var __createBinding = this && this.__createBinding || (Object.create ? function(e, t, o, r) {
-        void 0 === r && (r = o), Object.defineProperty(e, r, {
+var __createBinding = this && this.__createBinding || (Object.create ? function(e, t, s, o) {
+        void 0 === o && (o = s), Object.defineProperty(e, o, {
             enumerable: !0,
             get: function() {
-                return t[o]
+                return t[s]
             }
         })
-    } : function(e, t, o, r) {
-        e[r = void 0 === r ? o : r] = t[o]
+    } : function(e, t, s, o) {
+        e[o = void 0 === o ? s : o] = t[s]
     }),
     __setModuleDefault = this && this.__setModuleDefault || (Object.create ? function(e, t) {
         Object.defineProperty(e, "default", {
@@ -21,7 +21,7 @@ var __createBinding = this && this.__createBinding || (Object.create ? function(
         if (e && e.__esModule) return e;
         var t = {};
         if (null != e)
-            for (var o in e) "default" !== o && Object.prototype.hasOwnProperty.call(e, o) && __createBinding(t, e, o);
+            for (var s in e) "default" !== s && Object.prototype.hasOwnProperty.call(e, s) && __createBinding(t, e, s);
         return __setModuleDefault(t, e), t
     },
     __importDefault = this && this.__importDefault || function(e) {
@@ -48,7 +48,10 @@ class Lupo extends discord_js_1.Client {
         tofu: "<:lappytofu:902410429601570866>",
         keyboard: "<:bunnykeyboard:998811876974678017>",
         luv: "<:lappyluv:1001149497012924446>",
-        spotify: "<:spotify:1010667806980833312>"
+        spotify: "<:spotify:1010667806980833312>",
+        facha: "<:lappyfacha:902410117826351154>",
+        death: "<:lappydeath:902410489458475068>",
+        food: "<:lappyfood:913295896899383306>"
     };
     spotify = new spotify_finder_1.default({
         consumer: {
@@ -107,15 +110,23 @@ class Lupo extends discord_js_1.Client {
         })
     }
     commands() {
-        return console.log(`* [${"handler".color("red")}] :: ${"Running".color("green")} -> ` + "Commands".color("blue")), (0, glob_1.sync)(process.cwd() + "/dist/cmds/**/*.js").forEach(async e => {
+        let e = require("spinnies"),
+            t = new e,
+            s = 0,
+            o = 0;
+        return t.add("cmds", {
+            text: "Loading Commands..."
+        }), (0, glob_1.sync)(process.cwd() + "/dist/cmds/**/*.js").forEach(async e => {
             e && require.cache[e] && delete require.cache[e];
             let t = require(e);
             (t = "default" in t ? t.default : t).type ||= "default", "fields" in t && (t.parsedFields = t.fields.map(e => e.req ? `<${e.name}>` : `[${e.name}]`).join(" ")), this.cmds[t.type] || (this.cmds[t.type] = new discord_js_1.Collection);
             try {
-                this.cmds[t.type].set(t.names[0] ?? "unknown", t), this.util.generateCommandDoc(t), console.log(`* [${"handler".color("red")}] :: ${"loaded".color("green")} command '${(t.names[0]??"unknown").color("blue")}'`)
+                this.cmds[t.type].set(t.names[0] ?? "unknown", t), this.util.generateCommandDoc(t), s++
             } catch (e) {
-                console.log((`* [handler] :: failed to load command '${t.names[0]??"unknown"}' because ` + e).color("red"))
+                o++
             }
+        }), t.succeed("cmds", {
+            text: `Loaded ${s} Commands And Failed To Load ${o} Commands.`
         }), this
     }
     events() {
@@ -130,39 +141,45 @@ class Lupo extends discord_js_1.Client {
         }), this
     }
     start() {
-        return this.db.connect(), this.events().commands().on("debug", e => {
-            console.log(e.replace(/\w+/gim, e => isNaN(e) ? e.color("blue") : e.color("green")).replace(/\[(.*?)\]/gim, (...e) => `[${e[1].color("red")}]`))
-        }).login(), this
+        return console.log(`┌────────────────────────────────────────┐
+├[31m ╔╗  [0m───────── [31m╔══╦╗  [0m─── [31m╔╗  [0m──────────┤
+├[31m ║║  [0m───────── [31m║╔╗║║  [0m── [31m╔╝╚╗  [0m─────────┤
+├[31m ║║ ╔╗╔╦══╦══╗ ║║╚╣║╔╦═╦═╩╗╔╝  [0m─────────┤
+├[31m ║║╔╣║║║╔╗║╔╗║ ║║╔╣║╠╣═║╔╗║║  [0m──────────┤
+├[31m ║╚╝║╚╝║╚╝║╚╝║ ║╚╝║╚╣║═╣║║║╚╗  [0m─────────┤
+├[31m ╚══╩══╣╔═╩══╝ ╚══╩═╩╩═╩╝╚╩═╝  [0m─────────┤
+├───────[31m║║ [34m𝚃𝚢𝚙𝚎𝚂𝚌𝚛𝚒𝚙𝚝 𝙳𝚒𝚜𝚌𝚘𝚛𝚍𝙹𝚂 𝙲𝚕𝚒𝚎𝚗𝚝  [0m─┤
+├───────[31m╚╝ [34m𝙱𝚢 𝙺𝚊𝚎𝚍𝚎 𝚂𝚝𝚞𝚍𝚒𝚘  [0m─────────────┤
+└────────────────────────────────────────┘`), this.db.connect(), this.events().commands().login(), setTimeout(() => this.isReady() || console.log("[31mCould not start client[0m") || process.kill(1), 2e4), this
     }
-    async permsError(e, t, o, r = e.author) {
-        return !e.target && r && (e.target = r), r = this.makeEmbeds(e, {
+    async permsError(e, t, s, o = e.author) {
+        return !e.target && o && (e.target = o), o = this.makeEmbeds(e, {
             title: this.emotes.error + " | [Error] -> Missing Permissions",
-            description: `Member/User: ${r?.toString()||"unknown"}
+            description: `Member/User: ${o?.toString()||"unknown"}
 Permissions:
-${o.join(", ").toCodeBlock()}
+${s.join(", ").toCodeBlock()}
 `
         }), t?.["reply" in t ? "reply" : "send"]({
-            embeds: r
+            embeds: o
         })
     }
-    async sendError(e, t, o, r, s = e.author, n = [], i = " ") {
-        return e.target = s, s = this.makeEmbeds(e, {
-            title: this.emotes.error + " | [Error] " + (o ? " -> " + o.toTitleCase() : ""),
-            description: r?.toCodeBlock() ?? "```js\nFailed To Display Error```"
+    async sendError(e, t, s, o, r = e.author, n = [], i = " ") {
+        return e.target = r, r = this.makeEmbeds(e, {
+            title: this.emotes.error + " | [Error] " + (s ? " -> " + s.toTitleCase() : ""),
+            description: o?.toCodeBlock() ?? "```js\nFailed To Display Error```"
         }), t?.["reply" in t ? "reply" : "send"]({
-            embeds: s,
+            embeds: r,
             components: n,
-            content: i
+            content: i,
+            ephemeral: e.ephemeral
         })
     }
-    makeEmbeds(r, ...e) {
-        const s = [];
+    makeEmbeds(o, ...e) {
+        const r = [];
         return e.forEach((e, t) => {
-            if (!(5 < t)) {
-                const o = new discord_js_1.EmbedBuilder(e);
-                !o.data.thumbnail && r.target && o.setThumbnail(r.target?.displayAvatarURL()), o.data.color || o.setColor("Blurple"), s.push(o.toJSON())
-            }
-        }), s
+            const s = new discord_js_1.EmbedBuilder(e);
+            !s.data.thumbnail && o.target && s.setThumbnail(o.target?.displayAvatarURL()), s.data.color || s.setColor("Blurple"), r.push(s.toJSON())
+        }), r
     }
 }
 exports.Lupo = Lupo;

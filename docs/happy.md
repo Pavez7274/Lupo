@@ -1,0 +1,8 @@
+# Happy
+
+
+
+## Command Usage
+```
+?happy 
+```

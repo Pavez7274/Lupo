@@ -9,6 +9,7 @@ import { Neko } from './Neko';
 import { sync } from 'glob';
 import DS from 'distube';
 
+
 // exports
 export class Lupo extends Client {
 	[index: string]: any;
@@ -18,7 +19,11 @@ export class Lupo extends Client {
 		tofu: '<:lappytofu:902410429601570866>', 
 		keyboard: '<:bunnykeyboard:998811876974678017>', 
 		luv: '<:lappyluv:1001149497012924446>',
-		spotify: '<:spotify:1010667806980833312>'
+		spotify: '<:spotify:1010667806980833312>',
+    facha : '<:lappyfacha:902410117826351154>',
+    death: '<:lappydeath:902410489458475068>',
+    food: '<:lappyfood:913295896899383306>',
+    
 	};
 	spotify = new Spotify({
 		consumer: {
@@ -87,7 +92,8 @@ export class Lupo extends Client {
 	};
 
 	public commands (): Lupo {
-		console.log(`* [${'handler'.color('red')}] :: ${'Running'.color('green')} -> ${'Commands'.color('blue')}`);
+		let S = require('spinnies'), spinners = new S(), loaded = 0, unloaded = 0;
+		spinners.add('cmds', { text: 'Loading Commands...' });
 		sync(`${process.cwd()}/dist/cmds/**/*.js`).forEach(async (mod: string) => {
 			if (mod && require.cache[mod]) {
 				delete require.cache[mod];
@@ -106,11 +112,12 @@ export class Lupo extends Client {
 			try {
 				this.cmds[cmd.type].set(cmd.names[0] ?? 'unknown', cmd);
 				this.util.generateCommandDoc(cmd);
-				console.log(`* [${'handler'.color('red')}] :: ${'loaded'.color('green')} command '${(cmd.names[0] ?? 'unknown').color('blue')}'`);
+				loaded++
 			} catch (error) {
-				console.log(`* [handler] :: failed to load command '${cmd.names[0] ?? 'unknown'}' because ${error}`.color('red'));
-			}
+				unloaded++;
+			};
 		});
+		spinners.succeed('cmds', { text: `Loaded ${loaded} Commands And Failed To Load ${unloaded} Commands.` });
 		return this;
 	};
 
@@ -141,18 +148,32 @@ export class Lupo extends Client {
 	};
 
 	public start (): Lupo {
+		console.log(`┌────────────────────────────────────────┐
+├\x1b[31m ╔╗  \x1b[0m───────── \x1b[31m╔══╦╗  \x1b[0m─── \x1b[31m╔╗  \x1b[0m──────────┤
+├\x1b[31m ║║  \x1b[0m───────── \x1b[31m║╔╗║║  \x1b[0m── \x1b[31m╔╝╚╗  \x1b[0m─────────┤
+├\x1b[31m ║║ ╔╗╔╦══╦══╗ ║║╚╣║╔╦═╦═╩╗╔╝  \x1b[0m─────────┤
+├\x1b[31m ║║╔╣║║║╔╗║╔╗║ ║║╔╣║╠╣═║╔╗║║  \x1b[0m──────────┤
+├\x1b[31m ║╚╝║╚╝║╚╝║╚╝║ ║╚╝║╚╣║═╣║║║╚╗  \x1b[0m─────────┤
+├\x1b[31m ╚══╩══╣╔═╩══╝ ╚══╩═╩╩═╩╝╚╩═╝  \x1b[0m─────────┤
+├───────\x1b[31m║║ \x1b[34m𝚃𝚢𝚙𝚎𝚂𝚌𝚛𝚒𝚙𝚝 𝙳𝚒𝚜𝚌𝚘𝚛𝚍𝙹𝚂 𝙲𝚕𝚒𝚎𝚗𝚝  \x1b[0m─┤
+├───────\x1b[31m╚╝ \x1b[34m𝙱𝚢 𝙺𝚊𝚎𝚍𝚎 𝚂𝚝𝚞𝚍𝚒𝚘  \x1b[0m─────────────┤
+└────────────────────────────────────────┘`)
 		this.db.connect();
 		this
 			.events()
 			.commands()
-			.on('debug', (str: string) => {
+			/*.on('debug', (str: string) => {
 				console.log(
 					str
-					.replace(/\w+/gim, (a: string) => isNaN(a) ? a.color('blue') : a.color('green'))
-					.replace(/\[(.*?)\]/gim, (...m: Array<string | number>) => `[${m[1].color('red')}]`)
+					.replace(/(\[.*?\]|\w+)/gim, (arg: string) => {
+						if (['(', '[', '<'].includes(arg.at(0)) && [')', ']', '>'].includes(arg.at(-1)))
+							return arg.color('red');
+						return arg.color(isNaN(arg as number) ? 'blue' : 'yellow');
+					})
 				);
-			})
+			})*/
 			.login();
+		setTimeout(() => this.isReady() || console.log('\x1b[31mCould not start client\x1b[0m') || process.kill(1), 2e4);
 		return this;
 	};
 
@@ -173,13 +194,13 @@ export class Lupo extends Client {
       title: `${this.emotes.error} | [Error] ${ type ? ` -> ${type.toTitleCase()}` : '' }`,
       description: msg?.toCodeBlock() ?? '```js\nFailed To Display Error```',
     });
-    return instance?.['reply' in instance ? 'reply' : 'send']({ embeds, components, content });
+    return instance?.['reply' in instance ? 'reply' : 'send']({ embeds, components, content, ephemeral: data!.ephemeral });
   };
 	
 	public makeEmbeds (data: any, ...embeds: APIEmbed[] | object[]): APIEmbed[] {
 		const Embeds: any = [];
 		embeds.forEach((options: object, index: number) => {
-			if (index > 5) return;
+			// if (index > 5) return;
 			const embed = new EmbedBuilder(options);
 			if (!embed.data.thumbnail && data.target) {
 				embed.setThumbnail(data.target?.displayAvatarURL());

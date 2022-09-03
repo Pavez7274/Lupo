@@ -1,7 +1,7 @@
 "use strict";
 async function run(t, n) {
     if (2 == n.type) {
-        let e = await t.cmds.default.find(e => e.names.includes(n.commandName));
+        let e = await t.cmds.default.find(e => e.names.includes(n.commandName.split(/_/g)[0]) || e?.context === n.commandName);
         return e && e.contextRun ? e.contextRun({
             lappy: t,
             int: n

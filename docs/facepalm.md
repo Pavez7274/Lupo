@@ -1,0 +1,8 @@
+# Facepalm
+
+
+
+## Command Usage
+```
+?facepalm 
+```

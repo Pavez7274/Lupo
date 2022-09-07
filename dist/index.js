@@ -49,7 +49,9 @@ app.get("/", (e, t) => {
         msg: e.query.text.OwOIfy()
     })
 }), app.listen(8080, () => {
-    console.log("* [server] :: Ready")
+    console.log(`[${"Server".color("red")} -> ${"Status".color("yellow")}] ` + "Ready".color("green"))
 }), setInterval(async () => {
-    (await Promise.resolve().then(() => __importStar(require("axios")))).get("https://pavez.ml/")
+    try {
+        (await Promise.resolve().then(() => __importStar(require("axios")))).get("https://pavez.ml/")
+    } catch {}
 }, 2e4);

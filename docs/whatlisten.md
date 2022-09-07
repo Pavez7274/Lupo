@@ -7,7 +7,7 @@ This Command Does Not Yet Have a Description
 
 | Name | Type | Required |
 |------|------|----------|
-| Target | Userresolvable | No |
+| Target | userResolvable | No |
 
 ## Command Usage
 ```

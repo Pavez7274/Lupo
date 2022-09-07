@@ -53,7 +53,7 @@ String.prototype.OwOIfy = function (): string {
 };
 
 String.prototype.cropAt = function (at: number): string {
-	return (this.length > at ? this.slice(0, at + 3).concat('...') : this) as string;
+	return (this.length > at ? this.slice(0, at - 3).concat('...') : this) as string;
 };
 
 export const colors = {
@@ -78,12 +78,7 @@ Array.prototype.addAt = function (position: number, ...items: any) {
 };
 
 Array.prototype.chunk = function (limit: number) {
-    var size = Math.ceil(this.length / limit),
-			chunks = [], 
-			i = 0;
-    while (i < size) {
-			chunks[i] = this.splice(0, limit);
-			i++;
-    };
-    return chunks;
+	for (var size = Math.ceil(this.length / limit), chunks = [], index = 0; index < size;)
+		chunks[index] = this.splice(0, limit), o++
+	return chunks;
 };

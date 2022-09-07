@@ -44,12 +44,13 @@ export async function run (lappy: Lupo, msg: Msg): Promise<any | void> {
 				?.map((perm: string) => memb.permissionsIn(ch).has(PermissionFlagsBits[perm]))
 				?.some((perm: boolean) => !perm))
 			return lappy.permsError({ author }, msg, command.perms);
-    if ('bot_perms' in command) {
-			if (command.bot_perms
+	if (command.voiceRequired && !memb.voice?.channel)
+		return lappy.sendError({ author }, msg, 'Voice Required', 'You must be on a voice channel to use this command')
+	if ('bot_perms' in command)
+		if (command.bot_perms
 					?.map(async (perm: string) => (await gd.members.fetchMe())?.permissionsIn(ch)?.has(PermissionFlagsBits[perm]))
 					?.some((perm: boolean) => !perm))
-				return lappy.permsError({ author: lappy.user }, msg, command.bot_perms);
-    };
+			return lappy.permsError({ author: lappy.user }, msg, command.bot_perms);
 	const req_fields = command?.fields?.filter((field: any) => field.req) || [];
 	if (req_fields.length > args.len) {
 		const index = req_fields.length - args.len;

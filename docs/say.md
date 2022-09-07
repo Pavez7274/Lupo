@@ -7,7 +7,7 @@ Make Me Say Something!!
 
 | Name | Type | Required |
 |------|------|----------|
-| Message | String | Yes |
+| Message | string | Yes |
 
 ## Command Usage
 ```

@@ -2,6 +2,7 @@
 import { Client, Collection, User, ActionRow, EmbedBuilder, Message, GatewayIntentBits, APIEmbed } from 'discord.js';
 import { SoundCloudPlugin } from '@distube/soundcloud';
 import { SpotifyPlugin } from '@distube/spotify';
+import { YtDlpPlugin } from '@distube/yt-dlp';
 import * as util from '../util/index';
 import Spotify from 'spotify-finder';
 import { DB } from './DataBase';
@@ -20,10 +21,9 @@ export class Lupo extends Client {
 		keyboard: '<:bunnykeyboard:998811876974678017>', 
 		luv: '<:lappyluv:1001149497012924446>',
 		spotify: '<:spotify:1010667806980833312>',
-    facha : '<:lappyfacha:902410117826351154>',
-    death: '<:lappydeath:902410489458475068>',
-    food: '<:lappyfood:913295896899383306>',
-    
+		facha : '<:lappyfacha:902410117826351154>',
+		death: '<:lappydeath:902410489458475068>',
+		food: '<:lappyfood:913295896899383306>',
 	};
 	spotify = new Spotify({
 		consumer: {
@@ -33,6 +33,9 @@ export class Lupo extends Client {
 	});
 	neko = new Neko({ client: this });
 	util = util;
+	datas = {
+		unloadedCommands: []
+	};
 	constructor () {
 		super({
 			allowedMentions: {
@@ -66,12 +69,14 @@ export class Lupo extends Client {
 				value: new DS(this, {
 					plugins: [
 						new SoundCloudPlugin(),
-						new SpotifyPlugin()
+						new SpotifyPlugin({
+							emitEventsAfterFetching: true
+						}), 
+						new YtDlpPlugin()
 					],
 					leaveOnFinish: false,
 					leaveOnEmpty: false,
 					leaveOnStop: false,
-					searchSongs: 5,
 					nsfw: true
 				})
 			},
@@ -103,6 +108,7 @@ export class Lupo extends Client {
 				cmd = cmd.default;
 			};
 			cmd.type ||= 'default';
+			cmd.mod = mod;
 			if ('fields' in cmd) {
 				cmd.parsedFields = cmd.fields.map((field: any) => field.req ? `<${field.name}>` : `[${field.name}]`).join(' ');
 			};
@@ -114,6 +120,7 @@ export class Lupo extends Client {
 				this.util.generateCommandDoc(cmd);
 				loaded++
 			} catch (error) {
+				this.datas.unloadedCommands.push(mod, error);
 				unloaded++;
 			};
 		});
@@ -122,7 +129,13 @@ export class Lupo extends Client {
 	};
 
 	public events (): Lupo {
-		console.log(`* [${'handler'.color('red')}] :: ${'Running'.color('green')} -> ${'Events'.color('blue')}`);
+		console.log(`[${
+			'Lupo'.color('red')
+		} -> ${
+			'Events'.color('yellow')
+		}] ${
+			'Running'.color('green')
+		}`);
 		sync(`${process.cwd()}/dist/events/**/*.js`).forEach(async (mod: string): Promise<void> => {
       try {
 				if (mod && require.cache[mod]) {
@@ -139,7 +152,15 @@ export class Lupo extends Client {
 					this?.[ev.type]?.removeAllListeners(ev.name);
 					this?.[ev.type]?.[ev.once ? 'once' : 'on'](ev.name, (...args: any) => ev.run(this, ...args));
 				};
-				console.log(`* [${'handler'.color('red')}] :: ${'loaded'.color('green')} event '${(ev.name ?? 'unknown').color('blue')}'`);
+				console.log(`	[${
+					'Lupo'.color('red')
+				} -> ${
+					'Events'.color('yellow')
+				}] ${
+					'Loaded'.color('green')
+				} ${
+					(ev.name ?? 'unknown').color('blue')
+				}`);
 			} catch (_err) {
 				console.log(_err);
 			};
@@ -155,8 +176,8 @@ export class Lupo extends Client {
 ├\x1b[31m ║║╔╣║║║╔╗║╔╗║ ║║╔╣║╠╣═║╔╗║║  \x1b[0m──────────┤
 ├\x1b[31m ║╚╝║╚╝║╚╝║╚╝║ ║╚╝║╚╣║═╣║║║╚╗  \x1b[0m─────────┤
 ├\x1b[31m ╚══╩══╣╔═╩══╝ ╚══╩═╩╩═╩╝╚╩═╝  \x1b[0m─────────┤
-├───────\x1b[31m║║ \x1b[34m𝚃𝚢𝚙𝚎𝚂𝚌𝚛𝚒𝚙𝚝 𝙳𝚒𝚜𝚌𝚘𝚛𝚍𝙹𝚂 𝙲𝚕𝚒𝚎𝚗𝚝  \x1b[0m─┤
-├───────\x1b[31m╚╝ \x1b[34m𝙱𝚢 𝙺𝚊𝚎𝚍𝚎 𝚂𝚝𝚞𝚍𝚒𝚘  \x1b[0m─────────────┤
+├────── \x1b[31m║║ \x1b[34m𝚃𝚢𝚙𝚎𝚂𝚌𝚛𝚒𝚙𝚝 𝙳𝚒𝚜𝚌𝚘𝚛𝚍𝙹𝚂 𝙲𝚕𝚒𝚎𝚗𝚝  \x1b[0m─┤
+├────── \x1b[31m╚╝ \x1b[34m𝙱𝚢 𝙺𝚊𝚎𝚍𝚎 𝚂𝚝𝚞𝚍𝚒𝚘  \x1b[0m─────────────┤
 └────────────────────────────────────────┘`)
 		this.db.connect();
 		this

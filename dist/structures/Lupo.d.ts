@@ -17,6 +17,9 @@ export declare class Lupo extends Client {
     spotify: any;
     neko: Neko;
     util: typeof util;
+    datas: {
+        unloadedCommands: never[];
+    };
     constructor();
     commands(): Lupo;
     events(): Lupo;

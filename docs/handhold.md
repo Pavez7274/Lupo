@@ -7,7 +7,7 @@ Hold Someone's Hand
 
 | Name | Type | Required |
 |------|------|----------|
-| Target | Memberresolvable | Yes |
+| Target | memberResolvable | Yes |
 
 ## Command Usage
 ```

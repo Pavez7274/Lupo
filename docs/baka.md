@@ -1,0 +1,8 @@
+# Baka
+
+
+
+## Command Usage
+```
+?baka 
+```

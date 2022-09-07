@@ -26,13 +26,16 @@ async function run(o, a) {
                 if ("perms" in c && c.perms?.map(e => n.permissionsIn(s).has(discord_js_1.PermissionFlagsBits[e]))?.some(e => !e)) return o.permsError({
                     author: i
                 }, a, c.perms);
+                if (c.voiceRequired && !n.voice?.channel) return o.sendError({
+                    author: i
+                }, a, "Voice Required", "You must be on a voice channel to use this command");
                 if ("bot_perms" in c && c.bot_perms?.map(async e => (await t.members.fetchMe())?.permissionsIn(s)?.has(discord_js_1.PermissionFlagsBits[e]))?.some(e => !e)) return o.permsError({
                     author: o.user
                 }, a, c.bot_perms);
-                var m, u = c?.fields?.filter(e => e.req) || [];
-                if (u.length > e.len) return m = u.length - e.len, o.sendError({
+                var u, m = c?.fields?.filter(e => e.req) || [];
+                if (m.length > e.len) return u = m.length - e.len, o.sendError({
                     author: i
-                }, a, "Field", `Field ${m} ['${u[m-1]?.name||"unknown"}'] Cannot Be Empty
+                }, a, "Field", `Field ${u} ['${m[u-1]?.name||"unknown"}'] Cannot Be Empty
 Correct use: '${e.prefix}${c.names[0]} ${c.parsedFields}'`);
                 try {
                     return await c.run({

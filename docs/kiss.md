@@ -6,7 +6,7 @@ Uh, Well, u Know, What Couples Do...
 
 | Name | Type | Required |
 |------|------|----------|
-| Target | Memberresolvable | Yes |
+| Target | memberResolvable | Yes |
 
 ## Command Usage
 ```

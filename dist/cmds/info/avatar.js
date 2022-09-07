@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", {
     value: !0
 }), exports.default = {
-    names: ["avatar", "icon"],
+    names: ["avatar", "icon", "pfp"],
     fields: [{
         name: "target",
         type: "userResolvable",

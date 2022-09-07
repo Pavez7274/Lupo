@@ -6,7 +6,7 @@ Feed
 
 | Name | Type | Required |
 |------|------|----------|
-| Target | Memberresolvable | Yes |
+| Target | memberResolvable | Yes |
 
 ## Command Usage
 ```

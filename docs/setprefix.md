@@ -7,7 +7,7 @@ See Or Change My Prefix On This Server
 
 | Name | Type | Required |
 |------|------|----------|
-| New | String | No |
+| New | string | No |
 
 ## Command Usage
 ```

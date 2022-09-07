@@ -6,7 +6,7 @@ Get Help On a Specific Command
 
 | Name | Type | Required |
 |------|------|----------|
-| Command | String | No |
+| Command | string | No |
 
 ## Command Usage
 ```

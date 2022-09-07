@@ -35,6 +35,7 @@ Object.defineProperty(exports, "__esModule", {
 const discord_js_1 = require("discord.js"),
     soundcloud_1 = require("@distube/soundcloud"),
     spotify_1 = require("@distube/spotify"),
+    yt_dlp_1 = require("@distube/yt-dlp"),
     util = __importStar(require("../util/index")),
     spotify_finder_1 = __importDefault(require("spotify-finder")),
     DataBase_1 = require("./DataBase"),
@@ -63,6 +64,9 @@ class Lupo extends discord_js_1.Client {
         client: this
     });
     util = util;
+    datas = {
+        unloadedCommands: []
+    };
     constructor() {
         super({
             allowedMentions: {
@@ -90,11 +94,12 @@ class Lupo extends discord_js_1.Client {
             },
             music: {
                 value: new distube_1.default(this, {
-                    plugins: [new soundcloud_1.SoundCloudPlugin, new spotify_1.SpotifyPlugin],
+                    plugins: [new soundcloud_1.SoundCloudPlugin, new spotify_1.SpotifyPlugin({
+                        emitEventsAfterFetching: !0
+                    }), new yt_dlp_1.YtDlpPlugin],
                     leaveOnFinish: !1,
                     leaveOnEmpty: !1,
                     leaveOnStop: !1,
-                    searchSongs: 5,
                     nsfw: !0
                 })
             },
@@ -119,22 +124,22 @@ class Lupo extends discord_js_1.Client {
         }), (0, glob_1.sync)(process.cwd() + "/dist/cmds/**/*.js").forEach(async e => {
             e && require.cache[e] && delete require.cache[e];
             let t = require(e);
-            (t = "default" in t ? t.default : t).type ||= "default", "fields" in t && (t.parsedFields = t.fields.map(e => e.req ? `<${e.name}>` : `[${e.name}]`).join(" ")), this.cmds[t.type] || (this.cmds[t.type] = new discord_js_1.Collection);
+            (t = "default" in t ? t.default : t).type ||= "default", t.mod = e, "fields" in t && (t.parsedFields = t.fields.map(e => e.req ? `<${e.name}>` : `[${e.name}]`).join(" ")), this.cmds[t.type] || (this.cmds[t.type] = new discord_js_1.Collection);
             try {
                 this.cmds[t.type].set(t.names[0] ?? "unknown", t), this.util.generateCommandDoc(t), s++
-            } catch (e) {
-                o++
+            } catch (t) {
+                this.datas.unloadedCommands.push(e, t), o++
             }
         }), t.succeed("cmds", {
             text: `Loaded ${s} Commands And Failed To Load ${o} Commands.`
         }), this
     }
     events() {
-        return console.log(`* [${"handler".color("red")}] :: ${"Running".color("green")} -> ` + "Events".color("blue")), (0, glob_1.sync)(process.cwd() + "/dist/events/**/*.js").forEach(async e => {
+        return console.log(`[${"Lupo".color("red")} -> ${"Events".color("yellow")}] ` + "Running".color("green")), (0, glob_1.sync)(process.cwd() + "/dist/events/**/*.js").forEach(async e => {
             try {
                 e && require.cache[e] && delete require.cache[e];
                 let t = require(e);
-                "dsc" === (t = "default" in t ? t.default : t).type ? (this.removeAllListeners(t.name), this?.[t.once ? "once" : "on"](t.name, (...e) => t.run(this, ...e))) : (this?.[t.type]?.removeAllListeners(t.name), this?.[t.type]?.[t.once ? "once" : "on"](t.name, (...e) => t.run(this, ...e))), console.log(`* [${"handler".color("red")}] :: ${"loaded".color("green")} event '${(t.name??"unknown").color("blue")}'`)
+                "dsc" === (t = "default" in t ? t.default : t).type ? (this.removeAllListeners(t.name), this?.[t.once ? "once" : "on"](t.name, (...e) => t.run(this, ...e))) : (this?.[t.type]?.removeAllListeners(t.name), this?.[t.type]?.[t.once ? "once" : "on"](t.name, (...e) => t.run(this, ...e))), console.log(`	[${"Lupo".color("red")} -> ${"Events".color("yellow")}] ${"Loaded".color("green")} ` + (t.name ?? "unknown").color("blue"))
             } catch (e) {
                 console.log(e)
             }
@@ -148,8 +153,8 @@ class Lupo extends discord_js_1.Client {
 ├[31m ║║╔╣║║║╔╗║╔╗║ ║║╔╣║╠╣═║╔╗║║  [0m──────────┤
 ├[31m ║╚╝║╚╝║╚╝║╚╝║ ║╚╝║╚╣║═╣║║║╚╗  [0m─────────┤
 ├[31m ╚══╩══╣╔═╩══╝ ╚══╩═╩╩═╩╝╚╩═╝  [0m─────────┤
-├───────[31m║║ [34m𝚃𝚢𝚙𝚎𝚂𝚌𝚛𝚒𝚙𝚝 𝙳𝚒𝚜𝚌𝚘𝚛𝚍𝙹𝚂 𝙲𝚕𝚒𝚎𝚗𝚝  [0m─┤
-├───────[31m╚╝ [34m𝙱𝚢 𝙺𝚊𝚎𝚍𝚎 𝚂𝚝𝚞𝚍𝚒𝚘  [0m─────────────┤
+├────── [31m║║ [34m𝚃𝚢𝚙𝚎𝚂𝚌𝚛𝚒𝚙𝚝 𝙳𝚒𝚜𝚌𝚘𝚛𝚍𝙹𝚂 𝙲𝚕𝚒𝚎𝚗𝚝  [0m─┤
+├────── [31m╚╝ [34m𝙱𝚢 𝙺𝚊𝚎𝚍𝚎 𝚂𝚝𝚞𝚍𝚒𝚘  [0m─────────────┤
 └────────────────────────────────────────┘`), this.db.connect(), this.events().commands().login(), setTimeout(() => this.isReady() || console.log("[31mCould not start client[0m") || process.kill(1), 2e4), this
     }
     async permsError(e, t, s, o = e.author) {

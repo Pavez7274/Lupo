@@ -7,7 +7,7 @@ View a User's Public Information
 
 | Name | Type | Required |
 |------|------|----------|
-| Target | Userresolvable | No |
+| Target | userResolvable | No |
 
 ## Command Usage
 ```

@@ -7,7 +7,7 @@ This Command Does Not Yet Have a Description
 
 | Name | Type | Required |
 |------|------|----------|
-| Name | String | Yes |
+| Name | string | Yes |
 
 ## Command Usage
 ```

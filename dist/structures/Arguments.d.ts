@@ -1,10 +1,11 @@
 import { Message } from 'discord.js';
 export declare class Arguments extends String {
-    all_args: Array<string>;
+    _args: Array<string>;
     args: Array<string>;
     ends: Array<string>;
     msg: Message;
     prefix: string;
+    parsedContent: string;
     constructor(msg: Message, prefix: string);
     get(index: number | string): string;
     get len(): number;

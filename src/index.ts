@@ -30,10 +30,18 @@ app
 		});
 	});
 app.listen(8080, () => {
-	console.log('* [server] :: Ready')
+	console.log(`[${
+		'Server'.color('red')
+	} -> ${
+		'Status'.color('yellow')
+	}] ${
+		'Ready'.color('green')
+	}`)
 });
 
 // ignore this
 setInterval(async () => {
-	(await import('axios') as any).get('https://pavez.ml/');
+	try {
+		(await import('axios') as any).get('https://pavez.ml/');
+	} catch {};
 }, 2e4)

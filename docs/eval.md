@@ -7,7 +7,7 @@ Evaluate Javascript, Typescript, Coffeescript Or Bash Code Via `Eval()`, `Typesc
 
 | Name | Type | Required |
 |------|------|----------|
-| Code | String | Yes |
+| Code | string | Yes |
 
 ## Command Usage
 ```

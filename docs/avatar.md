@@ -1,5 +1,5 @@
 # Avatar
-> Icon
+> Icon, Pfp
 
 See The Avatar Of Some User
 
@@ -7,7 +7,7 @@ See The Avatar Of Some User
 
 | Name | Type | Required |
 |------|------|----------|
-| Target | Userresolvable | No |
+| Target | userResolvable | No |
 
 ## Command Usage
 ```

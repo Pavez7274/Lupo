@@ -1,3 +1,4 @@
+export declare function noop(type?: "void" | "null" | "undefined" | "number" | "boolean"): void | null | undefined | 0 | false;
 export * from './generateCommandDoc';
 export * from './resolveSnowflake';
 export * from './findMember';

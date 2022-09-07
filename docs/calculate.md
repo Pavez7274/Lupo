@@ -7,7 +7,7 @@ a Simple Calculator
 
 | Name | Type | Required |
 |------|------|----------|
-| Operation | Any | Yes |
+| Operation | any | Yes |
 
 ## Command Usage
 ```

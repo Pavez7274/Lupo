@@ -4,13 +4,14 @@ Object.defineProperty(exports, "__esModule", {
 }), exports.Arguments = void 0;
 const isBoolean_1 = require("../util/isBoolean");
 class Arguments extends String {
-    all_args;
+    _args;
     args;
     ends;
     msg;
     prefix;
-    constructor(s, t) {
-        super(s.content), this.prefix = t, this.msg = s, this.all_args = this.slice(t.length).trim().split(/ +/g), this.args = this.all_args.filter(s => !s.startsWith("--")), this.ends = this.all_args.filter(s => s.startsWith("--"))
+    parsedContent;
+    constructor(s, e) {
+        super(s.content), this.prefix = e, this.msg = s, this.parsedContent = this.slice(e.length).trim(), this.ends = this.parsedContent.match(/--(\w+)(=(".*?"|.)|)/gim) ?? [], this._args = this.parsedContent.split(/ +/g), this.args = this.parsedContent.replace(/--(\w+)=".*?"/gim, "--$1=ValueInQuotes").split(/ +/g).filter(s => !s.startsWith("--"))
     }
     get(s) {
         return this.args?.["last" === s ? this.length - 1 : s] || void 0
@@ -18,31 +19,33 @@ class Arguments extends String {
     get len() {
         return this.args.length
     }
-    string(s = 0, t = " ") {
-        return (s ? this.all_args : this.args).join(t)
+    string(s = 0, e = " ") {
+        return (s ? this._args : this.args).join(e)
     }
     shift() {
         var s = this.args.shift(),
-            t = this.all_args.indexOf(s);
-        return -1 !== t && this.all_args.splice(t, 1), s
+            e = this._args.indexOf(s);
+        return -1 !== e && this._args.splice(e, 1), s
     }
     pop() {
         var s = this.args.pop(),
-            t = this.all_args.indexOf(s);
-        return -1 !== t && this.all_args.splice(t, 1), s
+            e = this._args.indexOf(s);
+        return -1 !== e && this._args.splice(e, 1), s
     }
-    endIsTrue(t, s = !1) {
-        var e = this.ends.find(s => s.toLowerCase().startsWith("--" + t.toLowerCase()));
-        return e ? new RegExp(`--${t}(=(true|yes|1)|)`, "gi").test(e) : s
+    endIsTrue(e, s = !1) {
+        var t = this.ends.find(s => new RegExp("--" + e, "gi").test(s));
+        return t ? new RegExp(`--${e}(=(true|yes|1)|)`, "gi").test(t) : s
     }
-    endIsFalse(t, s = !1) {
-        var e = this.ends.find(s => s.toLowerCase().startsWith("--" + t.toLowerCase()));
-        return e ? new RegExp(`--${t}=(false|no|0)`, "gi").test(e) : s
+    endIsFalse(e, s = !1) {
+        var t = this.ends.find(s => new RegExp("--" + e, "gi").test(s));
+        return t ? new RegExp(`--${e}=(false|no|0)`, "gi").test(t) : s
     }
-    getEndValue(t) {
-        let s = this.ends.find(s => new RegExp(t, "gi").test(s));
-        var e;
-        if (s) return e = s.split(/=/g).slice(1).join("="), (0, isBoolean_1.isBoolean)(e) ? (0, isBoolean_1.parse)(e) : isNaN(Number(e)) ? e : Number(e)
+    getEndValue(e) {
+        let t = this.ends.find(s => new RegExp(e, "gi").test(s));
+        if (t) {
+            let s = t.split(/=/g).slice(1).join("=");
+            return (0, isBoolean_1.isBoolean)(s) ? (0, isBoolean_1.parse)(s) : s.endsWith("n") && BigInt(s.slice(0, -1)) ? BigInt(s.slice(0, -1)) : isNaN(Number(s)) ? s.startsWith('"') && s.endsWith('"') ? s.slice(1, -1) : s : Number(s)
+        }
     }
 }
 exports.Arguments = Arguments;

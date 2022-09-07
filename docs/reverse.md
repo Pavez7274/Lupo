@@ -7,7 +7,7 @@ Invert a Text
 
 | Name | Type | Required |
 |------|------|----------|
-| Text | String | Yes |
+| Text | string | Yes |
 
 ## Command Usage
 ```

@@ -16,7 +16,7 @@ export function generateCommandDoc (cmd:any) {
 		str.push('| Name | Type | Required |');
 		str.push('|------|------|----------|');
 		for (let field of cmd.fields) {
-			str.push(`| ${field.name.toTitleCase()} | ${field.type.toTitleCase()} | ${field.req ? 'Yes' : 'No'} |`);
+			str.push(`| ${field.name.toTitleCase()} | ${field.type} | ${field.req ? 'Yes' : 'No'} |`);
 		};
 		str.push('');
 	};

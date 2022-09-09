@@ -1,36 +1,52 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", {
-    value: !0
-}), exports.paginator = void 0;
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.paginator = void 0;
 const discord_js_1 = require("discord.js");
-async function paginator(s, o, n, e = 6e4, t = !1) {
-    let d = [new discord_js_1.ActionRowBuilder],
-        a = 0;
-    d[0].setComponents((new discord_js_1.ButtonBuilder).setCustomId("back").setLabel("<<").setStyle(1).setDisabled(!0), (new discord_js_1.ButtonBuilder).setCustomId("next").setLabel(">>").setStyle(1).setDisabled(1 === n.length)), o instanceof discord_js_1.Message || o.deferred || await o.deferReply({
-        ephemeral: t
+async function paginator(data, ins, pages, time = 6e4, ephemeral = false) {
+    let components = [new discord_js_1.ActionRowBuilder()], actual = 0;
+    components[0].setComponents(new discord_js_1.ButtonBuilder().setCustomId('back').setLabel('<<').setStyle(1).setDisabled(true), new discord_js_1.ButtonBuilder().setCustomId('next').setLabel('>>').setStyle(1).setDisabled(pages.length === 1));
+    if (!(ins instanceof discord_js_1.Message) && !ins.deferred)
+        await ins.deferReply({ ephemeral });
+    const $ = await ins?.[ins instanceof discord_js_1.Message ? 'edit' : 'editReply']({
+        embeds: data.lappy.makeEmbeds(data, pages[actual]),
+        fetchReply: true,
+        components
     });
-    const i = await o?.[o instanceof discord_js_1.Message ? "edit" : "editReply"]({
-            embeds: s.lappy.makeEmbeds(s, n[a]),
-            fetchReply: !0,
-            components: d
-        }),
-        c = await i.createMessageComponentCollector({
-            type: 2,
-            filter: function(e) {
-                return ["back", "next"].includes(e.customId)
-            },
-            time: e
+    function filter(i) {
+        return ['back', 'next'].includes(i.customId);
+    }
+    ;
+    const col = await $.createMessageComponentCollector({
+        type: 2, filter, time
+    });
+    col.on('collect', (i) => {
+        if (i.customId === 'back')
+            actual = actual > 0
+                ? actual - 1
+                : 0;
+        else if (i.customId === 'next')
+            actual = pages.length - 1 > actual
+                ? actual + 1
+                : pages.length - 1;
+        components[0].components[0].setDisabled(actual <= 0);
+        components[0].components[1].setDisabled(actual >= pages.length - 1);
+        i.update({
+            embeds: data.lappy.makeEmbeds(data, pages[actual]),
+            components
         });
-    c.on("collect", e => {
-        "back" === e.customId ? a = 0 < a ? a - 1 : 0 : "next" === e.customId && (a = n.length - 1 > a ? a + 1 : n.length - 1), d[0].components[0].setDisabled(a <= 0), d[0].components[1].setDisabled(a >= n.length - 1), e.update({
-            embeds: s.lappy.makeEmbeds(s, n[a]),
-            components: d
-        }), c.resetTimer()
-    }).on("end", (e, t) => {
-        "messageDelete" !== t && (d[0].components[0].setDisabled(!0), d[0].components[1].setDisabled(!0), o?.[o instanceof discord_js_1.Message ? "edit" : "editReply"]({
-            embeds: s.lappy.makeEmbeds(s, n[a]),
-            components: d
-        }))
-    })
+        col.resetTimer();
+    }).on('end', (nya, r) => {
+        if (r === 'messageDelete')
+            return;
+        components[0].components[0].setDisabled(true);
+        components[0].components[1].setDisabled(true);
+        ins?.[ins instanceof discord_js_1.Message ? 'edit' : 'editReply']({
+            embeds: data.lappy.makeEmbeds(data, pages[actual]),
+            components
+        });
+    });
 }
-exports.paginator = paginator, exports.default = paginator;
+exports.paginator = paginator;
+;
+exports.default = paginator;
+//# sourceMappingURL=paginator.js.map

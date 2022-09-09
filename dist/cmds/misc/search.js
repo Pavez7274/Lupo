@@ -1,73 +1,71 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", {
-    value: !0
-});
+Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
-
-function pad(e, t = 2) {
-    return ("00" + e).slice(-t)
+function pad(n, z = 2) {
+    return ('00' + n).slice(-z);
 }
-
-function parse(e) {
-    return pad(e % 36e5 / 6e4 | 0) + ":" + pad(e % 6e4 / 1e3 | 0)
+;
+function parse(ms) {
+    return pad((ms % 3.6e6) / 6e4 | 0) + ':' + pad((ms % 6e4) / 1e3 | 0);
 }
+;
 exports.default = {
-    names: ["search", "song", "track", "playlist"],
+    names: [
+        'search',
+        'song',
+        'track',
+        'playlist'
+    ],
     fields: [{
-        name: "name",
-        req: !0,
-        type: "string"
-    }],
-    type: "default",
-    run: async t => {
-        let e = (await t.lappy.spotify.search({
-            q: t.args.string()
-        })).tracks;
-        if (!e?.items) return t.lappy.sendError(t, t.msg, "not found", `I couldn't find the song ['${t.args.string().cropAt(10)??"unknown"}']`);
-        if (t.args.endIsTrue("list") || t.args.endIsTrue("l")) return s = t.lappy.makeEmbeds(t, {
-            title: t.lappy.emotes.spotify + " | Search on Spotify",
-            description: e.items.map((e, t) => `\`${t+1}.\` **[${e.name}](${e.external_urls.spotify}) by [${e.artists[0].name}](${e.artists[0].external_urls.spotify})**`).join("\n")
-        }), t.msg.reply({
-            embeds: s
+            name: 'name',
+            req: true,
+            type: 'string'
+        }],
+    type: 'default',
+    run: async (d) => {
+        let { tracks } = await d.lappy.spotify.search({
+            q: d.args.string()
         });
-        var s = Number(t.args.getEndValue("index") || 1) - 1;
-        if (isNaN(s) || Math.floor(s) != s || s < 0 || e.items.length - 1 < s) return t.lappy.sendError(t, t.msg, "invalid type", "[--index] must be a valid number");
-        let n = e.items[s],
-            r = t.lappy.makeEmbeds(t, {
-                title: t.lappy.emotes.spotify + " | Search on Spotify",
-                description: `**Song** :: [${n.name}](${n.external_urls.spotify})
-**Artists** :: ${n.artists.map(e=>`[${e.name}](${e.external_urls.spotify})`).join(" | ")}
-**${n.album.type.toTitleCase()}** :: [${n.album.name}](${n.album.external_urls.spotify})
-**Duration** :: ${parse(n.duration_ms)}
-**Explicit** :: ${n.explicit?"Yes":"No"}
+        if (!tracks?.items)
+            return d.lappy.sendError(d, d.msg, 'not found', `I couldn't find the song ['${d.args.string().cropAt(10) ?? 'unknown'}']`);
+        if (d.args.endIsTrue('list') || d.args.endIsTrue('l')) {
+            let embeds = d.lappy.makeEmbeds(d, {
+                title: `${d.lappy.emotes.spotify} | Search on Spotify`,
+                description: tracks.items.map((t, r) => `\`${r + 1}.\` **[${t.name}](${t.external_urls.spotify}) by [${t.artists[0].name}](${t.artists[0].external_urls.spotify})**`).join('\n')
+            });
+            return d.msg.reply({ embeds });
+        }
+        ;
+        let i = Number(d.args.getEndValue('index') || 1) - 1;
+        if (isNaN(i) || Math.floor(i) != i || 0 > i || tracks.items.length - 1 < i)
+            return d.lappy.sendError(d, d.msg, 'invalid type', '[--index] must be a valid number');
+        let track = tracks.items[i];
+        let embeds = d.lappy.makeEmbeds(d, {
+            title: `${d.lappy.emotes.spotify} | Search on Spotify`,
+            description: `**Song** :: [${track.name}](${track.external_urls.spotify})
+**Artists** :: ${track.artists.map((art) => `[${art.name}](${art.external_urls.spotify})`).join(' | ')}
+**${track.album.type.toTitleCase()}** :: [${track.album.name}](${track.album.external_urls.spotify})
+**Duration** :: ${parse(track.duration_ms)}
+**Explicit** :: ${track.explicit ? 'Yes' : 'No'}
 
-[Click here to listen a preview](${n.preview_url})`,
-                thumbnail: {
-                    url: n.album.images[0].url
-                }
-            }),
-            a = [new discord_js_1.ActionRowBuilder];
-        a[0].setComponents((new discord_js_1.ButtonBuilder).setCustomId("songThumbnail").setLabel("Get Thumbnail").setStyle(1));
-        const i = await t.msg.reply({
-            embeds: r,
-            components: a
-        });
-        i.createMessageComponentCollector({
-            filter: ({
-                customId: e
-            }) => "songThumbnail" == e,
+[Click here to listen a preview](${track.preview_url})`,
+            thumbnail: { url: track.album.images[0].url }
+        }), components = [new discord_js_1.ActionRowBuilder()];
+        components[0].setComponents(new discord_js_1.ButtonBuilder().setCustomId('songThumbnail').setLabel('Get Thumbnail').setStyle(1));
+        const msg = await d.msg.reply({ embeds, components });
+        msg.createMessageComponentCollector({
+            filter: ({ customId }) => customId == 'songThumbnail',
             componentType: 2,
             time: 6e4
-        }).on("collect", e => {
-            e = {
-                int: e,
-                track: n,
-                ...t
-            }, t.lappy.cmds.button.get("song_thumbnail").run(e)
-        }).on("end", () => {
-            a[0].components[0].setDisabled(!0), i.edit({
-                components: a
-            })
         })
+            .on('collect', (int) => {
+            let data = { int, track, ...d };
+            d.lappy.cmds.button.get('song_thumbnail').run(data);
+        })
+            .on('end', () => {
+            components[0].components[0].setDisabled(true);
+            msg.edit({ components });
+        });
     }
 };
+//# sourceMappingURL=search.js.map

@@ -168,7 +168,7 @@ export class Lupo extends Client {
 		return this;
 	};
 
-	public start (): Lupo {
+	public start (token: string = process.env?.DISCORD_TOKEN || process.env.LUPO_TOKEN): Lupo {
 		console.log(`┌────────────────────────────────────────┐
 ├\x1b[31m ╔╗  \x1b[0m───────── \x1b[31m╔══╦╗  \x1b[0m─── \x1b[31m╔╗  \x1b[0m──────────┤
 ├\x1b[31m ║║  \x1b[0m───────── \x1b[31m║╔╗║║  \x1b[0m── \x1b[31m╔╝╚╗  \x1b[0m─────────┤
@@ -193,7 +193,7 @@ export class Lupo extends Client {
 					})
 				);
 			})*/
-			.login();
+			.login(token);
 		setTimeout(() => this.isReady() || console.log('\x1b[31mCould not start client\x1b[0m') || process.kill(1), 2e4);
 		return this;
 	};

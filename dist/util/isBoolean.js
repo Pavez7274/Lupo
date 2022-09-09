@@ -1,30 +1,44 @@
 "use strict";
-
-function isBoolean(e) {
-    return ["false", "true", "yes", "no", "1", "0"].includes(e)
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.parse = exports.isBoolean = void 0;
+function isBoolean(str) {
+    return [
+        'false',
+        'true',
+        'yes',
+        'no',
+        '1',
+        '0'
+    ].includes(str);
 }
-
-function parse(e) {
-    let s = !1;
-    switch (e) {
-        case "yes":
-            s = !0;
+exports.isBoolean = isBoolean;
+;
+function parse(str) {
+    let r = false;
+    switch (str) {
+        case 'yes':
+            r = true;
             break;
-        case "no":
-            s = !1;
+        case 'no':
+            r = false;
             break;
-        case "true":
-        case "1":
-            s = !0;
+        case 'true':
+            r = true;
             break;
-        case "0":
-            s = !1
+        case '1':
+            r = true;
+            break;
+        case '0':
+            r = false;
+            break;
     }
-    return s
+    ;
+    return r;
 }
-Object.defineProperty(exports, "__esModule", {
-    value: !0
-}), exports.parse = exports.isBoolean = void 0, exports.isBoolean = isBoolean, exports.parse = parse, exports.default = {
-    isBoolean: isBoolean,
-    parse: parse
+exports.parse = parse;
+;
+exports.default = {
+    isBoolean,
+    parse
 };
+//# sourceMappingURL=isBoolean.js.map

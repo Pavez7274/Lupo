@@ -1,24 +1,19 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", {
-    value: !0
-}), exports.default = {
-    names: ["bored"],
-    type: "default",
-    desc: "",
-    run: async e => {
-        var a = e.memb.displayName + " is bored " + e.lappy.emotes.death,
-            t = await e.lappy.neko.img("bored"),
-            a = e.lappy.makeEmbeds(e, {
-                image: {
-                    url: t.url
-                },
-                title: a,
-                footer: {
-                    text: "anime: " + t.anime_name
-                }
-            });
-        return e.msg.reply({
-            embeds: a
-        })
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.default = {
+    names: [
+        'bored',
+    ],
+    type: 'default',
+    desc: '',
+    run: async (d) => {
+        let title = `${d.memb.displayName} is bored ${d.lappy.emotes.death}`;
+        let result = await d.lappy.neko.img('bored'), embeds = d.lappy.makeEmbeds(d, {
+            image: { url: result.url },
+            title,
+            footer: { text: `anime: ${result.anime_name}` }
+        });
+        return d.msg.reply({ embeds });
     }
 };
+//# sourceMappingURL=bored.js.map

@@ -10,7 +10,7 @@ export function run (lappy: Lupo, queue: Queue, song: Song): void {
 		embeds: lappy.makeEmbeds(song.metadata, {
 			title: `${lappy.emotes.feli} | Song Added -> ${song.source}`, 
 			description: `**[ Song ]** -> [${song.name}](${song.url})${
-				song.playlist && `**[ PlayList ]** -> [${song.playlist.name}](${song.playlist.url})\n`
+				song.playlist ? `**[ PlayList ]** -> [${song.playlist.name}](${song.playlist.url})\n` : ''
 			} 
 **[ Uploader ]** -> [${song.uploader.name}](${song.uploader.url})
 **[ Duration ]** -> \`${song.formattedDuration}\`

@@ -1,46 +1,46 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", {
-    value: !0
-}), exports.default = {
-    names: ["avatar", "icon", "pfp"],
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.default = {
+    names: [
+        'avatar',
+        'icon',
+        'pfp'
+    ],
     fields: [{
-        name: "target",
-        type: "userResolvable",
-        req: !1
-    }],
-    desc: "see the avatar of some user",
-    type: "default",
-    run: async e => {
-        let t, a;
-        if (!(t = e.args.len ? await e.lappy.util.findUser(e.lappy, e.args.string()) : e.author)) return e.lappy.sendError(e, e.msg, "not found", `No Matches Were Found With ['${e.args.string().slice(0,10)}']`);
-        a = await e.gd.members.fetch(t.id).catch(() => {});
-        var r = (e.args.endIsFalse("global", !0) && a || t).displayAvatarURL({
-                size: 4096
-            }),
-            r = e.lappy.makeEmbeds(e, {
-                title: e.lappy.emotes.tofu + " | " + t.tag,
-                url: r,
-                image: {
-                    height: 4096,
-                    url: r
-                }
-            });
-        return e.msg.reply({
-            embeds: r
-        })
-    },
-    contextRun: async e => {
-        var t = e.int.targetMember.displayAvatarURL({
-            size: 4096
+            name: 'target',
+            type: 'userResolvable',
+            req: false
+        }],
+    desc: 'see the avatar of some user',
+    type: 'default',
+    run: async (d) => {
+        let user, memb;
+        if (d.args.len)
+            user = await d.lappy.util.findUser(d.lappy, d.args.string());
+        else
+            user = d.author;
+        if (!user)
+            return d.lappy.sendError(d, d.msg, 'not found', `No Matches Were Found With ['${d.args.string().slice(0, 10)}']`);
+        memb = await d.gd.members.fetch(user.id).catch(() => { });
+        let url = ((d.args.endIsFalse('global', true) && memb) || user).displayAvatarURL({ size: 4096 }), embeds = d.lappy.makeEmbeds(d, {
+            title: `${d.lappy.emotes.tofu} | ${user.tag}`,
+            url,
+            image: {
+                height: 4096,
+                url
+            }
         });
-        return e.int.reply({
-            embeds: e.lappy.makeEmbeds(e, {
-                title: e.lappy.emotes.tofu + " | " + e.int.targetUser.tag,
-                image: {
-                    url: t
-                },
-                url: t
+        return d.msg.reply({ embeds });
+    },
+    contextRun: async (d) => {
+        let url = d.int.targetMember.displayAvatarURL({ size: 4096 });
+        return d.int.reply({
+            embeds: d.lappy.makeEmbeds(d, {
+                title: `${d.lappy.emotes.tofu} | ${d.int.targetUser.tag}`,
+                image: { url },
+                url
             })
-        })
+        });
     }
 };
+//# sourceMappingURL=avatar.js.map

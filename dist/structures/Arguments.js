@@ -1,7 +1,6 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", {
-    value: !0
-}), exports.Arguments = void 0;
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.Arguments = void 0;
 const isBoolean_1 = require("../util/isBoolean");
 class Arguments extends String {
     _args;
@@ -10,42 +9,80 @@ class Arguments extends String {
     msg;
     prefix;
     parsedContent;
-    constructor(s, e) {
-        super(s.content), this.prefix = e, this.msg = s, this.parsedContent = this.slice(e.length).trim(), this.ends = this.parsedContent.match(/--(\w+)(=(".*?"|.)|)/gim) ?? [], this._args = this.parsedContent.split(/ +/g), this.args = this.parsedContent.replace(/--(\w+)=".*?"/gim, "--$1=ValueInQuotes").split(/ +/g).filter(s => !s.startsWith("--"))
+    constructor(msg, prefix) {
+        super(msg.content);
+        this.prefix = prefix;
+        this.msg = msg;
+        this.parsedContent = this
+            .slice(prefix.length)
+            .trim();
+        this.ends = this.parsedContent.match(/--(\w+)(=(".*?"|.)|)/gim) ?? [];
+        this._args = this.parsedContent.split(/ +/g);
+        this.args = this.parsedContent
+            .replace(/--(\w+)=".*?"/gim, '--$1=ValueInQuotes')
+            .split(/ +/g)
+            .filter((arg) => !arg.startsWith('--'));
     }
-    get(s) {
-        return this.args?.["last" === s ? this.length - 1 : s] || void 0
+    ;
+    get(index) {
+        return this.args?.[index === 'last' ? this.length - 1 : index] || void 0;
     }
+    ;
     get len() {
-        return this.args.length
+        return this.args.length;
     }
-    string(s = 0, e = " ") {
-        return (s ? this._args : this.args).join(e)
+    ;
+    string(all = 0, sep = ' ') {
+        return all ? this._args.join(sep) : this.args.join(sep);
     }
+    ;
     shift() {
-        var s = this.args.shift(),
-            e = this._args.indexOf(s);
-        return -1 !== e && this._args.splice(e, 1), s
+        const shifted = this.args.shift(), index = this._args.indexOf(shifted);
+        if (index === -1)
+            return shifted;
+        this._args.splice(index, 1);
+        return shifted;
     }
+    ;
     pop() {
-        var s = this.args.pop(),
-            e = this._args.indexOf(s);
-        return -1 !== e && this._args.splice(e, 1), s
+        const poped = this.args.pop(), index = this._args.indexOf(poped);
+        if (index === -1)
+            return poped;
+        this._args.splice(index, 1);
+        return poped;
     }
-    endIsTrue(e, s = !1) {
-        var t = this.ends.find(s => new RegExp("--" + e, "gi").test(s));
-        return t ? new RegExp(`--${e}(=(true|yes|1)|)`, "gi").test(t) : s
+    ;
+    endIsTrue(name, def = false) {
+        let end = this.ends.find((end) => new RegExp(`--${name}`, 'gi').test(end));
+        if (!end)
+            return def;
+        return (new RegExp(`--${name}(=(true|yes|1)|)`, 'gi')).test(end);
     }
-    endIsFalse(e, s = !1) {
-        var t = this.ends.find(s => new RegExp("--" + e, "gi").test(s));
-        return t ? new RegExp(`--${e}=(false|no|0)`, "gi").test(t) : s
+    ;
+    endIsFalse(name, def = false) {
+        let end = this.ends.find((end) => new RegExp(`--${name}`, 'gi').test(end));
+        if (!end)
+            return def;
+        return (new RegExp(`--${name}=(false|no|0)`, 'gi')).test(end);
     }
-    getEndValue(e) {
-        let t = this.ends.find(s => new RegExp(e, "gi").test(s));
-        if (t) {
-            let s = t.split(/=/g).slice(1).join("=");
-            return (0, isBoolean_1.isBoolean)(s) ? (0, isBoolean_1.parse)(s) : s.endsWith("n") && BigInt(s.slice(0, -1)) ? BigInt(s.slice(0, -1)) : isNaN(Number(s)) ? s.startsWith('"') && s.endsWith('"') ? s.slice(1, -1) : s : Number(s)
-        }
+    ;
+    getEndValue(name) {
+        let end = this.ends.find((End) => (new RegExp(name, 'gi')).test(End));
+        if (!end)
+            return void 0;
+        let value = end.split(/=/g).slice(1).join('=');
+        if ((0, isBoolean_1.isBoolean)(value))
+            return (0, isBoolean_1.parse)(value);
+        if (value.endsWith('n') && !!BigInt(value.slice(0, -1)))
+            return BigInt(value.slice(0, -1));
+        if (!isNaN(Number(value)))
+            return Number(value);
+        if (value.startsWith('"') && value.endsWith('"'))
+            return value.slice(1, -1);
+        return value;
     }
+    ;
 }
 exports.Arguments = Arguments;
+;
+//# sourceMappingURL=Arguments.js.map

@@ -1,13 +1,17 @@
 "use strict";
-async function run(t, n) {
-    if (2 == n.type) {
-        let e = await t.cmds.default.find(e => e.names.includes(n.commandName.split(/_/g)[0]) || e?.context === n.commandName);
-        return e && e.contextRun ? e.contextRun({
-            lappy: t,
-            int: n
-        }) : n.deferReply()
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.run = exports.type = exports.name = void 0;
+exports.name = 'interactionCreate';
+exports.type = 'dsc';
+async function run(lappy, int) {
+    if (int.type == 2) {
+        let cmd = await lappy.cmds.default.find((cmd) => cmd.names.includes(int.commandName.split(/_/g)[0]) || cmd?.context === int.commandName);
+        if (!cmd || !cmd.contextRun)
+            return int.deferReply();
+        return cmd.contextRun({ lappy, int });
     }
+    ;
 }
-Object.defineProperty(exports, "__esModule", {
-    value: !0
-}), exports.run = exports.type = exports.name = void 0, exports.name = "interactionCreate", exports.type = "dsc", exports.run = run;
+exports.run = run;
+;
+//# sourceMappingURL=interaction.js.map

@@ -3,7 +3,10 @@
 import { escapeCodeBlock } from 'discord.js';
 import { random } from './random';
 
-// strings 
+// strings
+String.prototype.insensitiveIncludes = function (match: string, fromIndex: number | void): boolean {
+	return this.toLowerCase().includes(match.toLowerCase(), fromIndex)
+};
 String.prototype.toTitleCase = function (): string {
 	return this.replace(/\w\S{1,}/gim, (word: string) => word.toLowerCase().replace(word[0].toLowerCase(), word[0].toUpperCase()));
 };
@@ -78,7 +81,7 @@ Array.prototype.addAt = function (position: number, ...items: any) {
 };
 
 Array.prototype.chunk = function (limit: number) {
-	for (var size = Math.ceil(this.length / limit), chunks = [], index = 0; index < size;)
-		chunks[index] = this.splice(0, limit), o++
+	for (var size = Math.ceil(this.length / limit), chunks = [], index = 0; index < size; index++)
+		chunks[index] = this.splice(0, limit);
 	return chunks;
 };

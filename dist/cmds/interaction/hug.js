@@ -1,30 +1,36 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", {
-    value: !0
-}), exports.default = {
-    names: ["hug"],
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.default = {
+    names: [
+        'hug'
+    ],
     fields: [{
-        name: "target",
-        type: "memberResolvable",
-        req: !0
-    }],
-    type: "default",
-    desc: "hug someone >w<",
-    run: async e => {
-        if (!(a = await e.lappy.util.findMember(e.gd, e.args.string()))) return e.lappy.sendError(e, e.msg, "not found", `No Matches Were Found With ['${e.args.string().slice(0,10)}']`);
-        var a = a.id === e.lappy?.user?.id ? e.memb.displayName + " are hugging me?! " + e.lappy.emotes.error : a.id === e.author.id ? e.memb.displayName + " is hugging him/herself -w-" : `${e.memb.displayName} is hugging ${a.displayName} ` + e.lappy.emotes.feli,
-            r = await e.lappy.neko.img("hug"),
-            r = e.lappy.makeEmbeds(e, {
-                image: {
-                    url: r.url
-                },
-                title: a,
-                footer: {
-                    text: "anime: " + r.anime_name
-                }
-            });
-        return e.msg.reply({
-            embeds: r
-        })
+            name: 'target',
+            type: 'memberResolvable',
+            req: true
+        }],
+    type: 'default',
+    desc: 'hug someone >w<',
+    run: async (d) => {
+        let snowy = await d.lappy.util.findMember(d.gd, d.args.string()), title;
+        if (!snowy)
+            return d.lappy.sendError(d, d.msg, 'not found', `No Matches Were Found With ['${d.args.string().slice(0, 10)}']`);
+        if (snowy.id === d.lappy?.user?.id) {
+            title = `${d.memb.displayName} are hugging me?! ${d.lappy.emotes.error}`;
+        }
+        else if (snowy.id === d.author.id) {
+            title = `${d.memb.displayName} is hugging him/herself -w-`;
+        }
+        else {
+            title = `${d.memb.displayName} is hugging ${snowy.displayName} ${d.lappy.emotes.feli}`;
+        }
+        ;
+        let result = await d.lappy.neko.img('hug'), embeds = d.lappy.makeEmbeds(d, {
+            image: { url: result.url },
+            title,
+            footer: { text: `anime: ${result.anime_name}` }
+        });
+        return d.msg.reply({ embeds });
     }
 };
+//# sourceMappingURL=hug.js.map

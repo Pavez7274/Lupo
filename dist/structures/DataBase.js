@@ -1,30 +1,40 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", {
-    value: !0
-}), exports.DB = void 0;
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.DB = void 0;
 const dbdjs_db_1 = require("dbdjs.db");
 class DB extends dbdjs_db_1.Database {
     main;
-    constructor(e, s) {
-        super(e), this.main = s
+    constructor(options, main) {
+        super(options);
+        this.main = main;
     }
-    async set(e, s, t, a = void 0, r = "main") {
-        return super.set(r, (e + "_" + s).toUpperCase(), t, a)
+    ;
+    async set(name, id, value, ttl = void 0, table = 'main') {
+        return super.set(table, (`${name}_${id}`).toUpperCase(), value, ttl);
     }
-    async add(e, s, t = 1, a = 0, r = void 0, i = "main") {
-        return a = await this.get(e, s, a, i) ?? 0, this.set(e, s, a + t, r, i)
+    ;
+    async add(name, id, value = 1, def = 0, ttl = void 0, table = 'main') {
+        let old = await this.get(name, id, def, table) ?? 0;
+        return await this.set(name, id, old + value, ttl, table);
     }
-    async get(e, s, t = void 0, a = "main") {
-        return (await super.get(a, (e + "_" + s).toUpperCase()))?.value ?? t
+    ;
+    async get(type, id, def = void 0, table = 'main') {
+        return (await super.get(table, (`${type}_${id}`).toUpperCase()))?.value ?? def;
     }
-    async delete(e, s, t = this.main) {
-        return super.delete(t, (e + "_" + s).toUpperCase())
+    ;
+    async delete(name, id, table = this.main) {
+        return await super.delete(table, (`${name}_${id}`).toUpperCase());
     }
-    async all(e = this.main) {
-        return super.all(e)
+    ;
+    async all(table = this.main) {
+        return await super.all(table);
     }
-    async has(e, s = this.main) {
-        return (await this.all(s)).some(e)?.length
+    ;
+    async has(filter, table = this.main) {
+        return (await this.all(table)).some(filter)?.length;
     }
+    ;
 }
 exports.DB = DB;
+;
+//# sourceMappingURL=DataBase.js.map

@@ -1,56 +1,52 @@
 "use strict";
-var __createBinding = this && this.__createBinding || (Object.create ? function(e, t, r, i) {
-        void 0 === i && (i = r), Object.defineProperty(e, i, {
-            enumerable: !0,
-            get: function() {
-                return t[r]
-            }
-        })
-    } : function(e, t, r, i) {
-        e[i = void 0 === i ? r : i] = t[r]
-    }),
-    __setModuleDefault = this && this.__setModuleDefault || (Object.create ? function(e, t) {
-        Object.defineProperty(e, "default", {
-            enumerable: !0,
-            value: t
-        })
-    } : function(e, t) {
-        e.default = t
-    }),
-    __importStar = this && this.__importStar || function(e) {
-        if (e && e.__esModule) return e;
-        var t = {};
-        if (null != e)
-            for (var r in e) "default" !== r && Object.prototype.hasOwnProperty.call(e, r) && __createBinding(t, e, r);
-        return __setModuleDefault(t, e), t
-    };
-Object.defineProperty(exports, "__esModule", {
-    value: !0
-}), exports.default = {
-    names: ["kiss"],
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.default = {
+    names: [
+        'kiss'
+    ],
     fields: [{
-        name: "target",
-        type: "memberResolvable",
-        req: !0
-    }],
-    desc: "uh, well, u know, what couples do...",
-    type: "default",
-    run: async e => {
-        if (!(r = await e.lappy.util.findMember(e.gd, e.args.string()))) return e.lappy.sendError(e, e.msg, "not found", `No Matches Were Found With ['${e.args.string().slice(0,10)}']`);
-        if (r.id === e.lappy?.user?.id) return e.msg.reply("ew no");
-        if (r.id === e.author.id) return e.msg.reply("u're narcissistic?!?");
-        var t = await e.lappy.neko.img("kiss"),
-            r = e.lappy.makeEmbeds(e, {
-                image: {
-                    url: t.url
-                },
-                title: `${e.memb.displayName} is kissing ${r.displayName} ${(await Promise.resolve().then(()=>__importStar(require("../../util/protos")))).faces.random()}!!`,
-                footer: {
-                    text: "anime: " + t.anime_name
-                }
-            });
-        return e.msg.reply({
-            embeds: r
-        })
+            name: 'target',
+            type: 'memberResolvable',
+            req: true
+        }],
+    desc: 'uh, well, u know, what couples do...',
+    type: 'default',
+    run: async (d) => {
+        let snowy = await d.lappy.util.findMember(d.gd, d.args.string());
+        if (!snowy)
+            return d.lappy.sendError(d, d.msg, 'not found', `No Matches Were Found With ['${d.args.string().slice(0, 10)}']`);
+        if (snowy.id === d.lappy?.user?.id) {
+            return d.msg.reply('ew no');
+        }
+        else if (snowy.id === d.author.id) {
+            return d.msg.reply('u\'re narcissistic?!?');
+        }
+        ;
+        let result = await d.lappy.neko.img('kiss'), embeds = d.lappy.makeEmbeds(d, {
+            image: { url: result.url },
+            title: `${d.memb.displayName} is kissing ${snowy.displayName} ${(await Promise.resolve().then(() => __importStar(require('../../util/protos')))).faces.random()}!!`,
+            footer: { text: `anime: ${result.anime_name}` }
+        });
+        return d.msg.reply({ embeds });
     }
 };
+//# sourceMappingURL=kiss.js.map

@@ -31,7 +31,7 @@ export default {
 		await nya.edit('optimizing dist...');
 		await require(process.cwd().concat('/uglifier')).optimizeDist();
 		if (d.args.endIsTrue('(reboot|rt|r)'))
-			return nya.edit('rebooting...'), d.reboot();
+			return await nya.edit('rebooting...') && d.reboot();
 		if (d.args.endIsTrue('(commands|cmds|c)', true))
 			d.lappy.commands();
 		if (d.args.endIsTrue('(events|evs|e)', true))

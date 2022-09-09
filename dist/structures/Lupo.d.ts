@@ -23,7 +23,7 @@ export declare class Lupo extends Client {
     constructor();
     commands(): Lupo;
     events(): Lupo;
-    start(): Lupo;
+    start(token?: string): Lupo;
     permsError(data: any, instance: any, perms: string[], target?: User): Message;
     sendError(data: any, instance: any, type: string | undefined, msg: string | undefined, target?: User, components?: ActionRow<any>[] | void[], content?: string): Promise<Message>;
     makeEmbeds(data: any, ...embeds: APIEmbed[] | object[]): APIEmbed[];

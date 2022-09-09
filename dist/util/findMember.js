@@ -1,22 +1,52 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", {
-    value: !0
-}), exports.findMembers = exports.findMember = void 0;
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.findMembers = exports.findMember = void 0;
 const resolveSnowflake_1 = require("./resolveSnowflake");
-async function findMember(e, s, r) {
-    await e.members.fetch();
-    let t = new RegExp(s, r ?? "gi");
-    if ("" !== (s = s.toLowerCase().trim())) return (0, resolveSnowflake_1.isSnowflake)((0, resolveSnowflake_1.resolveSnowflake)(s)) ? e.members.cache.get((0, resolveSnowflake_1.resolveSnowflake)(s)) : e.members.cache.find(e => {
-        var r = e.displayName + e.user.discriminator;
-        return s === e.user.username.toLowerCase() || s === e.displayName || s === e.user.tag || s === r || t.test(e.displayName) || t.test(r) || t.test(e.user.tag) || s === e.toString() || (0, resolveSnowflake_1.resolveSnowflake)(s) === e.user.id
-    })
+async function findMember(guild, resolvable, flags) {
+    await guild.members.fetch();
+    let reg = new RegExp(resolvable, flags ?? 'gi');
+    resolvable = resolvable.toLowerCase().trim();
+    if (resolvable === '')
+        return;
+    if ((0, resolveSnowflake_1.isSnowflake)((0, resolveSnowflake_1.resolveSnowflake)(resolvable))) {
+        return guild.members.cache.get((0, resolveSnowflake_1.resolveSnowflake)(resolvable));
+    }
+    ;
+    return guild.members.cache.find((member) => {
+        let displayTag = member.displayName + member.user.discriminator;
+        return resolvable === member.user.username.toLowerCase() ||
+            resolvable === member.displayName ||
+            resolvable === member.user.tag ||
+            resolvable === displayTag ||
+            reg.test(member.displayName) ||
+            reg.test(displayTag) ||
+            reg.test(member.user.tag) ||
+            resolvable === member.toString() ||
+            (0, resolveSnowflake_1.resolveSnowflake)(resolvable) === member.user.id;
+    });
 }
-async function findMembers(e, s, r = 1 / 0, t) {
-    await e.members.fetch();
-    let a = new RegExp(s, t ?? "gi");
-    if ("" !== (s = s.toLowerCase().trim())) return e.members.cache.filter(e => {
-        var r = e.displayName + e.user.discriminator;
-        return s === e.user.username.toLowerCase() || s === e.displayName || s === e.user.tag || s === r || a.test(e.displayName) || a.test(r) || a.test(e.user.tag) || s === e.toString() || (0, resolveSnowflake_1.resolveSnowflake)(s) === e.user.id
-    }).first(r)
+exports.findMember = findMember;
+;
+async function findMembers(guild, resolvable, limit = Infinity, flags) {
+    await guild.members.fetch();
+    let reg = new RegExp(resolvable, flags ?? 'gi');
+    resolvable = resolvable.toLowerCase().trim();
+    if (resolvable === '')
+        return;
+    return guild.members.cache.filter((member) => {
+        let displayTag = member.displayName + member.user.discriminator;
+        return resolvable === member.user.username.toLowerCase() ||
+            resolvable === member.displayName ||
+            resolvable === member.user.tag ||
+            resolvable === displayTag ||
+            reg.test(member.displayName) ||
+            reg.test(displayTag) ||
+            reg.test(member.user.tag) ||
+            resolvable === member.toString() ||
+            (0, resolveSnowflake_1.resolveSnowflake)(resolvable) === member.user.id;
+    }).first(limit);
 }
-exports.findMember = findMember, exports.findMembers = findMembers, exports.default = findMember;
+exports.findMembers = findMembers;
+;
+exports.default = findMember;
+//# sourceMappingURL=findMember.js.map

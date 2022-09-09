@@ -1,19 +1,42 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", {
-    value: !0
-}), exports.findUsers = exports.findUser = void 0;
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.findUsers = exports.findUser = void 0;
 const resolveSnowflake_1 = require("./resolveSnowflake");
-async function findUser(e, r, o) {
-    if ("" !== (r = r.toLowerCase().trim())) {
-        if ((0, resolveSnowflake_1.isSnowflake)((0, resolveSnowflake_1.resolveSnowflake)(r))) return e.users.fetch((0, resolveSnowflake_1.resolveSnowflake)(r)).catch(() => {});
-        let s = new RegExp(r, o ?? "gi");
-        return e.users.cache.find(e => r === e.username.toLowerCase() || r === e.tag || s.test(e.username) || s.test(e.tag) || r === e.toString() || (0, resolveSnowflake_1.resolveSnowflake)(r) === e.id)
+async function findUser(client, resolvable, flags) {
+    resolvable = resolvable.toLowerCase().trim();
+    if (resolvable === '')
+        return;
+    if ((0, resolveSnowflake_1.isSnowflake)((0, resolveSnowflake_1.resolveSnowflake)(resolvable))) {
+        return await client.users.fetch((0, resolveSnowflake_1.resolveSnowflake)(resolvable)).catch(() => void 0);
     }
+    ;
+    let reg = new RegExp(resolvable, flags ?? 'gi');
+    return client.users.cache.find((user) => {
+        return resolvable === user.username.toLowerCase() ||
+            resolvable === user.tag ||
+            reg.test(user.username) ||
+            reg.test(user.tag) ||
+            resolvable === user.toString() ||
+            (0, resolveSnowflake_1.resolveSnowflake)(resolvable) === user.id;
+    });
 }
-async function findUsers(e, r, o = 1 / 0, t) {
-    if ("" !== (r = r.toLowerCase().trim())) {
-        let s = new RegExp(r, t ?? "gi");
-        return e.users.cache.filter(e => r === e.username.toLowerCase() || r === e.tag || s.test(e.username) || s.test(e.tag) || r === e.toString() || (0, resolveSnowflake_1.resolveSnowflake)(r) === e.id).first(o)
-    }
+exports.findUser = findUser;
+;
+async function findUsers(client, resolvable, limit = Infinity, flags) {
+    resolvable = resolvable.toLowerCase().trim();
+    if (resolvable === '')
+        return;
+    let reg = new RegExp(resolvable, flags ?? 'gi');
+    return client.users.cache.filter((user) => {
+        return resolvable === user.username.toLowerCase() ||
+            resolvable === user.tag ||
+            reg.test(user.username) ||
+            reg.test(user.tag) ||
+            resolvable === user.toString() ||
+            (0, resolveSnowflake_1.resolveSnowflake)(resolvable) === user.id;
+    }).first(limit);
 }
-exports.findUser = findUser, exports.findUsers = findUsers, exports.default = findUser;
+exports.findUsers = findUsers;
+;
+exports.default = findUser;
+//# sourceMappingURL=findUser.js.map

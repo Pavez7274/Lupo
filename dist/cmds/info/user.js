@@ -1,40 +1,47 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", {
-    value: !0
-}), exports.default = {
-    names: ["userinfo", "user"],
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.default = {
+    names: [
+        'userinfo',
+        'user'
+    ],
     fields: [{
-        name: "target",
-        type: "userResolvable",
-        req: !1
-    }],
-    desc: "view a user's public information",
-    type: "default",
-    run: async e => {
-        await e.gd.members.fetch();
-        let t, a;
-        if (!(t = e.args.len ? await e.lappy.util.findUser(e.lappy, e.args.string()) ?? await (await e.lappy.util.findMember(e.gd, e.args.string()))?.user : await e.author.fetch())) return e.lappy.sendError(e, e.msg, "not found", `No Matches Were Found With ['${e.args.string().slice(0,10)}']`);
-        a = await e.gd.members.fetch(t.id).catch(() => {});
-        let i = `**Id** :: \`${t.id??"unknown"}\`
-**Type** :: \`${t.system?"System":t.bot?"Bot":"User"}\`
-${t.accentColor?`**Color** :: \`#${t.accentColor.toString(16)}\`
-`:""}**Creation** :: <t:${Math.round(Number(t.createdAt)/1e3)}>
-` + (a?.joinedAt ? `**Joined** :: <t:${Math.round(Number(a.joinedAt)/1e3)}>
-` : "") + (a?.nickname ? `**Nickname** :: \`${a.nickname}\`
-` : "");
-        a?.presence?.activities && (i += a.presence.activities.map(e => 0 === e.type ? "**Playing** :: " + e.name : 2 === e.type ? `**Listening (${e.name.toTitleCase()})** :: \`${e.details}\` by **${e.state??"unknow"}**` : `**${e.name}** :: ` + (e.emoji ? e.emoji.toString() + " " : "") + (e.details ?? e.state ?? "unknow")).join("\n"));
-        var n = e.lappy.makeEmbeds(e, {
-            title: `${e.lappy.emotes.tofu} | ${t.tag} Information`,
-            description: i,
+            name: 'target',
+            type: 'userResolvable',
+            req: false
+        }],
+    desc: 'view a user\'s public information',
+    type: 'default',
+    run: async (d) => {
+        await d.gd.members.fetch();
+        let user, member;
+        if (d.args.len)
+            user = await d.lappy.util.findUser(d.lappy, d.args.string()) ?? await (await d.lappy.util.findMember(d.gd, d.args.string()))?.user;
+        else
+            user = await d.author.fetch();
+        if (!user)
+            return d.lappy.sendError(d, d.msg, 'not found', `No Matches Were Found With ['${d.args.string().slice(0, 10)}']`);
+        member = await d.gd.members.fetch(user.id).catch(() => { });
+        let msg = `**Id** :: \`${user.id ?? 'unknown'}\`\n**Type** :: \`${user.system ? 'System' : user.bot ? 'Bot' : 'User'}\`\n${user.accentColor ? `**Color** :: \`#${user.accentColor.toString(16)}\`\n` : ''}**Creation** :: <t:${Math.round(Number(user.createdAt) / 1000)}>\n${member?.joinedAt ? `**Joined** :: <t:${Math.round(Number(member.joinedAt) / 1000)}>\n` : ''}${member?.nickname ? `**Nickname** :: \`${member.nickname}\`\n` : ''}`;
+        if (member?.presence?.activities) {
+            msg += member.presence.activities.map(k => {
+                if (k.type === 0)
+                    return `**Playing** :: ${k.name}`;
+                if (k.type === 2)
+                    return `**Listening (${k.name.toTitleCase()})** :: \`${k.details}\` by **${k.state ?? 'unknow'}**`;
+                else
+                    return `**${k.name}** :: ${k.emoji ? k.emoji.toString() + ' ' : ''}${k.details ?? k.state ?? 'unknow'}`;
+            }).join('\n');
+        }
+        ;
+        let embeds = d.lappy.makeEmbeds(d, {
+            title: `${d.lappy.emotes.tofu} | ${user.tag} Information`,
+            description: msg,
             thumbnail: {
-                url: t.displayAvatarURL({
-                    size: 1024,
-                    dynamic: !0
-                })
+                url: user.displayAvatarURL({ size: 1024, dynamic: true })
             }
         });
-        return e.msg.reply({
-            embeds: n
-        })
+        return d.msg.reply({ embeds });
     }
 };
+//# sourceMappingURL=user.js.map

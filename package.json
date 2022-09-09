@@ -11,6 +11,7 @@
     "dbdjs.db": "^2.0.2",
     "discord.js": "^14.3.0",
     "distube": "^4.0.3",
+    "dotenv": "^16.0.2",
     "express": "^4.18.1",
     "ffmpeg-static": "^4.4.1",
     "fs": "^0.0.1-security",

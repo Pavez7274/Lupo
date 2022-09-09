@@ -24,6 +24,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const Lupo_1 = require("./structures/Lupo");
 require("./util/protos");
+require("dotenv");
 const client = new Lupo_1.Lupo();
 client.start();
 const promises_1 = require("fs/promises");

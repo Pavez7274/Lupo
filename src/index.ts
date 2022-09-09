@@ -1,6 +1,7 @@
 // imports
 import { Lupo } from './structures/Lupo';
 import './util/protos';
+import 'dotenv';
 
 // declarations
 const client = new Lupo();

@@ -4,6 +4,7 @@ import { SoundCloudPlugin } from '@distube/soundcloud';
 import { SpotifyPlugin } from '@distube/spotify';
 import { YtDlpPlugin } from '@distube/yt-dlp';
 import * as util from '../util/index';
+import { BandcampPlugin } from './BCPlugin';
 import Spotify from 'spotify-finder';
 import { DB } from './DataBase';
 import { Neko } from './Neko'; 
@@ -72,11 +73,9 @@ export class Lupo extends Client {
 						new SpotifyPlugin({
 							emitEventsAfterFetching: true
 						}), 
+						new BandcampPlugin(), 
 						new YtDlpPlugin()
 					],
-					leaveOnFinish: false,
-					leaveOnEmpty: false,
-					leaveOnStop: false,
 					nsfw: true
 				})
 			},

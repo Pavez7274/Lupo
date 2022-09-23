@@ -1,54 +1,53 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
+Object.defineProperty(exports, "__esModule", {
+    value: !0
+});
 const discord_js_1 = require("discord.js");
 exports.default = {
-    names: [
-        'botinfo',
-        'bot'
-    ],
-    desc: 'returns my information uvu',
-    type: 'default',
-    run: async (d) => {
-        const embeds = d.lappy.makeEmbeds(d, {
-            title: `${d.lappy.emotes.feli} | The White Wolf`,
-            fields: [{
-                    name: `${d.lappy.emotes.tofu} | Proyect`,
-                    value: `**Developers** :: ${d.lappy.owners.map((owner) => `<@!${owner}>`).join(' ')}
-**Version** :: \`${require(process.cwd() + '/package.json').version}\`
-**Library** :: \`discord.js v${require('discord.js').version}\`
-[Source Code](https://github.com/Pavez7274/Lupo)`
+    names: ["botinfo", "bot"],
+    desc: "returns my information uvu",
+    type: "default",
+    run: async t => {
+        const e = t.lappy.makeEmbeds(t, {
+                title: t.lappy.emotes.feli + " | The White Wolf",
+                fields: [{
+                    name: t.lappy.emotes.tofu + " | Proyect",
+                    value: `**[ Team ]** -> ${t.lappy.owners.map(e=>`<@!${e}>`).join(" ")}
+**[ Version ]** -> \`${require(process.cwd()+"/package.json").version}\`
+**[ Library ]** -> \`discord.js v${require("discord.js").version}\`
+*[Source Code](https://github.com/Pavez7274/Lupo)*`
                 }, {
-                    name: `${d.lappy.emotes.error} | System`,
-                    value: `**Ping** :: \`${d.lappy.ws.ping}Ms\`
-**Turn On At** :: <t:${((Date.now() - (d.lappy.uptime || 0)) / 1000).toFixed()}>
-**Ram** :: \`${(process.memoryUsage().rss / 1024 / 1024).toFixed()}Mb\`
-**Cpu** :: \`${require('os').cpus().map(b => (b = b.times, b.user + b.nice + b.sys + b.irq) / b.idle).reduce((a, b) => a + b).toFixed(2)}%\`
-**Platform** :: \`${process.platform.toTitleCase()}\`
-**TypeScript** :: \`v${require('typescript').version}\`
-**Node** :: \`${process.version}\``
+                    name: t.lappy.emotes.error + " | System",
+                    value: `**[ Ping ]** -> \`${t.lappy.ws.ping}Ms\`
+**[ Turn On At ]** -> <t:${((Date.now()-(t.lappy.uptime||0))/1e3).toFixed()}>
+**[ Ram ]** -> \`${(process.memoryUsage().rss/1024/1024).toFixed()}Mb\`
+**[ Cpu ]** -> \`${require("os").cpus().map(e=>((e=e.times).user+e.nice+e.sys+e.irq)/e.idle).reduce((e,s)=>e+s).toFixed(2)}%\`
+**[ Platform ]** -> \`${process.platform.toTitleCase()}\`
+**[ TypeScript ]** -> \`v${require("typescript").version}\`
+**[ NodeJs ]** -> \`${process.version}\``
                 }, {
-                    name: `${d.lappy.emotes.keyboard} | Util`,
-                    value: `**Character** :: [Lappland](https://arknights.fandom.com/wiki/Lappland) from Arknights`
+                    name: t.lappy.emotes.keyboard + " | Util",
+                    value: "**[ Character ]** -> [Lappland](https://arknights.fandom.com/wiki/Lappland) from [Arknights](https://www.arknights.global/)"
                 }]
-        }), components = [new discord_js_1.ActionRowBuilder()];
-        components[0].setComponents(new discord_js_1.ButtonBuilder().setCustomId('pavez').setLabel('About Pavez').setStyle(1), new discord_js_1.ButtonBuilder().setCustomId('freysur').setLabel('About Freysur').setStyle(1).setDisabled(true), new discord_js_1.ButtonBuilder().setCustomId('zlexus').setLabel('About zLexus').setStyle(1).setDisabled(true));
-        const m = await d.msg.reply({ embeds, components });
-        m.createMessageComponentCollector({
-            filter: ({ customId }) => ['pavez', 'freysur', 'zlexus'].includes(customId),
+            }),
+            s = [new discord_js_1.ActionRowBuilder],
+            o = (s[0].setComponents((new discord_js_1.ButtonBuilder).setCustomId("pavez").setLabel("About Pavez").setStyle(1), (new discord_js_1.ButtonBuilder).setCustomId("freysur").setLabel("About Freysur").setStyle(1).setDisabled(!0), (new discord_js_1.ButtonBuilder).setCustomId("zlexus").setLabel("About zLexus").setStyle(1).setDisabled(!0)), await t.msg.reply({
+                embeds: e,
+                components: s
+            }));
+        o.createMessageComponentCollector({
+            filter: ({
+                customId: e
+            }) => ["pavez", "freysur", "zlexus"].includes(e),
             componentType: 2,
             time: 6e4
+        }).on("collect", e => {
+            let s = t;
+            s.int = e, t.lappy.cmds.button.get(e.customId).run(s)
+        }).on("end", () => {
+            s[0].components[0].setDisabled(!0), s[0].components[1].setDisabled(!0), s[0].components[2].setDisabled(!0), o.edit({
+                components: s
+            })
         })
-            .on('collect', (i) => {
-            let data = d;
-            data.int = i;
-            d.lappy.cmds.button.get(i.customId).run(data);
-        })
-            .on('end', () => {
-            components[0].components[0].setDisabled(true);
-            components[0].components[1].setDisabled(true);
-            components[0].components[2].setDisabled(true);
-            msg_0.edit({ components });
-        });
     }
 };
-//# sourceMappingURL=bot.js.map

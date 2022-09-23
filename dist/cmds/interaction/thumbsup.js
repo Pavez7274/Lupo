@@ -1,20 +1,24 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.default = {
-    names: [
-        'thumbsup',
-        'like'
-    ],
-    type: 'default',
-    desc: '',
-    run: async (d) => {
-        let title = `${d.memb.displayName} likes it ${d.lappy.emotes.facha}`;
-        let result = await d.lappy.neko.img('thumbsup'), embeds = d.lappy.makeEmbeds(d, {
-            image: { url: result.url },
-            title,
-            footer: { text: `anime: ${result.anime_name}` }
-        });
-        return d.msg.reply({ embeds });
+Object.defineProperty(exports, "__esModule", {
+    value: !0
+}), exports.default = {
+    names: ["thumbsup", "like"],
+    type: "default",
+    desc: "",
+    run: async e => {
+        var a = e.memb.displayName + " likes it " + e.lappy.emotes.facha,
+            t = await e.lappy.neko.img("thumbsup"),
+            a = e.lappy.makeEmbeds(e, {
+                image: {
+                    url: t.url
+                },
+                title: a,
+                footer: {
+                    text: "anime: " + t.anime_name
+                }
+            });
+        return e.msg.reply({
+            embeds: a
+        })
     }
 };
-//# sourceMappingURL=thumbsup.js.map

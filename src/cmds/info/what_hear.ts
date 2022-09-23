@@ -39,13 +39,13 @@ export default {
 		let track = (await d.lappy.spotify.search({ q: activity?.details }))?.tracks.items
 			.find((item: any) => item.name === activity?.details && (item.artists.every(({ name }) => activity?.state?.includes(name))));
 		if (!track) 
-			return d.lappy.sendError(d, d.msg, 'not found', `I couldn't find the song ['${activity.details ?? 'unknown'}']`);
+			return d.lappy.sendError(d, d.msg, 'not found', `I couldn't find the song ['${activity?.details ?? 'unknown'}']`);
 		let embeds = d.lappy.makeEmbeds(d, {
 			title: `${d.lappy.emotes.spotify} | What does ${memb.user.id === d.author.id ? 'u' : memb.displayName} listen to?`,
 			description: `**Song** :: [${track.name}](${track.external_urls.spotify})
 **Artists** :: ${track.artists.map((art: any) => `[${art.name}](${art.external_urls.spotify})`).join(' | ')}
 **${track.album.type.toTitleCase()}** :: [${track.album.name}](${track.album.external_urls.spotify})
-**Duration** :: ${parse(Date.now() - activity?.timestamps?.start)} / ${parse(track.duration_ms)}
+**Duration** :: ${parse(Date.now() - Number(activity?.timestamps?.start))} / ${parse(track.duration_ms)}
 **Explicit** :: ${track.explicit ? 'Yes' : 'No'}
 
 [Click here to listen a preview](${track.preview_url})`,
@@ -61,6 +61,7 @@ export default {
 			new ButtonBuilder().setCustomId('songThumbnail').setLabel('Get Thumbnail').setStyle(1), 
 			new ButtonBuilder().setCustomId('songLyrics').setLabel('Get Lyrics').setStyle(1).setDisabled(!lyrics)
 		);
+		// @ts-ignore
 		const msg = await d.msg.reply({ embeds, components });
 		msg.createMessageComponentCollector({
 			filter: ({ customId }) => ['songThumbnail', 'songLyrics'].includes(customId), 

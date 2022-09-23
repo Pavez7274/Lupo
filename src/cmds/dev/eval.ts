@@ -27,14 +27,13 @@ export const fields = [{
 export async function run (d: Data): Promise<Message | void> {
 	// definitions
   let start = Date.now(),
-      asynchorus = 0,
+      asynchronous = 0,
       compiled = [false, 'JavaScript'],
       evaled: any = '',
       depth = 0,
       code: any;
 	// checks whether to do an asynchronous run
-  d.args.get(0)?.toLowerCase() === 'async' &&
-		(asynchorus = 1) && d.args.args.shift();
+   asynchronous = d.args.endIsTrue('(asynchronous|async)');
 	try {
 		// checks whether it should be compiled or not
 		if (d.args.endIsTrue('(javascript|js)') || d.cmd === 'js') {
@@ -51,7 +50,7 @@ export async function run (d: Data): Promise<Message | void> {
 		};
 		code = await minify(code)?.code ?? code;
 		// evaluates the code uwu
-		evaled = await eval(asynchorus ? `(async (d) => {${code}} )(d)` : code);
+		evaled = await eval(asynchronous ? `(async (d) => {${code}} )(d)` : code);
   } catch (_err: any) {
 		// uhhh, there's a lot here but... summary, sends a message in case of error
 		let button_0 = new ButtonBuilder()
@@ -106,13 +105,13 @@ export async function run (d: Data): Promise<Message | void> {
 		const embeds = d.lappy.makeEmbeds(d, {
 			title: `${d.lappy.emotes.tofu} | Eval -> ${compiled[1]}`, 
 			fields: [{
-				name: '✉️ | code provided', 
+				name: '✉️ | Code provided', 
 				value: code.cropAt(1000).toCodeBlock('js')
 			}, {
-				name: '📃 | answer', 
+				name: '📃 | Answer', 
 				value: result ?? '```ts\nunknown```' 
 			}, {
-				name: '📖 | extra', 
+				name: '📖 | Extra', 
 				value: `**[ Type ]** -> \`${typeof_1}\`\n**[ Time ]** -> \`${Date.now() - start ?? 0}Ms\``
 			}]
 		});

@@ -23,8 +23,17 @@ export class Arguments extends String {
 			.split(/ +/g)
 			.filter((arg: string) => !arg.startsWith('--'));
 	};
-	public get (index: number | string): string {
-		return this.args?.[index === 'last' ? this.length - 1 : index] || void 0;
+	public get (index: number): string {
+		return this.args.at(index) || void 0;
+	};
+	public isNatural (index: number, negatives: boolean = true): boolean {
+		let arg = Number(this.args.at(index));
+		if (isNaN(arg)) return false;
+		return Math.floor(arg) == arg && (negatives || arg >= 0);
+	};
+	public isNumber (index: number, negative: boolean = true): boolean {
+		let arg = Number(this.arg.at(index));
+		return isNaN(arg) ? false : negative || arg >= 0;
 	};
 	get len (): number {
 		return this.args.length;

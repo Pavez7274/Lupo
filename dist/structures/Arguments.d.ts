@@ -7,7 +7,9 @@ export declare class Arguments extends String {
     prefix: string;
     parsedContent: string;
     constructor(msg: Message, prefix: string);
-    get(index: number | string): string;
+    get(index: number): string;
+    isNatural(index: number, negatives?: boolean): boolean;
+    isNumber(index: number, negative?: boolean): boolean;
     get len(): number;
     string(all?: boolean | number, sep?: string): string;
     shift(): string | undefined;

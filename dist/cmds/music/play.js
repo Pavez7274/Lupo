@@ -1,24 +1,21 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.default = {
-    names: [
-        'play',
-        'p'
-    ],
+Object.defineProperty(exports, "__esModule", {
+    value: !0
+}), exports.default = {
+    names: ["play", "p"],
     fields: [{
-            name: 'song',
-            type: 'string',
-            req: true
-        }],
-    voiceRequired: true,
-    type: 'default',
-    run: async (d) => {
-        d.lappy.music.play(d.memb.voice.channel, d.args.string(), {
-            textChannel: d.ch,
-            member: d.memb,
-            message: d.msg,
-            metadata: d
-        });
+        name: "song",
+        type: "string",
+        req: !0
+    }],
+    voiceRequired: !0,
+    type: "default",
+    run: async e => {
+        e.lappy.music.play(e.memb.voice.channel, e.args.string(), {
+            textChannel: e.ch,
+            member: e.memb,
+            message: e.msg,
+            metadata: e
+        })
     }
 };
-//# sourceMappingURL=play.js.map

@@ -1,22 +1,22 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.run = exports.type = exports.name = void 0;
-exports.name = 'addSong';
-exports.type = 'music';
-function run(lappy, queue, song) {
-    song.metadata.msg.reply({
-        embeds: lappy.makeEmbeds(song.metadata, {
-            title: `${lappy.emotes.feli} | Song Added -> ${song.source}`,
-            description: `**[ Song ]** -> [${song.name}](${song.url})${song.playlist ? `**[ PlayList ]** -> [${song.playlist.name}](${song.playlist.url})\n` : ''} 
-**[ Uploader ]** -> [${song.uploader.name}](${song.uploader.url})
-**[ Duration ]** -> \`${song.formattedDuration}\`
-**[ Added By ]** -> ${song.member.toString()} ||${song.user.id}||
-**[ Explicit ]** -> \`${song.age_restricted ? 'Yes' : 'No'}\`
-**[ Views ]** -> \`${song.views?.toLocaleString() ?? 0}\``,
-            thumbnail: { url: song.thumbail }
+
+function run(e, t, r) {
+    r.metadata.msg.reply({
+        embeds: e.makeEmbeds(r.metadata, {
+            title: e.emotes.feli + " | Song Added -> " + r.source,
+            description: `**[ Name ]** -> [${r.name}](${r.url})${r.playlist?`**[ PlayList ]** -> [${r.playlist.name}](${r.playlist.url})
+`:""} 
+**[ Uploader ]** -> [${r.uploader.name}](${r.uploader.url})
+**[ Duration ]** -> \`${r.formattedDuration}\`
+**[ Added By ]** -> ${r.member?.toString()} ||${r.user?.id}||
+**[ Explicit ]** -> \`${r.age_restricted?"Yes":"No"}\`
+**[ Views ]** -> \`${r.views?.toLocaleString()??0}\``,
+            thumbnail: {
+                url: r.thumbnail
+            }
         })
-    });
+    })
 }
-exports.run = run;
-;
-//# sourceMappingURL=addSong.js.map
+Object.defineProperty(exports, "__esModule", {
+    value: !0
+}), exports.run = exports.type = exports.name = void 0, exports.name = "addSong", exports.type = "music", exports.run = run;

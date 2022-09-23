@@ -10,7 +10,7 @@ export default {
 	],
 	fields: [{
 		name: 'target', 
-		type: 'userResolvable', 
+		type: 'USER', 
 		req: false
 	}], 
 	desc: 'view a user\'s public information', 
@@ -24,12 +24,35 @@ export default {
 		if (!user)
 			return d.lappy.sendError(d, d.msg, 'not found', `No Matches Were Found With ['${d.args.string().slice(0, 10)}']`);
 		member = await d.gd.members.fetch(user.id).catch(() => {});
-		let msg = `**Id** :: \`${user.id ?? 'unknown'}\`\n**Type** :: \`${user.system ? 'System' : user.bot ? 'Bot' : 'User'}\`\n${user.accentColor ? `**Color** :: \`#${user.accentColor.toString(16)}\`\n` : ''}**Creation** :: <t:${Math.round(Number(user.createdAt)/1000)}>\n${member?.joinedAt ? `**Joined** :: <t:${Math.round(Number(member.joinedAt)/1000)}>\n` : ''}${member?.nickname ? `**Nickname** :: \`${member.nickname}\`\n` : ''}`;
+		let msg = `**[ Snowflake ]** -> \`${
+			user.id ?? 'unknown'
+		}\`
+**[ Type ]** -> \`${
+	user.system 
+		? 'System' : user.bot 
+		? 'Bot' : 'User'
+}\`\n${
+	user.accentColor 
+	? `**[ Color ]** -> \`#${
+		user.accentColor.toString(16)
+	}\`\n` : ''
+}**[ Creation ]** -> <t:${
+	Math.round(Number(user.createdAt)/1000)
+}>
+${member?.joinedAt 
+	? `**[ Joined ]** -> <t:${
+		Math.round(Number(member.joinedAt)/1000)}>\n` : ''
+}${
+	member?.nickname 
+		? `**[ Nickname ]** -> \`${
+			member.nickname
+		}\`\n` : ''
+}`;
 		if (member?.presence?.activities) {
 			msg += member.presence.activities.map(k => {
-   			if (k.type === 0) return `**Playing** :: ${k.name}`;
-   			if (k.type === 2) return `**Listening (${k.name.toTitleCase()})** :: \`${k.details}\` by **${k.state?? 'unknow'}**`;
-   			else return `**${k.name}** :: ${k.emoji ? k.emoji.toString() + ' ' : ''}${k.details ?? k.state ?? 'unknow'}`
+   			if (k.type === 0) return `**[ Playing ]** -> ${k.name}`;
+   			if (k.type === 2) return `**[ Listening ]** -> ${k.name.toTitleCase()} -> \`${k.details}\` by **${k.state?? 'unknow'}**`;
+   			else return `**[ ${k.name} ]** -> ${k.emoji ? k.emoji.toString() + ' ' : ''}${k.details ?? k.state ?? 'unknow'}`
 			}).join('\n');
 		};
 		let embeds = d.lappy.makeEmbeds(d, {

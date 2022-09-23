@@ -1,23 +1,16 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.resolveSnowflake = exports.isSnowflake = void 0;
-function isSnowflake(resolvable) {
-    const typeof_0 = typeof resolvable;
-    if (!['number', 'string'].includes(typeof_0) || isNaN(resolvable))
-        return false;
-    typeof_0 === 'number' && (resolvable = resolvable.toString());
-    return /\d{17,20}/.test(resolvable);
+
+function isSnowflake(e) {
+    var o = typeof e;
+    return !(!["number", "string"].includes(o) || isNaN(e)) && ("number" == o && (e = e.toString()), /\d{17,20}/.test(e))
 }
-exports.isSnowflake = isSnowflake;
-;
-function resolveSnowflake(resolvable) {
-    resolvable = resolvable.replace(/[&#@!:<>]/gim, '');
-    return !!Number(resolvable) && resolvable;
+
+function resolveSnowflake(e) {
+    return e = e.replace(/[&#@!:<>]/gim, ""), !!Number(e) && e
 }
-exports.resolveSnowflake = resolveSnowflake;
-;
-exports.default = {
-    isSnowflake,
-    resolveSnowflake
+Object.defineProperty(exports, "__esModule", {
+    value: !0
+}), exports.resolveSnowflake = exports.isSnowflake = void 0, exports.isSnowflake = isSnowflake, exports.resolveSnowflake = resolveSnowflake, exports.default = {
+    isSnowflake: isSnowflake,
+    resolveSnowflake: resolveSnowflake
 };
-//# sourceMappingURL=resolveSnowflake.js.map

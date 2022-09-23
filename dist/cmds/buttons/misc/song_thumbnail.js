@@ -1,15 +1,16 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.default = {
-    names: [
-        'song_thumbnail'
-    ],
-    type: 'button',
-    run: async (d) => {
-        const embeds = d.lappy.makeEmbeds(d, {
-            image: d.track.album.images[0]
+Object.defineProperty(exports, "__esModule", {
+    value: !0
+}), exports.default = {
+    names: ["song_thumbnail"],
+    type: "button",
+    run: async e => {
+        var t = e.lappy.makeEmbeds(e, {
+            image: e.track.album.images[0]
         });
-        return d.int.reply({ embeds, ephemeral: true });
+        return e.int.reply({
+            embeds: t,
+            ephemeral: !0
+        })
     }
 };
-//# sourceMappingURL=song_thumbnail.js.map

@@ -10,7 +10,7 @@ export default {
 	],
 	fields: [{
 		name: 'new', 
-		type: 'string', 
+		type: 'STRING', 
 		req: false
 	}], 
 	desc: 'see or change my prefix on this server', 

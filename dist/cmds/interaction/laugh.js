@@ -1,18 +1,23 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.default = {
-    names: [
-        'laugh'
-    ],
-    desc: 'riete, riata?.',
-    type: 'default',
-    run: async (d) => {
-        let result = await d.lappy.neko.img('laugh'), embeds = d.lappy.makeEmbeds(d, {
-            image: { url: result.url },
-            title: `${d.memb.displayName} se rie`,
-            footer: { text: `anime: ${result.anime_name}` }
-        });
-        return d.msg.reply({ embeds });
+Object.defineProperty(exports, "__esModule", {
+    value: !0
+}), exports.default = {
+    names: ["laugh"],
+    desc: "riete, riata?.",
+    type: "default",
+    run: async e => {
+        var a = await e.lappy.neko.img("laugh"),
+            a = e.lappy.makeEmbeds(e, {
+                image: {
+                    url: a.url
+                },
+                title: e.memb.displayName + " se rie",
+                footer: {
+                    text: "anime: " + a.anime_name
+                }
+            });
+        return e.msg.reply({
+            embeds: a
+        })
     }
 };
-//# sourceMappingURL=laugh.js.map

@@ -1,7 +1,7 @@
 import { Lupo } from '../src/structures/Lupo';
 import { Arguments } from '../src/structures/Arguments';
 import { Guild, GuildMember, Message, TextChannel, User, UserContextMenuCommandInteraction } from 'discord.js';
-import * as Util from '../src/util/index'
+import * as Util from '../src/util/index';
 export interface Msg extends Message {
 	channel: TextChannel;
 	guild: Guild;

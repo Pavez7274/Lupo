@@ -1,63 +1,24 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.default = {
-    names: [
-        'say',
-        'owoify'
-    ],
+Object.defineProperty(exports, "__esModule", {
+    value: !0
+}), exports.default = {
+    names: ["say", "owoify"],
     fields: [{
-            name: 'message',
-            type: 'string',
-            req: true
-        }],
-    bot_perms: [
-        'ManageMessages'
-    ],
-    desc: 'make me say something!!',
-    run: async (d) => {
-        if (/[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/gi.test(d.args.string())) {
-            await d.lappy.sendError(d, d.msg, 'Restriction -> URLs', 'One or More URLs Were Detected In Your Message');
-            return d.msg.delete().catch(() => { });
-        }
-        ;
-        let msg, owoify = d.args.endIsTrue('owoify') || d.cmd === 'owoify';
+        name: "message",
+        type: "string",
+        req: !0
+    }],
+    bot_perms: ["ManageMessages"],
+    desc: "make me say something!!",
+    run: async s => {
+        if (/[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/gi.test(s.args.string())) return await s.lappy.sendError(s, s.msg, "Restriction -> URLs", "One or More URLs Were Detected In Your Message"), s.msg.delete().catch(() => {});
+        let e, t = s.args.endIsTrue("owoify") || "owoify" === s.cmd;
         try {
-            msg = JSON.parse(d.args.string());
+            e = JSON.parse(s.args.string())
+        } catch {
+            e = s.args.string()
         }
-        catch {
-            msg = d.args.string();
-        }
-        ;
-        let typeof_0 = typeof msg;
-        if (typeof_0 === 'object' && 'embeds' in msg && msg.embeds.length > 5)
-            return d.lappy.sendError(d, d.msg, 'length', 'the maximum of embeds is 5');
-        typeof_0 === 'number' &&
-            (msg += '');
-        if (!['string', 'object'].includes(typeof_0) || Array.isArray(msg))
-            return d.lappy.sendError(d, d.msg, 'type', 'you can only send `strings` or `objects/arrays`');
-        if (owoify) {
-            if (typeof_0 === 'object' && 'embeds' in msg) {
-                msg.embeds = msg.embeds.map((embed) => {
-                    embed.title &&
-                        (embed.title = embed.title.OwOIfy());
-                    embed.description &&
-                        (embed.description = embed.description.OwOIfy());
-                    embed.fields &&
-                        (embed.fields = embed.fields.map((f) => {
-                            f.value = f.value.OwOIfy();
-                            return f;
-                        }));
-                    embed.footer &&
-                        (embed.footer.text = embed.footer.text.OwOIfy());
-                    return embed;
-                });
-            }
-            else
-                msg = msg.OwOIfy();
-        }
-        ;
-        await d.ch.send(msg).catch((error) => d.lappy.sendError(d, d.msg, error.name, error.stack));
-        return d.msg.delete().catch(() => { });
+        var r = typeof e;
+        return "object" == r && "embeds" in e && 5 < e.embeds.length ? s.lappy.sendError(s, s.msg, "length", "the maximum of embeds is 5") : ("number" == r && (e += ""), !["string", "object"].includes(r) || Array.isArray(e) ? s.lappy.sendError(s, s.msg, "type", "you can only send `strings` or `objects/arrays`") : (t && ("object" == r && "embeds" in e ? e.embeds = e.embeds.map(e => (e.title && (e.title = e.title.OwOIfy()), e.description && (e.description = e.description.OwOIfy()), e.fields && (e.fields = e.fields.map(e => (e.value = e.value.OwOIfy(), e))), e.footer && (e.footer.text = e.footer.text.OwOIfy()), e)) : e = e.OwOIfy()), await s.ch.send(e).catch(e => s.lappy.sendError(s, s.msg, e.name, e.stack)), s.msg.delete().catch(() => {})))
     }
 };
-//# sourceMappingURL=say.js.map

@@ -1,20 +1,24 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.default = {
-    names: [
-        'blush',
-        'flush'
-    ],
-    type: 'default',
-    desc: '',
-    run: async (d) => {
-        let title = `${d.memb.displayName} se sonroja ${d.lappy.emotes.luv}`;
-        let result = await d.lappy.neko.img('blush'), embeds = d.lappy.makeEmbeds(d, {
-            image: { url: result.url },
-            title,
-            footer: { text: `anime: ${result.anime_name}` }
-        });
-        return d.msg.reply({ embeds });
+Object.defineProperty(exports, "__esModule", {
+    value: !0
+}), exports.default = {
+    names: ["blush", "flush"],
+    type: "default",
+    desc: "",
+    run: async e => {
+        var a = e.memb.displayName + " se sonroja " + e.lappy.emotes.luv,
+            s = await e.lappy.neko.img("blush"),
+            a = e.lappy.makeEmbeds(e, {
+                image: {
+                    url: s.url
+                },
+                title: a,
+                footer: {
+                    text: "anime: " + s.anime_name
+                }
+            });
+        return e.msg.reply({
+            embeds: a
+        })
     }
 };
-//# sourceMappingURL=blush.js.map

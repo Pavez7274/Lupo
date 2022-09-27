@@ -5,5 +5,5 @@ export function run (): void {
 	const date = new Date(Date.now()).toLocaleString('en-gb', {
     timeZone: 'America/Mendoza'
   });
-  console.log(`[${'Lupo'.color('red')}] :: ${'Ready at'.color('green')} ${date.color('yellow')}`);
+  console.log(`[${'Lupo'.color('red')} -> ${'status'.color('yellow')}] ${'Ready at'.color('green')} ${date.color('yellow')}`);
 };

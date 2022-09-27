@@ -193,15 +193,12 @@ export class Lupo extends Client {
 				);
 			})*/
 			.login(token);
-		setTimeout(() => this.isReady() || console.log('\x1b[31mCould not start client\x1b[0m') || process.kill(1), 2e4);
+		setTimeout(() => this.isReady() || console.log('\x1b[31mCould not start client\x1b[0m'), 2e4);
 		return this;
 	};
 
 	public async permsError (data: any, instance: any, perms: string[], target: User = data.author): Message {
-		if (!data.target && target) {
-			data.target = target;
-		};
-		const embeds = this.makeEmbeds(data, {
+		const embeds = this.makeEmbeds({ target, ...data }, {
 			title: `${this.emotes.error} | [Error] -> Missing Permissions`,
 			description: `Member/User: ${target?.toString() || 'unknown'}\nPermissions:\n${perms.join(', ').toCodeBlock()}\n`
 		});
@@ -209,8 +206,7 @@ export class Lupo extends Client {
   };
 	
 	public async sendError (data: any, instance: any, type: string | undefined, msg: string | undefined, target: User = data.author, components: ActionRow<any>[] | void[] = [], content: string = ' '): Promise<Message> {
-		data.target = target;
-    const embeds = this.makeEmbeds(data, {
+		const embeds = this.makeEmbeds({ target, ...data } , {
       title: `${this.emotes.error} | [Error] ${ type ? ` -> ${type.toTitleCase()}` : '' }`,
       description: msg?.toCodeBlock() ?? '```js\nFailed To Display Error```',
     });

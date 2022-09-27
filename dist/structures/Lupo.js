@@ -153,10 +153,13 @@ class Lupo extends discord_js_1.Client {
 ├[31m ╚══╩══╣╔═╩══╝ ╚══╩═╩╩═╩╝╚╩═╝  [0m─────────┤
 ├────── [31m║║ [34m𝚃𝚢𝚙𝚎𝚂𝚌𝚛𝚒𝚙𝚝 𝙳𝚒𝚜𝚌𝚘𝚛𝚍𝙹𝚂 𝙲𝚕𝚒𝚎𝚗𝚝  [0m─┤
 ├────── [31m╚╝ [34m𝙱𝚢 𝙺𝚊𝚎𝚍𝚎 𝚂𝚝𝚞𝚍𝚒𝚘  [0m─────────────┤
-└────────────────────────────────────────┘`), this.db.connect(), this.events().commands().login(e), setTimeout(() => this.isReady() || console.log("[31mCould not start client[0m") || process.kill(1), 2e4), this
+└────────────────────────────────────────┘`), this.db.connect(), this.events().commands().login(e), setTimeout(() => this.isReady() || console.log("[31mCould not start client[0m"), 2e4), this
     }
     async permsError(e, t, s, o = e.author) {
-        return !e.target && o && (e.target = o), o = this.makeEmbeds(e, {
+        return o = this.makeEmbeds({
+            target: o,
+            ...e
+        }, {
             title: this.emotes.error + " | [Error] -> Missing Permissions",
             description: `Member/User: ${o?.toString()||"unknown"}
 Permissions:
@@ -166,23 +169,26 @@ ${s.join(", ").toCodeBlock()}
             embeds: o
         })
     }
-    async sendError(e, t, s, o, r = e.author, n = [], i = " ") {
-        return e.target = r, r = this.makeEmbeds(e, {
+    async sendError(e, t, s, o, n = e.author, r = [], i = " ") {
+        return n = this.makeEmbeds({
+            target: n,
+            ...e
+        }, {
             title: this.emotes.error + " | [Error] " + (s ? " -> " + s.toTitleCase() : ""),
             description: o?.toCodeBlock() ?? "```js\nFailed To Display Error```"
         }), t?.["reply" in t ? "reply" : "send"]({
-            embeds: r,
-            components: n,
+            embeds: n,
+            components: r,
             content: i,
             ephemeral: e.ephemeral
         })
     }
     makeEmbeds(o, ...e) {
-        const r = [];
+        const n = [];
         return e.forEach((e, t) => {
             const s = new discord_js_1.EmbedBuilder(e);
-            !s.data.thumbnail && o.target && s.setThumbnail(o.target?.displayAvatarURL()), s.data.color || s.setColor("Blurple"), r.push(s.toJSON())
-        }), r
+            !s.data.thumbnail && o.target && s.setThumbnail(o.target?.displayAvatarURL()), s.data.color || s.setColor("Blurple"), n.push(s.toJSON())
+        }), n
     }
 }
 exports.Lupo = Lupo;

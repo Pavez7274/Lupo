@@ -4,7 +4,7 @@ function run() {
     const e = new Date(Date.now()).toLocaleString("en-gb", {
         timeZone: "America/Mendoza"
     });
-    console.log(`[${"Lupo".color("red")}] :: ${"Ready at".color("green")} ` + e.color("yellow"))
+    console.log(`[${"Lupo".color("red")} -> ${"status".color("yellow")}] ${"Ready at".color("green")} ` + e.color("yellow"))
 }
 Object.defineProperty(exports, "__esModule", {
     value: !0

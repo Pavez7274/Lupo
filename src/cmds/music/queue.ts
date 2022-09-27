@@ -16,7 +16,7 @@ export default {
 			return d.lappy.sendError(d, d.msg, 'No Music', 'I\'m not in a voice chat');
 		let s = q.songs.slice(1);
 		if (!s?.length)
-			return d.lappy.sendError(d, d.msg, 'No Songs', 'No songs on hold');
+			return d.lappy.sendError(d, d.msg, 'No Queue', 'No songs on hold');
 		s = s.map((song: Song, index: number) => `**${
 			index + 1
 		}. [${

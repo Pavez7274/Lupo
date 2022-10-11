@@ -1,6 +1,6 @@
 # Feed
 
-Feed
+Feed Someone
 
 ## Fields
 

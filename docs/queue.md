@@ -1,7 +1,7 @@
 # Queue
 > List, q
 
-This Command Does Not Yet Have a Description
+Returns The Track List
 
 ## Command Usage
 ```

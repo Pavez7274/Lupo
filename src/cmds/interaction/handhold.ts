@@ -20,10 +20,10 @@ export default {
 			return d.lappy.sendError(d, d.msg, 'not found', `No Matches Were Found With ['${d.args.string().slice(0, 10)}']`);
 		if (snowy.id === d.lappy?.user?.id) {
 			return d.msg.reply([
-				'ew, no.',
-				'wash ur hand', 
-				'no.',
-				'of course, when communism works'
+				'Ew, no.',
+				'Wash ur hand', 
+				'No.',
+				'Of course, when communism works'
 			].random());
 		} else if (snowy.id === d.author.id) {
 			return d.msg.reply(`that's s${'o'.repeat(d.lappy.util.random(5, 1))} pathetic`);

@@ -7,6 +7,7 @@ export default {
 		'play', 
 		'p'
 	],
+	desc: 'add a track', 
 	fields: [{
 		name: 'song', 
 		type: 'string', 

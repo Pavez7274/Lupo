@@ -31,7 +31,7 @@ export default {
 			array.push(idk);
 		};
 		table.addRowMatrix(array);
-		if (d.args.ends.includes('--all')) {
+		if (d.args.ends.includes('--all') || !d.args.len) {
 			let embeds = d.lappy.makeEmbeds(d, {
 				title: `${d.lappy.emotes.feli} | help -> All Commands`,
 				description: table
@@ -44,9 +44,9 @@ export default {
 			});
 			return d.msg.reply({ embeds });
 		};
-		if (d.args.len === 0) {
+		/* if (d.args.len === 0) {
 			return d.lappy.sendError(d, d.msg, 'Field', `Field 1 ['command'] Cannot Be Empty`);
-		};
+		};*/
 		let cmd = d.lappy.cmds.default.find((cmd: any) => cmd.names.includes(d.args.get(0)));
 		if (!cmd)
 			return d.lappy.sendError(d, d.msg, 'Not Found', `Command ['${d.args.get(0)}'] Not Found`);

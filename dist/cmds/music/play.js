@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", {
     value: !0
 }), exports.default = {
     names: ["play", "p"],
+    desc: "add a track",
     fields: [{
         name: "song",
         type: "string",

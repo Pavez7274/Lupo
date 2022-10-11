@@ -1,7 +1,7 @@
 # Play
 > p
 
-This Command Does Not Yet Have a Description
+Add a Track
 
 ## Fields
 

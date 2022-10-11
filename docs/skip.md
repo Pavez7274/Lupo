@@ -1,6 +1,6 @@
 # Skip
 
-This Command Does Not Yet Have a Description
+Jump To The Next Track
 
 ## Command Usage
 ```

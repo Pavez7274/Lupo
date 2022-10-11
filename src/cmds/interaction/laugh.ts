@@ -5,16 +5,15 @@ import { Data } from '../../../types/data';
 export default {
 	names: [
 		'laugh'
-	],
-	desc: 'riete, riata?.', 
+	], 
 	type: 'default',
 	run: async (d: Data): Promise<any> => {
 		let result = await d.lappy.neko.img('laugh'),
 		embeds = d.lappy.makeEmbeds(d, {
 			image: { url: result.url }, 
-			title: `${d.memb.displayName} se rie`,
+			title: `${d.memb.displayName} laughs ${d.random(50) == 30 ? 'until a lung explodes' : '' }`,
 			footer: { text: `anime: ${result.anime_name}` }
 		});
-		return d.msg.reply({ embeds })
+		return d.msg.reply({ embeds });
 	}
 };

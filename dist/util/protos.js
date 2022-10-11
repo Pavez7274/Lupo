@@ -7,7 +7,7 @@ const discord_js_1 = require("discord.js"),
 String.prototype.insensitiveIncludes = function(e, r) {
     return this.toLowerCase().includes(e.toLowerCase(), r)
 }, String.prototype.toTitleCase = function() {
-    return this.replace(/\w\S{1,}/gim, e => e.toLowerCase().replace(e[0].toLowerCase(), e[0].toUpperCase()))
+    return this.replace(/\w\S{1,}/gim, e => e[0].toUpperCase().concat(e.slice(1)))
 }, String.prototype.toCodeBlock = function(e = "") {
     return `\`\`\`${e}
 ${(0,discord_js_1.escapeCodeBlock)(this)}

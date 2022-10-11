@@ -4,7 +4,9 @@ import { Data } from '../../../types/data';
 // exports 
 export default {
 	names: [ 'stop' ],
+	desc: 'stops all tracks', 
 	type: 'default',
+	voiceRequired: true, 
 	run: async (d: Data): Promise<any> => {
 		if (!d.lappy.music.getQueue(d.gd))
 			return d.lappy.sendError(d, d.msg, 'No Music', 'I\'m not in a voice chat');

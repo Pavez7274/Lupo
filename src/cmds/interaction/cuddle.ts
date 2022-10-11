@@ -11,7 +11,7 @@ export default {
 		type: 'memberResolvable', 
 		req: true
 	}], 
-	desc: 'abraza(? a alguien', 
+	desc: 'Cuddle someone', 
 	type: 'default',
 	run: async (d: Data): Promise<any> => {
 		let snowy = await d.lappy.util.findMember(d.gd, d.args.string());

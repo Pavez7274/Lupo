@@ -42,11 +42,11 @@ export default {
 			return d.lappy.sendError(d, d.msg, 'not found', `I couldn't find the song ['${activity?.details ?? 'unknown'}']`);
 		let embeds = d.lappy.makeEmbeds(d, {
 			title: `${d.lappy.emotes.spotify} | What does ${memb.user.id === d.author.id ? 'u' : memb.displayName} listen to?`,
-			description: `**Song** :: [${track.name}](${track.external_urls.spotify})
-**Artists** :: ${track.artists.map((art: any) => `[${art.name}](${art.external_urls.spotify})`).join(' | ')}
-**${track.album.type.toTitleCase()}** :: [${track.album.name}](${track.album.external_urls.spotify})
-**Duration** :: ${parse(Date.now() - Number(activity?.timestamps?.start))} / ${parse(track.duration_ms)}
-**Explicit** :: ${track.explicit ? 'Yes' : 'No'}
+			description: `**[ Song ]** -> [${track.name}](${track.external_urls.spotify})
+**[ Artists ]** -> ${track.artists.map((art: any) => `[${art.name}](${art.external_urls.spotify})`).join(' | ')}
+**[ ${track.album.type.toTitleCase()} ]** -> [${track.album.name}](${track.album.external_urls.spotify})
+**[ Duration ]** -> ${parse(Date.now() - Number(activity?.timestamps?.start))} / ${parse(track.duration_ms)}
+**[ Explicit ]** -> ${track.explicit ? 'Yes' : 'No'}
 
 [Click here to listen a preview](${track.preview_url})`,
 			thumbnail: { url: track.album.images[0].url }

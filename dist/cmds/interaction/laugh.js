@@ -3,7 +3,6 @@ Object.defineProperty(exports, "__esModule", {
     value: !0
 }), exports.default = {
     names: ["laugh"],
-    desc: "riete, riata?.",
     type: "default",
     run: async e => {
         var a = await e.lappy.neko.img("laugh"),
@@ -11,7 +10,7 @@ Object.defineProperty(exports, "__esModule", {
                 image: {
                     url: a.url
                 },
-                title: e.memb.displayName + " se rie",
+                title: e.memb.displayName + " laughs " + (30 == e.random(50) ? "until a lung explodes" : ""),
                 footer: {
                     text: "anime: " + a.anime_name
                 }

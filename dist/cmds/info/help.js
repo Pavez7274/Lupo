@@ -23,13 +23,12 @@ exports.default = {
             s[l] && e.push(s[l]), s[++l] && e.push(s[l]), s[++l] && e.push(s[l]), a.push(e)
         }
         var e;
-        if (table.addRowMatrix(a), l.args.ends.includes("--all")) return e = l.lappy.makeEmbeds(l, {
+        if (table.addRowMatrix(a), l.args.ends.includes("--all") || !l.args.len) return e = l.lappy.makeEmbeds(l, {
             title: l.lappy.emotes.feli + " | help -> All Commands",
             description: table.toString().split("\n").map(e => e.trim()).join("\n").cropAt(4e3).toCodeBlock()
         }), l.msg.reply({
             embeds: e
         });
-        if (0 === l.args.len) return l.lappy.sendError(l, l.msg, "Field", "Field 1 ['command'] Cannot Be Empty");
         let t = l.lappy.cmds.default.find(e => e.names.includes(l.args.get(0)));
         if (!t) return l.lappy.sendError(l, l.msg, "Not Found", `Command ['${l.args.get(0)}'] Not Found`);
         let o = l.lappy.makeEmbeds(l, {

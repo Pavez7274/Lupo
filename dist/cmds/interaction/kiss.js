@@ -37,14 +37,14 @@ Object.defineProperty(exports, "__esModule", {
     type: "default",
     run: async e => {
         if (!(r = await e.lappy.util.findMember(e.gd, e.args.string()))) return e.lappy.sendError(e, e.msg, "not found", `No Matches Were Found With ['${e.args.string().slice(0,10)}']`);
-        if (r.id === e.lappy?.user?.id) return e.msg.reply("ew no");
-        if (r.id === e.author.id) return e.msg.reply("u're narcissistic?!?");
+        if (r.id === e.lappy?.user?.id) return e.msg.reply("Ew, no.");
+        if (r.id === e.author.id) return e.msg.reply("You're narcissistic?!?");
         var t = await e.lappy.neko.img("kiss"),
             r = e.lappy.makeEmbeds(e, {
                 image: {
                     url: t.url
                 },
-                title: `${e.memb.displayName} is kissing ${r.displayName} ${(await Promise.resolve().then(()=>__importStar(require("../../util/protos")))).faces.random()}!!`,
+                title: `${e.memb.displayName} kiss to ${r.displayName} ${(await Promise.resolve().then(()=>__importStar(require("../../util/protos")))).faces.random()}!!`,
                 footer: {
                     text: "anime: " + t.anime_name
                 }

@@ -11,7 +11,7 @@ export default {
 		type: 'memberResolvable', 
 		req: true
 	}], 
-	desc: 'feed', 
+	desc: 'Feed someone', 
 	type: 'default',
 	run: async (d: Data): Promise<any> => {
 		let snowy = await d.lappy.util.findMember(d.gd, d.args.string());
@@ -19,10 +19,10 @@ export default {
 			return d.lappy.sendError(d, d.msg, 'not found', `No Matches Were Found With ['${d.args.string().slice(0, 10)}']`);
 		if (snowy.id === d.lappy?.user?.id) {
 			return d.msg.reply([
-				"you can't feed me",
-				"I'd rather starve to deaths", 
-				'no.',
-				'of course, when communism works'
+				"I won't eat that",
+				"I prefer to eat shit", 
+				"No.",
+				"And how do I know that isn't poisoned?"
 			].random());
 		} else if (snowy.id === d.author.id) {
 			return d.msg.reply(`don't you've someone to do it for you?`);

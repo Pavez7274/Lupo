@@ -1,7 +1,7 @@
 # Volume
 > Vol
 
-This Command Does Not Yet Have a Description
+Change Or See The Volume Of The Music
 
 ## Fields
 

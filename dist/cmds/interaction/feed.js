@@ -8,24 +8,24 @@ Object.defineProperty(exports, "__esModule", {
         type: "memberResolvable",
         req: !0
     }],
-    desc: "feed",
+    desc: "Feed someone",
     type: "default",
     run: async e => {
-        if (!(t = await e.lappy.util.findMember(e.gd, e.args.string()))) return e.lappy.sendError(e, e.msg, "not found", `No Matches Were Found With ['${e.args.string().slice(0,10)}']`);
-        if (t.id === e.lappy?.user?.id) return e.msg.reply(["you can't feed me", "I'd rather starve to deaths", "no.", "of course, when communism works"].random());
-        if (t.id === e.author.id) return e.msg.reply("don't you've someone to do it for you?");
-        var r = await e.lappy.neko.img("feed"),
-            t = e.lappy.makeEmbeds(e, {
+        if (!(r = await e.lappy.util.findMember(e.gd, e.args.string()))) return e.lappy.sendError(e, e.msg, "not found", `No Matches Were Found With ['${e.args.string().slice(0,10)}']`);
+        if (r.id === e.lappy?.user?.id) return e.msg.reply(["I won't eat that", "I prefer to eat shit", "No.", "And how do I know that isn't poisoned?"].random());
+        if (r.id === e.author.id) return e.msg.reply("don't you've someone to do it for you?");
+        var t = await e.lappy.neko.img("feed"),
+            r = e.lappy.makeEmbeds(e, {
                 image: {
-                    url: r.url
+                    url: t.url
                 },
-                title: `${e.memb.displayName} feeds ${t.displayName} ` + e.lappy.emotes.food,
+                title: `${e.memb.displayName} feeds ${r.displayName} ` + e.lappy.emotes.food,
                 footer: {
-                    text: "anime: " + r.anime_name
+                    text: "anime: " + t.anime_name
                 }
             });
         return e.msg.reply({
-            embeds: t
+            embeds: r
         })
     }
 };

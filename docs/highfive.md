@@ -1,6 +1,6 @@
 # Highfive
 
-Hold Someone's Hand
+High-Five To Someone
 
 ## Fields
 

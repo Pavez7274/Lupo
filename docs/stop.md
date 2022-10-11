@@ -1,6 +1,6 @@
 # Stop
 
-This Command Does Not Yet Have a Description
+Stops All Tracks
 
 ## Command Usage
 ```

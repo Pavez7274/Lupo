@@ -26,16 +26,12 @@ function IDontHaveANameForThis (data, url) {
 export class BandcampPlugin extends CustomPlugin {
 	constructor () { super() };
 	async validate (url: string): Promise<boolean> {
-		/*if (typeof url != 'string' ||
-				!url.includes('.bandcamp.com/') ||
-				!['track', 'album'].includes(url.split('/').at(3))
-			 ) return false;*/
 		if (typeof url != 'string' || !/http(s|):\/\/\w+\.bandcamp\.com/gi.test(url))
 			return false;
 		try {
 			const req = await axios.get(url);
 			if (!req || !req.data) return false;
-			return !!IDontHaveANameForThis(req.data, url);
+			return IDontHaveANameForThis(req.data, url);
 		} catch {
 			return false;
 		};
@@ -66,32 +62,37 @@ export class BandcampPlugin extends CustomPlugin {
 				url: data.url,
 				songs: tracks,
 				member 
-			}, playlist = new Playlist(info, { member, metadata});
+			}, playlist = new Playlist(info, { member, metadata });
 			this.distube.play(channel, playlist, opt); 
 		} else {
 			const { member, metadata } = opt, 
 				data = parser.parseArtistInfo((await axios.get(url)).data, url);
-			for (let i = 0; i < data.albums.length; i++) {
+			data.albums.map(async (album: any) => {
+				this.play(channel, album.url, opt);
+			});
+			/*for (let i = 0; i < data.albums.length; i++) {
 				let rq = await axios.get(data.albums[i].url), 
 					josecito = parser.parseAlbumInfo(rq.data, data.albums[i].url);
-				josecito = josecito.map((a: any) => `${a.name} ${data.name}`);
+				josecito = josecito.tracks.map((a: any) => `${a.name} ${data.name}`);
 				data.albums[i] = josecito;
 			};
-			let songs = data.albums
-				.reduce((a: string[], b: string[]) => a.concat(b))
+			let songs = data.albums.reduce((a: string[], b: string[]) => a.concat(b));
+			songs = songs.map((a: string) => this.distube.search(a, { limit: 1 }).then((b: any[]) => b.at(0)?.url));
+			songs = songs.filter((a: any) => Boolean(a));
 				.map(async (a: string) => (await this.distube.search(a, { limit: 1 })).at(0))
-				.filter((a: any) => Boolean(a))
-				.map((a: any) => new Song(a, { member, metadata })), 
-				info = {
+				.filter(async (a: any) => Boolean((await a).id))
+				.map(async (a: any) => new Song(await a, { member, metadata }))
+				.filter((a: Song) => Boolean(a.id))
+			console.log(songs);
+			let properties = {
 					thumbnail: data.coverImage, 
 					source: 'bandcamp', 
 					name: `Discography of ${data.name}`,
 					url: data.url, 
-					member, 
-					songs, 
+					member
 				},
-				playlist = new Playlist(info, { member, metadata });
-			this.distube.play(channel, playlist, opt);
+				playlist = await this.distube.createCustomPlaylist(songs, { member, metadata, properties });
+			this.distube.play(channel, playlist, opt);*/
 		};
 	};
 };

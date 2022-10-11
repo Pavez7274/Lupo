@@ -8,7 +8,7 @@ Object.defineProperty(exports, "__esModule", {
         type: "memberResolvable",
         req: !0
     }],
-    desc: "abraza(? a alguien",
+    desc: "Cuddle someone",
     type: "default",
     run: async e => {
         if (!(r = await e.lappy.util.findMember(e.gd, e.args.string()))) return e.lappy.sendError(e, e.msg, "not found", `No Matches Were Found With ['${e.args.string().slice(0,10)}']`);

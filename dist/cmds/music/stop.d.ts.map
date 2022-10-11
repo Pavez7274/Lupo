@@ -1,1 +1,1 @@
-{"version":3,"file":"stop.d.ts","sourceRoot":"","sources":["../../../src/cmds/music/stop.ts"],"names":[],"mappings":"AACA,OAAO,EAAE,IAAI,EAAE,MAAM,qBAAqB,CAAC;;;;aAM3B,IAAI,KAAG,QAAQ,GAAG,CAAC;;AAHnC,wBASE"}
+{"version":3,"file":"stop.d.ts","sourceRoot":"","sources":["../../../src/cmds/music/stop.ts"],"names":[],"mappings":"AACA,OAAO,EAAE,IAAI,EAAE,MAAM,qBAAqB,CAAC;;;;;;aAQ3B,IAAI,KAAG,QAAQ,GAAG,CAAC;;AALnC,wBAWE"}

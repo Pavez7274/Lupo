@@ -11,7 +11,7 @@ export default {
 		type: 'memberResolvable', 
 		req: true
 	}], 
-	desc: 'hold someone\'s hand', 
+	desc: 'High-Five to someone', 
 	type: 'default',
 	run: async (d: Data): Promise<any> => {
 		let snowy = await d.lappy.util.findMember(d.gd, d.args.string());
@@ -19,9 +19,9 @@ export default {
 			return d.lappy.sendError(d, d.msg, 'not found', `No Matches Were Found With ['${d.args.string().slice(0, 10)}']`);
 		if (snowy.id === d.lappy?.user?.id) {
 			return d.msg.reply([
-				'ew, no.',
-				'wash ur hand', 
-				'no.',
+				'Ew, no.',
+				'Wash ur hand', 
+				'No.',
 			].random());
 		} else if (snowy.id === d.author.id) {
 			return d.msg.reply(`that's s${'o'.repeat(d.lappy.util.random(5, 1))} pathetic`);

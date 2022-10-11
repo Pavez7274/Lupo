@@ -9,6 +9,7 @@ export default {
 		'list', 
 		'q'
 	],
+	desc: 'returns the track list', 
 	type: 'default',
 	run: async (d: Data): Promise<any> => {
 		let q = d.lappy.music.getQueue(d.gd);

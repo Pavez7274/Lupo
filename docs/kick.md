@@ -1,6 +1,6 @@
 # Kick
 
-Patea a Quien Quieras.
+Kick Someone
 
 ## Command Usage
 ```

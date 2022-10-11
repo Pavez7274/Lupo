@@ -8,7 +8,7 @@ String.prototype.insensitiveIncludes = function (match: string, fromIndex: numbe
 	return this.toLowerCase().includes(match.toLowerCase(), fromIndex)
 };
 String.prototype.toTitleCase = function (): string {
-	return this.replace(/\w\S{1,}/gim, (word: string) => word.toLowerCase().replace(word[0].toLowerCase(), word[0].toUpperCase()));
+	return this.replace(/\w\S{1,}/gim, (word: string) => word[0].toUpperCase().concat(word.slice(1)));
 };
 
 String.prototype.toCodeBlock = function (lang: string | String = ''): string {

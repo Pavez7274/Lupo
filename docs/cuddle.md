@@ -1,6 +1,6 @@
 # Cuddle
 
-Abraza(? a Alguien
+Cuddle Someone
 
 ## Fields
 

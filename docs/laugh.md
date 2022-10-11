@@ -1,6 +1,6 @@
 # Laugh
 
-Riete, Riata?.
+This Command Does Not Yet Have a Description
 
 ## Command Usage
 ```

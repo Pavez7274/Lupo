@@ -18,14 +18,14 @@ export default {
 		if (!snowy)
 			return d.lappy.sendError(d, d.msg, 'not found', `No Matches Were Found With ['${d.args.string().slice(0, 10)}']`);
 		if (snowy.id === d.lappy?.user?.id) {
-			return d.msg.reply('ew no');
+			return d.msg.reply('Ew, no.');
 		} else if (snowy.id === d.author.id) {
-			return d.msg.reply('u\'re narcissistic?!?')
+			return d.msg.reply('You\'re narcissistic?!?')
 		};
 		let result = await d.lappy.neko.img('kiss'),
 		embeds = d.lappy.makeEmbeds(d, {
 			image: { url: result.url }, 
-			title: `${d.memb.displayName} is kissing ${snowy.displayName} ${(await import('../../util/protos')).faces.random()}!!`,
+			title: `${d.memb.displayName} kiss to ${snowy.displayName} ${(await import('../../util/protos')).faces.random()}!!`,
 			footer: { text: `anime: ${result.anime_name}` }
 		});
 		return d.msg.reply({ embeds })

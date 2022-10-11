@@ -1,6 +1,6 @@
 # Bite
 
-Muerde a Alguien
+Bite Someone
 
 ## Fields
 

@@ -26,6 +26,6 @@ export class DB extends Database {
 		return await super.all(table);
 	};
 	public async has (filter: Function | any, table: string = this.main): Promise<boolean> {
-		return (await this.all(table)).some(filter)?.length;
+		return (await this.all(table)).some(filter);
 	};
 };
